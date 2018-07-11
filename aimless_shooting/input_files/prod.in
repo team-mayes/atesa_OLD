@@ -8,6 +8,7 @@ Short QM run to check for direction of reaction progress
   dt=0.001,
   ntf=2,
   ntc=2,						! SHAKE. 1 = no, 2 = hydrogen bonds, 3 = all bonds
+  irest=1,
   temp0=300.0,
   ntpr=10,  					! Steps between writes to out
   ntwx=1,						! Steps between writes to mdcrd. 0 = no mdcrd
