@@ -6,15 +6,17 @@
 # use eval(rc_definition[1]) to interpret arbitrary strings in rc_definition[1] as python code.
 # before doing that, replace OP strings with their appropriate values as reported by pytraj!
 
+from __future__ import division     # causes division to work properly when using Python 2 todo: test this
 import os
 import pytraj
-import numpy    # appears unused, but is required to support numpy functions passed in rc_definition
+import glob
+import numpy                        # appears unused, but is required to support numpy functions passed in rc_definition
 import sys
 import re
 import importlib
 import subprocess
 import time
-aimless_shooting = importlib.import_module('aimless_shooting')
+
 
 def return_rcs(candidateops,rc_definition,working_directory,prmtop,rc_minmax):
     # First, copy the definition of candidatevalues from aimless_shooting.py, modified to be called with a pytraj
@@ -47,8 +49,11 @@ def return_rcs(candidateops,rc_definition,working_directory,prmtop,rc_minmax):
 
         # Before returning the result, we want to convert to a reduced variable z = (r-rmin)/(rmax-rmin)
         if rc_minmax:
-            if not rc_minmax[0][index] or not rc_minmax[1][index]:
-                sys.exit('\nError: rc_definition contains reference to OP' + str(index+1) + ' without a corresponding entry in rc_minmax')
+            try:
+                if not rc_minmax[0][index] or not rc_minmax[1][index]:  # if there's a blank entry in rc_minmax
+                    sys.exit('\nError: rc_definition contains reference to OP' + str(index+1) + ' without a corresponding entry in rc_minmax')
+            except IndexError:                                          # if there's no entry at all
+                sys.exit('\nError: rc_definition contains reference to OP' + str(index + 1) + ' without a corresponding entry in rc_minmax')
             output = (output - rc_minmax[0][index])/(rc_minmax[1][index] - rc_minmax[0][index])
 
         return output
@@ -69,6 +74,7 @@ def return_rcs(candidateops,rc_definition,working_directory,prmtop,rc_minmax):
     except OSError:
         sys.exit('Error: could not find as.log in working directory: ' + working_directory)
     logfile_lines = logfile.readlines()
+    logfile.close()
     for line in logfile_lines:                              # iterate through log file
         if re.match(pattern2, line) is not None:            # looking for lines with coordinate file names
             filename = pattern.findall(line)[0][14:]        # read out file name
@@ -77,7 +83,7 @@ def return_rcs(candidateops,rc_definition,working_directory,prmtop,rc_minmax):
 
     # Next, we'll interpret the equation encoded in rc_definition and candidateops...
     equation = rc_definition
-    for j in range(len(candidateops[0])):  # for each candidate op...
+    for j in reversed(range(len(candidateops[0]))):         # for each candidate op... (reversed to avoid e.g. 'OP10' -> 'candidatevalues(..., 0)0')
         equation = equation.replace('OP' + str(j+1), 'candidatevalues(\'coord_file\',' + str(j) + ')')
 
     # Finally, evaluate and print to output for each coordinate file.
@@ -90,14 +96,99 @@ def return_rcs(candidateops,rc_definition,working_directory,prmtop,rc_minmax):
             results.append([eval(this_equation), item])
             index += 1
         update_progress(index / len(filelist))
-        results = sorted(results,key=lambda x: x[0])
+        results = sorted(results,key=lambda x: abs(x[0]))
         for result in results:
             file.write(result[1] + ': ' + str(result[0][0]) + '\n')
+        file.close()
 
 
-def committor_analysis(candidateops,rc_definition,working_directory,prmtop,rc_minmax,committor_analysis_options,batch_system):
-    # Implementation of committor analysis. Start by calling return_rcs to get list of RC values to work with...
-    return_rcs(candidateops,rc_definition,working_directory,prmtop,rc_minmax)
+def committor_analysis(candidateops,rc_definition,working_directory,prmtop,rc_minmax,committor_analysis_options,batch_system,commit_define_fwd,commit_define_bwd):
+    aimless_shooting = importlib.import_module('aimless_shooting')  # import here to avoid issues caused by circular import statements
+
+    def checkcommit(name, prmtop, directory=''):
+        # Copied directly from aimless_shooting.py, with minor edits to make it standalone.
+
+        committor_directory = ''
+        if directory:
+            directory += '/'
+            committor_directory = directory + 'committor_analysis/'
+
+        if not os.path.isfile(committor_directory + name):  # if the file doesn't exist yet, just do nothing
+            return ''
+
+        traj = pytraj.iterload(committor_directory + name, directory + prmtop, format='.nc')
+
+        if not traj:  # catches error if the trajectory file exists but has zero frames
+            print(
+                'Don\'t worry about this internal error; it just means that aimless_shooting is checking for commitment in a trajectory that doesn\'t have any frames yet, probably because the simulation has only just begun.')
+            return ''
+
+        commit_flag = ''  # initialize flag for commitment; this is the value to be returned eventually
+        for i in range(0, len(commit_define_fwd[2])):
+            if commit_define_fwd[3][i] == 'lt':
+                if pytraj.distance(traj, commit_define_fwd[0][i] + ' ' + commit_define_fwd[1][i], n_frames=1)[-1] <= \
+                        commit_define_fwd[2][i]:
+                    commit_flag = 'fwd'  # if a commitor test is passed, testing moves on to the next one.
+                else:
+                    commit_flag = ''
+                    break  # if a commitor test is not passed, all testing in this direction ends in a fail
+            elif commit_define_fwd[3][i] == 'gt':
+                if pytraj.distance(traj, commit_define_fwd[0][i] + ' ' + commit_define_fwd[1][i], n_frames=1)[-1] >= \
+                        commit_define_fwd[2][i]:
+                    commit_flag = 'fwd'
+                else:
+                    commit_flag = ''
+                    break
+            else:
+                open('as.log', 'a').write(
+                    '\nAn incorrect commitor definition \"' + commit_define_fwd[3][i] + '\" was given for index ' + str(
+                        i) + ' in the \'fwd\' direction.')
+                sys.exit(
+                    'An incorrect commitor definition \"' + commit_define_fwd[3][i] + '\" was given for index ' + str(
+                        i) + ' in the \'fwd\' direction.')
+
+        if commit_flag == '':  # only bother checking for bwd commitment if not fwd commited
+            for i in range(0, len(commit_define_bwd[2])):
+                if commit_define_bwd[3][i] == 'lt':
+                    if pytraj.distance(traj, commit_define_bwd[0][i] + ' ' + commit_define_bwd[1][i], n_frames=1)[-1] <= \
+                            commit_define_bwd[2][i]:
+                        commit_flag = 'bwd'  # if a commitor test is passed, testing moves on to the next one.
+                    else:
+                        commit_flag = ''
+                        break  # if a commitor test is not passed, all testing in this direction ends in a fail
+                elif commit_define_bwd[3][i] == 'gt':
+                    if pytraj.distance(traj, commit_define_bwd[0][i] + ' ' + commit_define_bwd[1][i], n_frames=1)[-1] >= \
+                            commit_define_bwd[2][i]:
+                        commit_flag = 'bwd'
+                    else:
+                        commit_flag = ''
+                        break
+                else:
+                    open('as.log', 'a').write('\nAn incorrect commitor definition \"' + commit_define_bwd[3][
+                        i] + '\" was given for index ' + str(i) + ' in the \'bwd\' direction.')
+                    sys.exit('An incorrect commitor definition \"' + commit_define_bwd[3][
+                        i] + '\" was given for index ' + str(i) + ' in the \'bwd\' direction.')
+
+        del traj  # to ensure cleanup of iterload object
+
+        return commit_flag
+
+    try:
+        os.remove('ca.log')                 # delete previous run's log file
+    except OSError:                         # catches error if no previous log file exists
+        pass
+    with open('ca.log', 'w+') as newlog:    # make a new log file
+        newlog.write('New log file')
+        newlog.close()
+        logfile = os.getcwd() + '/ca.log'
+
+    # Implementation of committor analysis. Start by obtaining the list of RC values to work with...
+    if not os.path.exists(working_directory + '/rc_eval.out'):
+        open('ca.log', 'a').write('\nNo rc_eval.out found in working directory, generating it...')
+        return_rcs(candidateops,rc_definition,working_directory,prmtop,rc_minmax)
+    else:
+        open('ca.log', 'a').write('\nFound ' + working_directory + '/rc_eval.out, continuing...')
+    open('ca.log', 'a').close()
 
     # Import arguments from user's input file
     n_shots = committor_analysis_options[0]
@@ -111,20 +202,24 @@ def committor_analysis(candidateops,rc_definition,working_directory,prmtop,rc_mi
     except FileNotFoundError:
         sys.exit('Error: could not find working directory: ' + working_directory)
 
-    os.makedirs('committor_analysis')
+    try:
+        os.makedirs('committor_analysis')
+    except FileExistsError:
+        pass
     os.chdir('committor_analysis')
 
     eligible = []                               # initialize list of eligible shooting points for committor analysis
     eligible_rcs = []                           # another list holding corresponding rc values
     lines = open('../rc_eval.out', 'r').readlines()
+    open('../rc_eval.out', 'r').close()
     for line in lines:
         splitline = line.split(' ')             # split line into list [shooting point filename, rc value]
         if abs(float(splitline[1]) - rc_ts) <= rc_tol:
-            eligible.append(splitline[0])
+            eligible.append(splitline[0][:-1])  # [:-1] removes trailing colon
             eligible_rcs.append(splitline[1])
 
     if len(eligible) == 0:
-        sys.exit('Error: attempted comittor analysis, but couldn\'t find any shooting points with reaction coordinate '
+        sys.exit('Error: attempted committor analysis, but couldn\'t find any shooting points with reaction coordinate '
                  'values within ' + str(rc_tol) + ' of ' + str(rc_ts) + ' in working directory: ' + working_directory)
 
     # Next I want to remove all the violations of the min_dist setting. To do this, I'll scan history files whose names
@@ -156,7 +251,8 @@ def committor_analysis(candidateops,rc_definition,working_directory,prmtop,rc_mi
         for filename in eligible:
             for history_filename in os.listdir('../history'):
                 if history_filename in filename:
-                    history_lines = open(history_filename, 'r').readlines()
+                    history_lines = open('../history/' + history_filename, 'r').readlines()
+                    open('../history/' + history_filename, 'r').close()
                     indices = []                # initialize indices of matches
                     index = 0                   # initialize index to keep track
                     for history_line in history_lines:
@@ -180,19 +276,14 @@ def committor_analysis(candidateops,rc_definition,working_directory,prmtop,rc_mi
     threadlist = []
     for point in eligible:
         thread = aimless_shooting.spawnthread(point,type='committor_analysis',suffix='0')
-        thread.prmtop = '../' + prmtop
+        thread.prmtop = prmtop
         threadlist.append(thread)
 
     running = []
     for thread in threadlist:
         aimless_shooting.makebatch(thread,n_shots)
-        jobids = aimless_shooting.subbatch(thread,n_shots=n_shots)
+        thread.jobidlist = aimless_shooting.subbatch(thread,n_shots=n_shots,logfile=logfile)
         running.append(thread)
-        # Importantly, the order of the jobids in this string corresponds to the order in which they were created, which
-        # means that e.g., jobids[3] corresponds to the job that produces the trajectory named:
-        # thread.basename + '_ca_3' + '.nc'
-        for jobid in jobids:
-            thread.jobidlist.append(jobid)
         thread.commitlist = [[] for dummy in range(n_shots)]    # initialize commitlist to contain n_shots values
 
     # Having submitted the jobs to the batch system, now all I need to do is track their results as in the main code.
@@ -207,14 +298,13 @@ def committor_analysis(candidateops,rc_definition,working_directory,prmtop,rc_mi
     else:
         sys.exit('Error: incorrect batch system type: ' + batch_system)
 
-    # todo: test this
+    # todo: debug this; it submits the jobs correctly, but then exits without error very early on, while running should still contain most threads... possibly "jobid not in str(output)" is returning True errantly?
     while running:
         process = subprocess.Popen(queue_command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                                   stderr=subprocess.STDOUT, close_fds=True,
-                                   shell=True)      # check list of currently running jobs
+                                   stderr=subprocess.STDOUT, close_fds=True, shell=True)
+        output = process.stdout.read()
         # The above line retrieves both the stdout and stderr streams into the same variable; on PBS, sometimes this
         # returns a "busy" message. The following while loop is meant to handle that, but it's obviously ugly.
-        output = process.stdout.read()
         while 'Pbs Server is currently too busy to service this request. Please retry this request.' in str(output):
             process = subprocess.Popen(queue_command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                        stderr=subprocess.STDOUT, close_fds=True, shell=True)
@@ -228,14 +318,16 @@ def committor_analysis(candidateops,rc_definition,working_directory,prmtop,rc_mi
             for jobid in thread.jobidlist:
                 number += 1                         # this is the number in range(n_shots) for this jobid
                 if not jobid == 'skip' and jobid not in str(output):    # job terminated on its own
-                    this_commit = aimless_shooting.checkcommit(thread, 'ca_' + number)
+                    this_commit = aimless_shooting.checkcommit(thread.basename + '_ca_' + str(number) + '.nc',
+                                                               thread.prmtop, working_directory)
                     if not this_commit:
                         thread.commitlist[number] = 'fail'
                     else:
                         thread.commitlist[number] = this_commit
                     thread.jobidlist[number] = 'skip'
                 elif not jobid == 'skip':                               # job is still running
-                    this_commit = aimless_shooting.checkcommit(thread, 'ca_' + number)
+                    this_commit = aimless_shooting.checkcommit(thread.basename + '_ca_' + str(number) + '.nc',
+                                                               thread.prmtop, working_directory)
                     if this_commit:
                         thread.commitlist[number] = this_commit
                         process = subprocess.Popen([cancel_command, thread.jobidlist[number]], stdout=subprocess.PIPE)
@@ -244,6 +336,12 @@ def committor_analysis(candidateops,rc_definition,working_directory,prmtop,rc_mi
                 elif jobid == 'skip':                                   # job has already been handled
                     skipcount += 1
             if skipcount == n_shots:                # if all the jobs associated with this thread have ended...
+                ### This block of code originally meant to provide partial output as committor_analysis runs.
+                # with open('committor_analysis.out', 'a') as outputfile: # write to output as we're going for convenience
+                #     for commit in running[index].commitlist:
+                #         if commit != 'fail':
+                #             outputfile.write(commit + ' ' + eligible_rcs[threadlist.index(running[index])])
+                #     outputfile.close()
                 del running[index]
                 index -= 1
             index += 1
@@ -251,15 +349,43 @@ def committor_analysis(candidateops,rc_definition,working_directory,prmtop,rc_mi
         time.sleep(60)                              # just wait a bit so as not to overwhelm the batch system
 
     # Finally, we just need to interpret the results and output them in a format that's convenient for a histogram
-    with open('committor_analysis.out','w') as outputfile:
-        index = -1
-        for thread in threadlist:
-            index += 1
-            for commit in thread.commitlist:
-                if commit != 'fail':
-                    # Write commit value, a space, and then the reaction coordinate value from eligible_rcs
-                    # This works because the order of threads in threadlist corresponds to the order of eligible_rcs
-                    outputfile.write(commit + ' ' + eligible_rcs[index])
+    # todo: this code currently rechecks every trajectory for commitment, rather than using the values stored in each thread.commitlist. Fix this!
+    trajectories = sorted(glob.glob('*_ca_*.nc'))
+
+    with open('committor_analysis.out', 'w') as f:
+        f.close()
+
+    last_basename = ''
+    this_committor = []
+    count = 0
+    for trajectory in trajectories:
+        count += 1
+        update_progress(count / len(trajectories))
+        basename = trajectory[:-8]  # name excluding '_ca_#.nc' where # is one digit (only works because mine are 0-9)
+        commit = checkcommit(trajectory, 'ts_guess.prmtop', working_directory)  # todo: the offending line for the above todo (other lines may also need to change of course)
+        if basename != last_basename or trajectory == trajectories[-1]:
+            if trajectory == trajectories[-1]:  # sloppy, but whatever
+                this_committor.append(commit)
+            # collate results of previous basename
+            fwd_count = 0
+            bwd_count = 0
+            if this_committor:  # true for every pass except first one
+                for result in this_committor:
+                    if result == 'fwd':
+                        fwd_count += 1
+                    elif result == 'bwd':
+                        bwd_count += 1
+                try:
+                    pb = fwd_count / (fwd_count + bwd_count)
+                    open('committor_analysis.out', 'a').write(str(pb) + '\n')
+                    open('committor_analysis.out', 'a').close()
+                except ZeroDivisionError:
+                    pass
+            # start new basename
+            last_basename = basename
+            this_committor = [commit]
+        else:  # if basename == last_basename
+            this_committor.append(commit)
 
 
 # update_progress() : Displays or updates a console progress bar

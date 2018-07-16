@@ -16,9 +16,6 @@ import importlib
 import pickle
 from jinja2 import Environment, FileSystemLoader
 rc_eval = importlib.import_module('rc_eval')
-import tracemalloc
-
-tracemalloc.start()
 
 
 # Define the "thread" object that constitutes one string of shooting moves in our search through phase space. Each
@@ -63,6 +60,7 @@ def makebatch(thread,n_shots=0):
     if type == 'init':
         # init batch file
         open('as.log', 'a').write('\nWriting init batch file for ' + name + ' starting from ' + thread.start_name)
+        open('as.log', 'a').close()
         template = env.get_template(batch)
         filled = template.render(name=name + '_init', nodes=init_nodes, taskspernode=init_ppn, walltime=init_walltime,
                                  solver='sander', inp=home_folder + '/input_files/init.in', out=name + '_init.out',
@@ -75,6 +73,7 @@ def makebatch(thread,n_shots=0):
     elif type == 'prod':
         # forward and backward simulation batch files
         open('as.log', 'a').write('\nWriting forward batch file for ' + name)
+        open('as.log', 'a').close()
         template = env.get_template(batch)
         filled = template.render(name=name + '_fwd', nodes=prod_nodes, taskspernode=prod_ppn, walltime=prod_walltime,
                                  solver='sander', inp=home_folder + '/input_files/prod.in', out=name + '_fwd.out',
@@ -85,6 +84,7 @@ def makebatch(thread,n_shots=0):
             newfile.close()
 
         open('as.log', 'a').write('\nWriting backward batch file for ' + name)
+        open('as.log', 'a').close()
         template = env.get_template(batch)
         filled = template.render(name=name + '_bwd', nodes=prod_nodes, taskspernode=prod_ppn, walltime=prod_walltime,
                                  solver='sander', inp=home_folder + '/input_files/prod.in', out=name + '_bwd.out',
@@ -99,20 +99,23 @@ def makebatch(thread,n_shots=0):
         for i in range(n_shots):
             template = env.get_template(batch)
             filled = template.render(name=name + '_ca_' + str(i), nodes=prod_nodes, taskspernode=prod_ppn,
-                                     walltime=prod_walltime, solver='sander', inp=home_folder + '/input_files/prod.in',
-                                     out=name + '_ca_' + str(i) + '.out', prmtop=thread.prmtop, inpcrd=name,
-                                     rst=name + '_ca_' + str(i) + '.rst', nc=name + '_ca_' + str(i) + '.nc',
-                                     mem=prod_mem, working_directory=working_directory)
+                                     walltime=prod_walltime, solver='sander',
+                                     inp=home_folder + '/input_files/committor_analysis.in',
+                                     out=name + '_ca_' + str(i) + '.out', prmtop='../' + thread.prmtop,
+                                     inpcrd='../' + name, rst=name + '_ca_' + str(i) + '.rst',
+                                     nc=name + '_ca_' + str(i) + '.nc', mem=prod_mem,
+                                     working_directory=working_directory + '/committor_analysis')
             with open(name + '_ca_' + str(i) + '.' + batch_system, 'w') as newfile:
                 newfile.write(filled)
                 newfile.close()
 
     else:
         open('as.log', 'a').write('\nAn incorrect job type \"' + type + '\" was passed to makebatch.')
+        open('as.log', 'a').close()
         sys.exit('An incorrect job type \"' + type + '\" was passed to makebatch.')
 
 
-def subbatch(thread,direction = '',n_shots=0):
+def subbatch(thread,direction = '',n_shots=0,logfile=''):
     # Submits a batch file given by batch and returns its process number as a string
     # n_shots and type == committor_analysis are used in rc_eval.py
     name = thread.name  # just shorthand
@@ -123,6 +126,7 @@ def subbatch(thread,direction = '',n_shots=0):
         type = 'bwd'
     else:
         type = thread.type
+        name = thread.basename
 
     if batch_system == 'pbs':
         command = 'qsub ' + name + '_' + type + '.' + batch_system
@@ -130,11 +134,14 @@ def subbatch(thread,direction = '',n_shots=0):
         command = 'sbatch ' + name + '_' + type + '.' + batch_system
     else:
         open('as.log', 'a').write('\nAn incorrect batch system type \"' + batch_system + '\" was passed to subbatch.')
+        open('as.log', 'a').close()
         sys.exit('An incorrect batch system type \"' + batch_system + '\" was supplied. Acceptable types are: pbs, slurm')
 
     if type == 'committor_analysis':
         jobids = []
         for i in range(n_shots):
+            open(logfile, 'a').write('\nSubmitting job: ' + name + '_ca_' + str(i) + '.' + batch_system)
+            open('as.log', 'a').close()
             if batch_system == 'pbs':
                 command = 'qsub ' + name + '_ca_' + str(i) + '.' + batch_system
             elif batch_system == 'slurm':
@@ -150,6 +157,7 @@ def subbatch(thread,direction = '',n_shots=0):
             if 'Bad UID for job execution MSG=user does not exist in server password file' in str(output):
                 open('as.log', 'a').write('\nWarning: attempted to submit a job, but got error: ' + str(output) + '\n'
                                           + 'Retrying in one minute...')
+                open('as.log', 'a').close()
                 time.sleep(60)
                 process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                            stderr=subprocess.STDOUT,
@@ -159,10 +167,11 @@ def subbatch(thread,direction = '',n_shots=0):
             try:
                 jobids.append(pattern.findall(str(output))[0])
             except IndexError:
-                sys.exit('Error: unable to submit a batch job. Got message: ' + str(output))
+                sys.exit('Error: unable to submit a batch job: ' + name + '_ca_' + str(i) + '.' + batch_system + '. Got message: ' + str(output))
         return jobids
     else:
         open('as.log', 'a').write('\nSubmitting job: ' + name + '_' + type + '.' + batch_system)
+        open('as.log', 'a').close()
         process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                                    close_fds=True, shell=True)
         output = process.stdout.read()
@@ -171,6 +180,7 @@ def subbatch(thread,direction = '',n_shots=0):
                                        close_fds=True, shell=True)
             output = process.stdout.read()
         open('as.log', 'a').write('\nBatch system says: ' + str(output))
+        open('as.log', 'a').close()
         pattern = re.compile('[0-9]+')
         try:
             return pattern.findall(str(output))[0]
@@ -190,20 +200,25 @@ def spawnthread(basename, type = 'init', suffix=''):
     return new_thread
 
 
-def checkcommit(thread,direction):
+def checkcommit(thread,direction,directory=''):
     # Function to check for commitment of the given thread in the given direction using pytraj. Direction should be a
     # string, either 'bwd' or 'fwd'. The definitions of commitment are given by the two "commit_define" objects supplied
     # by the user.
 
     if direction not in ['fwd','bwd']:  # occurs when this is called by rc_eval.py
-        name = thread.basename
+        name = thread
     else:
         name = thread.name
 
-    if not os.path.isfile(name + '_' + direction + '.nc'):   # if the file doesn't exist yet, just do nothing
+    committor_directory = ''
+    if directory:
+        directory += '/'
+        committor_directory = directory + 'committor_analysis/'
+
+    if not os.path.isfile(committor_directory + name + '_' + direction + '.nc'):   # if the file doesn't exist yet, just do nothing
         return ''
 
-    traj = pytraj.iterload(name + '_' + direction + '.nc', thread.prmtop, format='.nc')
+    traj = pytraj.iterload(committor_directory + name + '_' + direction + '.nc', directory + thread.prmtop, format='.nc')
 
     if not traj:                        # catches error if the trajectory file exists but has zero frames
         print('Don\'t worry about this internal error; it just means that aimless_shooting is checking for commitment in a trajectory that doesn\'t have any frames yet, probably because the simulation has only just begun.')
@@ -225,6 +240,7 @@ def checkcommit(thread,direction):
                 break
         else:
             open('as.log', 'a').write('\nAn incorrect commitor definition \"' + commit_define_fwd[3][i] + '\" was given for index ' + str(i) +' in the \'fwd\' direction.')
+            open('as.log', 'a').close()
             sys.exit('An incorrect commitor definition \"' + commit_define_fwd[3][i] + '\" was given for index ' + str(i) +' in the \'fwd\' direction.')
 
     if commit_flag == '':                # only bother checking for bwd commitment if not fwd commited
@@ -243,6 +259,7 @@ def checkcommit(thread,direction):
                     break
             else:
                 open('as.log', 'a').write('\nAn incorrect commitor definition \"' + commit_define_bwd[3][i] + '\" was given for index ' + str(i) +' in the \'bwd\' direction.')
+                open('as.log', 'a').close()
                 sys.exit('An incorrect commitor definition \"' + commit_define_bwd[3][i] + '\" was given for index ' + str(i) +' in the \'bwd\' direction.')
 
     del traj    # to ensure cleanup of iterload object
@@ -272,16 +289,19 @@ def pickframe(thread,direction,forked_from=Thread()):
         os.rename(new_restart_name + '.1',new_restart_name)     # I don't quite know why, but pytraj appends '.1' to the filename, so this removes it.
     except OSError: # I sort of anticipate this breaking down the line, so this block is here to help handle that.
         open('as.log', 'a').write('\nWarning: tried renaming .rst7.1 file to .rst7, but encountered OSError exception. Either you ran out of storage space, or this is a possible indication of an unexpected pytraj version?')
+        open('as.log', 'a').close()
         if not os.path.exists(new_restart_name):
             sys.exit('\nError: pickframe did not produce the restart file for the next shooting move. Please ensure that you didn\'t run out of storage space, and then raise this issue on GitHub to let me know!')
         else:
             open('as.log', 'a').write('\nWarning: it tentatively looks like this should be okay, as the desired file was still created.')
+            open('as.log', 'a').close()
         pass
 
     if forked_from.basename:
         open('as.log', 'a').write('\nForking ' + thread.basename + ' from ' + forked_from.basename + '_' + forked_from.last_valid + '_' + direction + '.nc, frame number ' + str(frame_number))
     else:
         open('as.log', 'a').write('\nInitializing next shooting point from shooting run ' + thread.basename + '_' + thread.last_valid + ' in ' + direction + ' direction, frame number ' + str(frame_number))
+    open('as.log', 'a').close()
 
     del traj  # to ensure cleanup of iterload object
 
@@ -304,6 +324,7 @@ def cleanthread(thread):
             basin = thread.commit1
             sys.exit('Error: thread commit1 flag took on unexpected value: ' + basin + '\nThis is a weird error. Please raise this issue on GitHub!')
         open('as.out', 'a').write(basin + ' <- ' + candidatevalues(thread) + '\n')
+        open('as.log', 'a').close()
 
     # Write last result to history
     if thread.last_valid == thread.suffix:
@@ -318,10 +339,12 @@ def cleanthread(thread):
     with open('history/' + thread.basename, 'w') as file:
         for history_line in thread.history:
             file.write(history_line + '\n')
+        file.close()
 
     thread.total_moves += 1
     open('as.log', 'a').write('\nShooting run ' + thread.name + ' finished with fwd trajectory result: ' + thread.commit1 + ' and bwd trajectory result: ' + thread.commit2)
     open('as.log', 'a').write('\n' + thread.basename + ' has a current acceptance ratio of: ' + str(thread.accept_moves) + '/' + str(thread.total_moves) + ', or ' + str(100*thread.accept_moves/thread.total_moves)[0:5] + '%')
+    open('as.log', 'a').close()
 
     # Implementation of fork. Makes (fork - 1) new threads from successful runs and adds them to the itinerary. The new
     # threads do not inherit anything from their parents except starting point and history.
@@ -363,7 +386,6 @@ def cleanthread(thread):
     elif thread.accept_moves >= max_accept > 0:
         thread.status = 'max_accept'    # the thread dies because it has accepted too many moves
     else:
-        global itinerary
         itinerary.append(thread)        # the thread lives and moves to next step
 
     # Write a status file to indicate the acceptance ratio and current status of every thread.
@@ -382,6 +404,7 @@ def cleanthread(thread):
                     file.write('  Status: terminated after move ' + thread.suffix + ' due to termination criterion: ' + thread.status + '\n')
                 else:
                     file.write('  Status: crashed during move ' + thread.suffix + '\n')
+        file.close()
 
 
 def candidatevalues(thread):
@@ -420,6 +443,7 @@ def revvels(thread):
     # the number of atoms listed on the 2nd line of the .rst file, dividing it by two, and then navigating to the line
     # immediately after that plus three (since coordinates begin on line 3) and minus one (because of indexing)
     byline = open(thread.name + '_init_fwd.rst').readlines()
+    open(thread.name + '_init_fwd.rst').close()
     pattern = re.compile('[-0-9.]+')        # regex to match numbers including decimals and negatives
     pattern2 = re.compile('\s[-0-9.]+')     # regex to match numbers including decimals and negatives, with one space in front
     n_atoms = pattern.findall(byline[1])[0] # number of atoms indicated on second line of .rst file
@@ -471,6 +495,7 @@ def main_loop():
         open('as.log', 'a').write(
             '\nCurrent status...\n Itinerary: ' + str(itin_names) + '\n Running: ' + str(run_names))
         open('as.log', 'a').write('\nSubmitting jobs in itinerary...')
+        open('as.log', 'a').close()
 
         index = -1  # set place in itinerary to -1
         for thread in itinerary:  # for each thread that's ready for its next step...
@@ -488,6 +513,7 @@ def main_loop():
         itin_names = [thread.name + '_' + thread.type for thread in itinerary]
         run_names = [thread.name + '_' + thread.type for thread in running]
         open('as.log', 'a').write('\nCurrent status...\n Itinerary: ' + str(itin_names) + '\n Running: ' + str(run_names))
+        open('as.log', 'a').close()
 
         while not itinerary:  # while itinerary is empty...
             process = subprocess.Popen(queue_command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
@@ -512,14 +538,17 @@ def main_loop():
                             thread.type = 'prod'
                             open('as.log', 'a').write(
                                 '\nJob completed: ' + thread.name + '_init\nAdding ' + thread.name + ' forward and backward jobs to itinerary')
+                            open('as.log', 'a').close()
                             del running[index]
                             index -= 1  # to keep index on track after deleting an entry
                         except FileNotFoundError:  # when revvels can't find the init .rst file
                             open('as.log', 'a').write('\nThread ' + thread.basename + ' crashed: initialization did not produce a restart file.')
                             if restart_on_crash == False:
                                 open('as.log', 'a').write('\nrestart_on_crash = False; thread will not restart')
+                                open('as.log', 'a').close()
                             elif restart_on_crash == True:
                                 open('as.log', 'a').write('\nrestart_on_crash = True; resubmitting thread to itinerary')
+                                open('as.log', 'a').close()
                                 itinerary.append(running[index])
                                 thread.type = 'init'
                             del running[index]
@@ -565,13 +594,6 @@ def main_loop():
                         cleanthread(thread)
                 index += 1
 
-            # For tracemalloc memory leak debugging
-            snapshot = tracemalloc.take_snapshot()
-            top_stats = snapshot.statistics('lineno')
-            print("[ Top 10 ]")
-            for stat in top_stats[:10]:
-                print(stat)
-
             pickle.dump(allthreads, open('restart.pkl', 'wb'))
             time.sleep(60)  # Delay 60 seconds before checking for job status again
 
@@ -579,6 +601,7 @@ def main_loop():
             acceptances = [(100 * thread.accept_moves / thread.total_moves) for thread in allthreads]
             max_of_accepts = max(acceptances)
             open('as.log', 'a').write('\nItinerary and running lists are empty.\nAimless shooting is complete! The highest acceptance ratio for any thread was ' + max_of_accepts + '%.\nSee as.out in the working directory for results.')
+            open('as.log', 'a').close()
             break
 
 
@@ -602,6 +625,7 @@ if not os.path.exists(path):
 
 input_file = open(path)
 input_file_lines = [i.strip('\n').split(' ') for i in input_file.readlines()]
+input_file.close()
 
 # Initialize default values for all the input file entries, to be overwritten by the actual contents of the file
 initial_structure = 'inpcrd'                    # Initial structure filename
@@ -630,6 +654,8 @@ always_new = False                              # Pick a new shooting move after
 rc_definition = ''                              # Defines the equation of the reaction coordinate for an rc_eval run
 rc_minmax = ''                                  # Minimum and maximum values of each OP, for use in rc_eval variable reduction
 candidateops = ''                               # Defines the candidate order parameters to output into the as.out file
+commit_define_fwd = []                          # Defines commitment to fwd basin
+commit_define_bwd = []                          # Defines commitment to bwd basin
 committor_analysis = ''                         # Variables to pass into committor analysis.
 restart = False                                 # Whether or not to restart an old AS run located in working_directory
 
@@ -643,6 +669,9 @@ def str2bool(var):                              # Function to convert string "Tr
 
 # Read in variables from the input file; there's probably a cleaner way to do this, but no matter.
 for entry in input_file_lines:
+    if not entry[2]:
+        sys.exit('Error: option ' + entry[0] + ' was supplied without a corresponding value')
+
     if entry[0] == 'initial_structure':
         initial_structure = entry[2]
     elif entry[0] == 'if_glob':
@@ -663,9 +692,9 @@ for entry in input_file_lines:
             sys.exit('Error: batch_system must be either pbs or slurm')
         batch_system = entry[2].lower()
     elif entry[0] == 'working_directory':
-        if not '/' in entry[2]: # interpreting as a subfolder of cwd
+        if not '/' in entry[2]:                         # interpreting as a subfolder of cwd
             working_directory = os.getcwd() + '/' + entry[2]
-        else:                   # interpreting as an absolute path
+        else:                                           # interpreting as an absolute path
             working_directory = entry[2]
     elif entry[0] == 'commit_fwd':
         if ' ' in entry[2]:
@@ -766,16 +795,19 @@ for entry in input_file_lines:
         except ValueError:
             sys.exit('Error: fork must be an integer')
         fork = int(entry[2])
-    elif entry[0] == 'home_folder':
+    elif entry[0] == 'home_directory':
         home_folder = entry[2]
     elif entry[0] == 'always_new':
         if not entry[2].lower() == 'true' and not entry[2].lower() == 'false':
             sys.exit('Error: always_new must be either True or False')
         always_new = str2bool(entry[2])
     elif entry[0] == 'rc_definition':
-        rc_definition = entry[2]
+        rc_definition = ''
+        for i in range(len(entry)-2):
+            rc_definition += entry[i+2] + ' '
+        rc_definition = rc_definition[:-1]      # remove trailing space
     elif entry[0] == 'rc_minmax':
-        if ' ' in entry[2]:
+        if len(entry) > 3:
             sys.exit('Error: rc_minmax cannot contain whitespace (\' \') characters')
         rc_minmax = ast.literal_eval(entry[2])
         if rc_minmax:   # to allow rc_minmax = '', only perform these checks if it's not
@@ -785,6 +817,8 @@ for entry in input_file_lines:
                 if rc_minmax[0][i] and rc_minmax[1][i] and rc_minmax[0][i] >= rc_minmax[1][i]:
                     sys.exit('Error: values in the second row of rc_minmax must be larger than the corresponding values in the first row')
     elif entry[0] == 'committor_analysis':
+        if len(entry) > 3:
+            sys.exit('Error: committor_analysis cannot contain whitespace (\' \') characters')
         committor_analysis = ast.literal_eval(entry[2])
         if committor_analysis:  # to allow committor_analysis = [], only perform these checks if it's not
             if not len(committor_analysis) == 5:
@@ -799,6 +833,10 @@ for entry in input_file_lines:
             sys.exit('Error: restart must be either True or False')
         restart = str2bool(entry[2])
 
+# Remove trailing '/' from working_directory for compatibility with my code
+if working_directory[-1] == '/':
+    working_directory = working_directory[:-1]
+
 # Initialize jinja2 environment for filling out templates
 if os.path.exists(home_folder + '/' + 'templates'):
     env = Environment(
@@ -806,16 +844,16 @@ if os.path.exists(home_folder + '/' + 'templates'):
     )
 else:
     sys.exit(
-        'Error: could not locate templates folder: ' + home_folder + '/' + 'templates\nSee documentation for the'
+        'Error: could not locate templates folder: ' + home_folder + '/' + 'templates\nSee documentation for the '
                                                                                '\'home_folder\' option.')
 
 # Return an error and exit if the input file is missing entries for non-optional inputs.
 if 'commit_fwd' not in [entry[0] for entry in input_file_lines] and not resample and not rc_definition:
-    sys.exit('Error: input file is missing entry for commit_fwd, which is non-optional for this standard AS run')
+    sys.exit('Error: input file is missing entry for commit_fwd, which is non-optional')
 if 'commit_bwd' not in [entry[0] for entry in input_file_lines] and not resample and not rc_definition:
-    sys.exit('Error: input file is missing entry for commit_bwd, which is non-optional for this standard AS run')
+    sys.exit('Error: input file is missing entry for commit_bwd, which is non-optional')
 if 'candidate_op' not in [entry[0] for entry in input_file_lines]:
-    sys.exit('Error: input file is missing entry for candidate_op, which is non-optional for this standard AS run')
+    sys.exit('Error: input file is missing entry for candidate_op, which is non-optional')
 
 if restart and (resample or rc_definition or committor_analysis):
     problem = ''
@@ -845,39 +883,39 @@ elif restart:
     main_loop()
     sys.exit()
 
-
 if rc_definition and not committor_analysis:
     rc_eval.return_rcs(candidateops,rc_definition,working_directory,topology,rc_minmax)
     sys.exit('\nCompleted reaction coordinate evaluation run. See ' + working_directory + '/rc_eval.out for results.')
 elif rc_definition and committor_analysis:
-    rc_eval.committor_analysis(candidateops,rc_definition,working_directory,topology,rc_minmax,committor_analysis,batch_system)
+    rc_eval.committor_analysis(candidateops,rc_definition,working_directory,topology,rc_minmax,committor_analysis,batch_system,commit_define_fwd,commit_define_bwd)
     sys.exit('\nCompleted committor analysis run. See ' + working_directory + '/committor_analysis.out for results.')
 elif not rc_definition and committor_analysis:
     sys.exit('Error: committor analysis run requires rc_definition to be defined')
 
-if if_glob:
-    start_name = glob.glob(initial_structure)   # list of names of coordinate files to begin shooting from
-else:
-    start_name = [initial_structure]
+if not resample:
+    if if_glob:
+        start_name = glob.glob(initial_structure)   # list of names of coordinate files to begin shooting from
+    else:
+        start_name = [initial_structure]
 
-for filename in start_name:
-    if ' ' in filename:
-        sys.exit('Error: one or more input coordinate filenames contains a space character, which is not supported\n'
-                 'This first offending filename found was: ' + filename)
+    for filename in start_name:
+        if ' ' in filename:
+            sys.exit('Error: one or more input coordinate filenames contains a space character, which is not supported\n'
+                     'This first offending filename found was: ' + filename)
 
-if len(start_name) == 0:
-    sys.exit('Error: no initial structure found. Check input options initial_structure and if_glob.')
-for init in start_name:
-    if not os.path.exists(init):
-        sys.exit('Error: could not find initial structure file: ' + init)
-
-if degeneracy > 1:
-    temp = []                   # initialize temporary list to substitute for start_name later
+    if len(start_name) == 0:
+        sys.exit('Error: no initial structure found. Check input options initial_structure and if_glob.')
     for init in start_name:
-        for i in range(degeneracy):
-            shutil.copy(init, init + '_' + str(i+1))
-            temp.append(init + '_' + str(i+1))
-    start_name = temp
+        if not os.path.exists(init):
+            sys.exit('Error: could not find initial structure file: ' + init)
+
+    if degeneracy > 1:
+        temp = []                   # initialize temporary list to substitute for start_name later
+        for init in start_name:
+            for i in range(degeneracy):
+                shutil.copy(init, init + '_' + str(i+1))
+                temp.append(init + '_' + str(i+1))
+        start_name = temp
 
 # Make a working directory
 dirName = working_directory
@@ -897,22 +935,22 @@ elif not overwrite:             # if resample == False and overwrite == False, m
 
 os.chdir(working_directory)     # move to working directory
 
-itinerary = []                  # a list of threads that need running
-running = []                    # a list of currently running threads
-allthreads = []                 # a list of all threads regardless of status
-
-for structure in start_name:                # for all of the initial structures...
-    thread = spawnthread(structure,suffix='1')              # spawn a new thread with the default settings
-    allthreads.append(thread)                               # add it to the list of all threads for bookkeeping
-    thread.last_valid = '0'                                 # so that if the first shooting point does not result in a valid transition path, shooting will begin from the TS guess
-    thread.prmtop = topology                                # set prmtop filename for the thread
-    itinerary.append(thread)                                # submit it to the itinerary
-    shutil.copy(called_path + '/' + structure, './')        # and copy the input structure to the working directory...
-    shutil.copy(called_path + '/' + thread.prmtop, './')    # ... and its little topology file, too!
-    if degeneracy > 1:                                      # if degeneracy > 1, files in start_name were copies...
-        os.remove(called_path + '/' + structure)            # ... delete them to keep the user's space clean!
-
 if not resample:
+    itinerary = []                  # a list of threads that need running
+    running = []                    # a list of currently running threads
+    allthreads = []                 # a list of all threads regardless of status
+
+    for structure in start_name:                # for all of the initial structures...
+        thread = spawnthread(structure,suffix='1')              # spawn a new thread with the default settings
+        allthreads.append(thread)                               # add it to the list of all threads for bookkeeping
+        thread.last_valid = '0'                                 # so that if the first shooting point does not result in a valid transition path, shooting will begin from the TS guess
+        thread.prmtop = topology                                # set prmtop filename for the thread
+        itinerary.append(thread)                                # submit it to the itinerary
+        shutil.copy(called_path + '/' + structure, './')        # and copy the input structure to the working directory...
+        shutil.copy(called_path + '/' + thread.prmtop, './')    # ... and its little topology file, too!
+        if degeneracy > 1:                                      # if degeneracy > 1, files in start_name were copies...
+            os.remove(called_path + '/' + structure)            # ... delete them to keep the user's space clean!
+
     try:
         os.remove('as.log')                 # delete previous run's log
     except OSError:                         # catches error if no previous log file exists
@@ -936,6 +974,7 @@ if resample:                            # if True, this is a resample run, so we
     except OSError:
         sys.exit('Error: could not find as.log in working directory: ' + working_directory)
     logfile_lines = logfile.readlines()
+    logfile.close()
     for line in logfile_lines:                                          # iterate through log file
         if 'finished with fwd trajectory result: ' in line:             # looking for lines with results
             commit = pattern2.findall(line)[0][8:-1]                    # first, identify the commitment flag
@@ -951,6 +990,7 @@ if resample:                            # if True, this is a resample run, so we
                 fakethread.start_name = init_name                       # making a fake thread for candidatevalues
                 fakethread.prmtop = prmtop
                 open('as.out', 'a').write(basin + ' <- ' + candidatevalues(fakethread) + '\n') # todo: test this line of resample
+                open('as.log', 'a').close()
     sys.exit('Resampling complete; written new as.out')
 
 os.makedirs('history')                  # make a new directory to contain the history files of each thread
