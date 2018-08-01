@@ -1,5 +1,7 @@
 #! /usr/bin/env python
 
+# Core aimless_shooting code. Tucker Burgin, 2018
+
 import os
 import subprocess
 import sys
@@ -45,6 +47,141 @@ class Thread:
 
 # Then, define a series of functions to perform the basic tasks of creating batch files, interacting with the batch
 # system, and interpreting/modifying coordinate and trajectory files.
+def handle_groupfile(job_to_add=''):
+    # Routine to handle groupfiles when necessary (i.e., when groupfile > 0). Maintains a list object keeping track of
+    # existing groupfiles and their contents as well as their statuses and ages. This function is called in makebatch()
+    # to return the name of the groupfile that that function should be writing to, and subbatch() redirects here when
+    # groupfile > 0. Finally, it is called at the end of every main_loop loop to update statuses as needed.
+    #
+    # job_to_add is an optional argument; if present, this function appends the name of the job given to the <CONTENTS>
+    # field for the groupfile that it returns. This puts the onus on the code that calls handle_groupfile() to actually
+    # put that job in that groupfile, of course!
+    #
+    # Process flow for this function:
+    #   iterate through existing list of groupfiles as read from groupfile_list
+    #   update statuses as necessary
+    #   submit any of them that have status "construction" and length == groupfile, or age > groupfile_max_delay and length >= 1 (where length means number of lines)
+    #   if the list no longer contains any with status "construction", make a new, blank one and return its name
+    #   otherwise, return the name of the groupfile with status "construction"
+    #
+    # Format of each sublist of groupfile_list:
+    #   [<NAME>, <STATUS>, <CONTENTS>, <TIME>]
+    #       <NAME> is the name of the groupfile
+    #       <STATUS> is any of:
+    #           "construction", meaning this groupfile is the one to add new lines to (only one of these at a time),
+    #           "completed", meaning the groupfile was submitted and has since terminated,
+    #           "processed", meaning the groupfile has been fed through main_loop and followup jobs submitted, or
+    #           a string of numbers indicating a jobid of a currently-running groupfile
+    #       <CONTENTS> is a list of the jobs contained in the groupfile (their (thread.name + '_' + thread.type) values)
+    #       <TIME> is the time in seconds when the groupfile was created
+    #           if the current time - TIME > groupfile_max_delay, then the groupfile is submitted regardless of length
+    #           (assuming it's at least of length 1)
+
+    def new_groupfile(job_to_add_local):
+        # Specialized subroutine to build a new empty groupfile and add its information to the groupfile_list
+        # If a job_to_add is present, add it to the new groupfile_list entry.
+        if groupfile_list:
+            pattern = re.compile('\_[0-9]*')
+            suffix = pattern.findall(groupfile_list[-1][0])[0][1:]  # this gets the suffix of the last groupfile
+            suffix = str(int(suffix) + 1)
+        else:
+            suffix = '1'
+        open('groupfile_' + suffix,'w').close()                     # make a new, empty groupfile
+        groupfile_list.append(['groupfile_' + suffix,'construction',job_to_add_local,time.time()])
+        return 'groupfile_' + suffix
+
+    def sub_groupfile(groupfile_name):
+        # Specialized subroutine to submit a groupfile job as a batch job
+        # Creates a batchfile from the template and submits, returning jobid
+        batch = 'batch_' + batch_system + '_groupfile.tpl'
+        open('as.log', 'a').write('\nWriting groupfile batch file for ' + groupfile_name)
+        open('as.log', 'a').close()
+
+        # This block necessary to submit jobs with one fewer than max groups when "flag" from outer scope is True
+        if flag:
+            groupcount = groupfile - 1
+            this_ppn = int(prod_ppn - (prod_ppn/groupfile))  # remove cores proportional to removed simulations
+        else:
+            groupcount = groupfile
+            this_ppn = prod_ppn
+
+        template = env.get_template(batch)
+        filled = template.render(nodes=prod_nodes, taskspernode=this_ppn, walltime=prod_walltime, solver='sander',
+                                 mem=prod_mem, working_directory=working_directory, groupcount=groupcount,
+                                 groupfile=groupfile_name, name=groupfile_name)
+        with open(groupfile_name + '_groupfile.' + batch_system, 'w') as newfile:
+            newfile.write(filled)
+            newfile.close()
+
+        if batch_system == 'pbs':
+            command = 'qsub ' + groupfile_name + '_groupfile.' + batch_system
+        elif batch_system == 'slurm':
+            command = 'sbatch ' + groupfile_name + '_groupfile.' + batch_system
+        print(command)
+        process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                   stderr=subprocess.STDOUT, close_fds=True, shell=True)
+        output = process.stdout.read()
+        while 'Pbs Server is currently too busy to service this request. Please retry this request.' in str(output):
+            process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                       stderr=subprocess.STDOUT, close_fds=True, shell=True)
+            output = process.stdout.read()
+        if 'Bad UID for job execution MSG=user does not exist in server password file' in str(output):
+            open('as.log', 'a').write('\nWarning: attempted to submit a job, but got error: ' + str(output) + '\n'
+                                      + 'Retrying in one minute...')
+            open('as.log', 'a').close()
+            time.sleep(60)
+            process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                       stderr=subprocess.STDOUT, close_fds=True, shell=True)
+            output = process.stdout.read()
+        pattern = re.compile('[0-9]+')
+        try:
+            return pattern.findall(str(output))[0]
+        except IndexError:
+            sys.exit('Error: unable to submit a batch job: ' + groupfile_name + '_groupfile.' + batch_system +
+                     '. Got message: ' + str(output))
+
+
+    for groupfile_data in groupfile_list:
+        try:                                            # if groupfile was running when this function was last called
+            null = int(groupfile_data[1])               # cast to int only works if status is a jobid
+            # Check queue to see if it's still running
+            # todo: this block of code should probably be a standalone function, as I use it or something very similar in several places
+            user_alias = '$USER'
+            if batch_system == 'pbs':
+                queue_command = 'qselect -u ' + user_alias + ' -s QR'
+            elif batch_system == 'slurm':
+                queue_command = 'squeue -u ' + user_alias
+            process = subprocess.Popen(queue_command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                       close_fds=True, shell=True)
+            output = process.stdout.read()
+            while 'Pbs Server is currently too busy to service this request. Please retry this request.' in str(output):
+                process = subprocess.Popen(queue_command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                           stderr=subprocess.STDOUT,
+                                           close_fds=True, shell=True)
+                output = process.stdout.read()
+
+            if not groupfile_data[1] in str(output):         # all jobs in the groupfile have finished
+                groupfile_data[1] = 'completed'         # update job status
+        except ValueError:
+            if groupfile_data[1] == 'construction':     # groupfile is the one being built
+                # First, check if this groupfile is due to be submitted based on groupfile_max_delay
+                age = time.time() - groupfile_data[3]   # age of groupfile entry
+                length = len(open(groupfile_data[0],'r').readlines())
+                # flag helps us know to submit jobs a little early when there are only prod jobs in the itinerary and
+                # no room for both halves of another prod job in the groupfile todo: won't work with committor analysis
+                flag = (length == groupfile - 1 and not 'init' in [thread.type for thread in itinerary])
+                if length >= 1 and ((age > groupfile_max_delay and groupfile_max_delay > 0) or length == groupfile or flag):
+                    groupfile_data[1] = sub_groupfile(groupfile_data[0])    # submit groupfile with call to sub_groupfile()
+                    return new_groupfile(job_to_add)    # make a new groupfile to return
+                else:
+                    if job_to_add:                      # add the job_to_add to the contents field, if applicable
+                        groupfile_data[2] += job_to_add + ' '
+                    return groupfile_data[0]            # this is the current groupfile and it's not full, so return it
+
+    if not groupfile_list:                          # this is the first call to this function, so no groupfiles exist yet
+        return new_groupfile(job_to_add)            # make a new groupfile to return
+
+
 def makebatch(thread,n_shots=0):
     # Makes batch files for the three jobs that constitute one shooting move, using Jinja2 template filling
     # n_shots and type == committor_analysis are used in rc_eval.py
@@ -56,6 +193,55 @@ def makebatch(thread,n_shots=0):
     if not os.path.exists(home_folder + '/' + 'input_files'):
         sys.exit('Error: could not locate input_files folder: ' + home_folder + '/' + 'input_files\nSee documentation '
                                                                                       'for the \'home_folder\' option.')
+
+    # Append a new line to the current groupfile (this is spiritually similar to building a batch file for jobs that are
+    # submitted individually; the actual batch file to submit the group file is built by handle_groupfile() when ready)
+    # This implementation is ugly because groupfile support was added later in development. If I ever get the chance to
+    # go back through and rewrite this code, this is an opportunity for polish!
+    if groupfile > 0:
+        current_groupfile = handle_groupfile(thread.name + '_' + thread.type)
+        if type == 'init':
+            inp = home_folder + '/input_files/init.in'
+            out = name + '_init.out'
+            top = thread.prmtop
+            inpcrd = thread.start_name
+            rst = name + '_init_fwd.rst'
+            nc = name + '_init.nc'
+            open(current_groupfile, 'a').write('-i ' + inp + ' -o ' + out + ' -p ' + top + ' -c ' + inpcrd + ' -r ' + rst + ' -x ' + nc + '\n')
+            open(current_groupfile, 'a').close()
+        elif type == 'prod':
+            inp = home_folder + '/input_files/prod.in'
+            out = name + '_fwd.out'
+            top = thread.prmtop
+            inpcrd = name + '_init_fwd.rst'
+            rst = name + '_fwd.rst'
+            nc = name + '_fwd.nc'
+            open(current_groupfile, 'a').write('-i ' + inp + ' -o ' + out + ' -p ' + top + ' -c ' + inpcrd + ' -r ' + rst + ' -x ' + nc + '\n')
+            # current_groupfile = handle_groupfile() # uncomment this line to enable splitting the halves of prod jobs up among different groupfiles (remember to comment out the "flag" line in handle_groupfile too)
+            inp = home_folder + '/input_files/prod.in'
+            out = name + '_bwd.out'
+            top = thread.prmtop
+            inpcrd = name + '_init_bwd.rst'
+            rst = name + '_bwd.rst'
+            nc = name + '_bwd.nc'
+            open(current_groupfile, 'a').write('-i ' + inp + ' -o ' + out + ' -p ' + top + ' -c ' + inpcrd + ' -r ' + rst + ' -x ' + nc + '\n')
+            open(current_groupfile, 'a').close()
+        elif type == 'committor_analysis':
+            name = thread.basename
+            for i in range(n_shots):
+                inp = home_folder + '/input_files/committor_analysis.in'
+                out = name + '_ca_' + str(i) + '.out'
+                top = '../' + thread.prmtop
+                inpcrd = '../' + name
+                rst = name + '_ca_' + str(i) + '.rst'
+                nc = name + '_ca_' + str(i) + '.nc'
+                open(current_groupfile, 'a').write('-i ' + inp + ' -o ' + out + ' -p ' + top + ' -c ' + inpcrd + ' -r ' + rst + ' -x ' + nc + '\n')
+                open(current_groupfile, 'a').close()
+                # Since we're adding multiple lines here, we need to check at every iteration if a new groupfile is
+                # required. handle_groupfile() handles this for us neatly.
+                if len(open(current_groupfile, 'r').readlines()) == groupfile:
+                    current_groupfile = handle_groupfile(name + '_ca_' + str(i))
+        return ''   # do not proceed with the remainder of this function
 
     if type == 'init':
         # init batch file
@@ -109,34 +295,45 @@ def makebatch(thread,n_shots=0):
                 newfile.write(filled)
                 newfile.close()
 
+    # This error is obsolete, as unless the code is broken in some way it should be unreachable (job type is not a user-
+    # supplied value)
     else:
         open('as.log', 'a').write('\nAn incorrect job type \"' + type + '\" was passed to makebatch.')
         open('as.log', 'a').close()
         sys.exit('An incorrect job type \"' + type + '\" was passed to makebatch.')
 
 
-def subbatch(thread,direction = '',n_shots=0,logfile=''):
+def subbatch(thread,direction = '',n_shots=0,logfile=''):   # todo: replace system-specific error handling here with more general solution
     # Submits a batch file given by batch and returns its process number as a string
     # n_shots and type == committor_analysis are used in rc_eval.py
     name = thread.name  # just shorthand
 
+    if groupfile > 0:
+        # todo: add support for groupfiles during committor analysis
+        # Usually subbatch() returns a jobid, but that's not appropriate when groupfiles are used, as they submit when
+        # they're full rather than when subbatch is called. If we're using groupfiles, this function is not needed, and
+        # so we simply issue a return statement to break out of it without doing anything.
+        return 'groupfile'
     if direction == 'fwd':
         type = 'fwd'
     elif direction == 'bwd':
         type = 'bwd'
+    elif direction == 'init':
+        type = 'init'
     else:
         type = thread.type
         name = thread.basename
 
     if batch_system == 'pbs':
-        command = 'qsub ' + name + '_' + type + '.' + batch_system
+        command = 'qsub '
     elif batch_system == 'slurm':
-        command = 'sbatch ' + name + '_' + type + '.' + batch_system
+        command = 'sbatch '
     else:
-        open('as.log', 'a').write('\nAn incorrect batch system type \"' + batch_system + '\" was passed to subbatch.')
-        open('as.log', 'a').close()
-        sys.exit('An incorrect batch system type \"' + batch_system + '\" was supplied. Acceptable types are: pbs, slurm')
+        sys.exit('Error: invalid batch_system variable passed')     # this line unreachable if previous testing worked
 
+    command += name + '_' + type + '.' + batch_system
+
+    # todo: clean this up (shouldn't need so much redundant code)
     if type == 'committor_analysis':
         jobids = []
         for i in range(n_shots):
@@ -177,6 +374,15 @@ def subbatch(thread,direction = '',n_shots=0,logfile=''):
         output = process.stdout.read()
         while 'Pbs Server is currently too busy to service this request. Please retry this request.' in str(output):
             process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                       close_fds=True, shell=True)
+            output = process.stdout.read()
+        if 'Bad UID for job execution MSG=user does not exist in server password file' in str(output):
+            open('as.log', 'a').write('\nWarning: attempted to submit a job, but got error: ' + str(output) + '\n'
+                                      + 'Retrying in one minute...')
+            open('as.log', 'a').close()
+            time.sleep(60)
+            process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                       stderr=subprocess.STDOUT,
                                        close_fds=True, shell=True)
             output = process.stdout.read()
         open('as.log', 'a').write('\nBatch system says: ' + str(output))
@@ -412,24 +618,31 @@ def candidatevalues(thread):
     # candidateops list object.
     output = ''
     traj = pytraj.iterload(thread.start_name, thread.prmtop)
-    for index in range(0,len(candidateops[0])):
-        if len(candidateops) == 4:          # candidateops contains dihedrals
-            if candidateops[3][index]:      # if this OP is a dihedral
-                value = pytraj.dihedral(traj,mask=candidateops[0][index] + ' ' + candidateops[1][index] + ' ' + candidateops[2][index] + ' ' + candidateops[3][index])
-            elif candidateops[2][index]:    # if this OP is an angle
-                value = pytraj.angle(traj,mask=candidateops[0][index] + ' ' + candidateops[1][index] + ' ' + candidateops[2][index])
-            else:                           # if this OP is a distance
-                value = pytraj.distance(traj,mask=candidateops[0][index] + ' ' + candidateops[1][index])
-            output += str(value) + ' '
-        elif len(candidateops) == 3:        # candidateops contains angles but not dihedrals
-            if candidateops[2][index]:      # if this OP is an angle
-                value = pytraj.angle(traj,mask=candidateops[0][index] + ' ' + candidateops[1][index] + ' ' + candidateops[2][index])
-            else:                           # if this OP is a distance
-                value = pytraj.distance(traj,mask=candidateops[0][index] + ' ' + candidateops[1][index])
-            output += str(value) + ' '
-        else:                               # candidateops contains only distances
-            value = pytraj.distance(traj,mask=candidateops[0][index] + ' ' + candidateops[1][index])
-            output += str(value) + ' '
+
+    # Implimentation of explicit, to directly interpret user-supplied OPs
+    if literal_ops:
+        for op in candidateops:
+            output += str(eval(op)) + ' '
+
+    else:
+        for index in range(0,len(candidateops[0])):
+            if len(candidateops) == 4:          # candidateops contains dihedrals
+                if candidateops[3][index]:      # if this OP is a dihedral
+                    value = pytraj.dihedral(traj,mask=candidateops[0][index] + ' ' + candidateops[1][index] + ' ' + candidateops[2][index] + ' ' + candidateops[3][index])[0]
+                elif candidateops[2][index]:    # if this OP is an angle
+                    value = pytraj.angle(traj,mask=candidateops[0][index] + ' ' + candidateops[1][index] + ' ' + candidateops[2][index])[0]
+                else:                           # if this OP is a distance
+                    value = pytraj.distance(traj,mask=candidateops[0][index] + ' ' + candidateops[1][index])[0]
+                output += str(value) + ' '
+            elif len(candidateops) == 3:        # candidateops contains angles but not dihedrals
+                if candidateops[2][index]:      # if this OP is an angle
+                    value = pytraj.angle(traj,mask=candidateops[0][index] + ' ' + candidateops[1][index] + ' ' + candidateops[2][index])[0]
+                else:                           # if this OP is a distance
+                    value = pytraj.distance(traj,mask=candidateops[0][index] + ' ' + candidateops[1][index])[0]
+                output += str(value) + ' '
+            else:                               # candidateops contains only distances
+                value = pytraj.distance(traj,mask=candidateops[0][index] + ' ' + candidateops[1][index])[0]
+                output += str(value) + ' '
 
     del traj  # to ensure cleanup of iterload object
 
@@ -485,11 +698,11 @@ def main_loop():
         queue_command = 'squeue -u ' + user_alias
         cancel_command = 'scancel'
 
-    global itinerary
-    global running
+    global itinerary                # get global variables from outer scope so they are accessible by main_loop()
+    global running                  # honestly I don't know why this is necessary, but removing these lines breaks it
     global allthreads
 
-    while itinerary or running:  # while either list has contents...
+    while itinerary or running:     # while either list has contents...
         itin_names = [thread.name + '_' + thread.type for thread in itinerary]
         run_names = [thread.name + '_' + thread.type for thread in running]
         open('as.log', 'a').write(
@@ -498,15 +711,15 @@ def main_loop():
         open('as.log', 'a').close()
 
         index = -1  # set place in itinerary to -1
-        for thread in itinerary:  # for each thread that's ready for its next step...
-            index += 1  # increment place in itinerary
-            makebatch(thread)  # make the necessary batch file
+        for thread in itinerary:    # for each thread that's ready for its next step...
+            index += 1              # increment place in itinerary
+            makebatch(thread)       # make the necessary batch file
             if thread.type == 'init':
-                thread.jobid1 = subbatch(thread)  # submit that batch file and collect its jobID into thread
+                thread.jobid1 = subbatch(thread, 'init')    # submit that batch file and collect its jobID into thread
             else:
                 thread.jobid1 = subbatch(thread, 'fwd')
                 thread.jobid2 = subbatch(thread, 'bwd')
-            running.append(itinerary[index])  # move element of itinerary into next position in running
+            running.append(itinerary[index])                # move element of itinerary into next position in running
 
         itinerary = []  # empty itinerary
 
@@ -515,7 +728,65 @@ def main_loop():
         open('as.log', 'a').write('\nCurrent status...\n Itinerary: ' + str(itin_names) + '\n Running: ' + str(run_names))
         open('as.log', 'a').close()
 
-        while not itinerary:  # while itinerary is empty...
+        # Once again, the fact that groupfile support was only added late in development means that this is a bit ugly.
+        # This while loop serves the same purpose as the one directly following it, but works in terms of groupfile jobs
+        # instead of individual batch jobs. I can't think of an easy way to unify them, but this is an opportunity for
+        # polish if I ever rewrite this software from the ground up.
+        #
+        # I'm not implementing flexible-length shooting for groupfiles, since it should be exceedingly rare anyway for
+        # every job in a groupfile to be committed substantially before the job is ending anyway, assuming the user
+        # chooses prod_walltime judiciously.
+        while groupfile > 0 and not itinerary:
+            handle_groupfile()                          # update groupfile_list
+            for groupfile_data in groupfile_list:       # for each list element [<NAME>, <STATUS>, <CONTENTS>, <TIME>]
+                if groupfile_data[1] == 'completed':    # if this groupfile task has status "completed"
+                    for string in groupfile_data[2].split(' '):     # iterate through thread.name + '_' + thread.type of jobs in groupfile
+                        if 'init' in string:                        # do this for all init jobs in this groupfile
+                            # Need to get ahold of the thread this init job represents...
+                            for thread in running:       # can't say this is surely the best way to do this...
+                                if thread.name in string:
+                                    try:
+                                        revvels(thread)     # make the initial .rst file for the bwd trajectory
+                                        itinerary.append(thread)
+                                        thread.type = 'prod'
+                                        open('as.log', 'a').write('\nJob completed: ' + thread.name + '_init\nAdding ' + thread.name + ' forward and backward jobs to itinerary')
+                                        open('as.log', 'a').close()
+                                    except FileNotFoundError:   # when revvels can't find the init .rst file
+                                        open('as.log', 'a').write('\nThread ' + thread.basename + ' crashed: initialization did not produce a restart file.')
+                                        if restart_on_crash == False:
+                                            open('as.log', 'a').write('\nrestart_on_crash = False; thread will not restart')
+                                            open('as.log', 'a').close()
+                                        elif restart_on_crash == True:
+                                            open('as.log', 'a').write('\nrestart_on_crash = True; resubmitting thread to itinerary')
+                                            open('as.log', 'a').close()
+                                            itinerary.append(thread)
+                                            thread.type = 'init'
+                                    running.remove(thread)
+                        if 'prod' in string:                        # do this for all prod jobs in this groupfile
+                            # todo: figure out how to tolerate only one of the halves of a prod job showing up in a given groupfile
+                            # Need to get ahold of the thread this prod job represents...
+                            for thread in running:       # can't say this is surely the best way to do this...
+                                if thread.name in string:
+                                    thread.commit1 = checkcommit(thread, 'fwd')  # check for commitment in fwd job
+                                    if not thread.commit1:
+                                        thread.commit1 = 'fail'
+                                    thread.commit2 = checkcommit(thread, 'bwd')  # check for commitment in bwd job
+                                    if not thread.commit2:
+                                        thread.commit2 = 'fail'
+                                    running.remove(thread)
+                                    thread.failcount += 1       # increment fails in a row regardless of outcome
+                                    if thread.commit1 != thread.commit2 and thread.commit1 != 'fail' and thread.commit2 != 'fail':  # valid transition path, update 'last_valid' attribute
+                                        thread.last_valid = thread.suffix
+                                        thread.accept_moves += 1
+                                        thread.failcount = 0    # reset fail count to zero if this move was accepted
+                                    cleanthread(thread)
+                    groupfile_data[1] = 'processed'     # to indicate that this completed groupfile job has been handled
+
+            pickle.dump(allthreads, open('restart.pkl', 'wb'))  # dump information required to restart aimless_shooting
+            if not itinerary:
+                time.sleep(60)                          # delay 60 seconds before checking for job status again
+
+        while groupfile == 0 and not itinerary:     # while itinerary is empty and we're not in groupfile mode...
             process = subprocess.Popen(queue_command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                                        stderr=subprocess.STDOUT, close_fds=True,
                                        shell=True)  # check list of currently running jobs
@@ -539,8 +810,6 @@ def main_loop():
                             open('as.log', 'a').write(
                                 '\nJob completed: ' + thread.name + '_init\nAdding ' + thread.name + ' forward and backward jobs to itinerary')
                             open('as.log', 'a').close()
-                            del running[index]
-                            index -= 1  # to keep index on track after deleting an entry
                         except FileNotFoundError:  # when revvels can't find the init .rst file
                             open('as.log', 'a').write('\nThread ' + thread.basename + ' crashed: initialization did not produce a restart file.')
                             if restart_on_crash == False:
@@ -551,8 +820,8 @@ def main_loop():
                                 open('as.log', 'a').close()
                                 itinerary.append(running[index])
                                 thread.type = 'init'
-                            del running[index]
-                            index -= 1  # to keep index on track after deleting an entry
+                        del running[index]
+                        index -= 1  # to keep index on track after deleting an entry
                     elif thread.type == 'prod':
                         # fwd trajectory exited before passing a commitor test, either walltime or other error
                         thread.commit1 = checkcommit(thread, 'fwd')  # check one last time
@@ -594,16 +863,42 @@ def main_loop():
                         cleanthread(thread)
                 index += 1
 
-            pickle.dump(allthreads, open('restart.pkl', 'wb'))
-            time.sleep(60)  # Delay 60 seconds before checking for job status again
+            pickle.dump(allthreads, open('restart.pkl', 'wb'))  # dump information required to restart aimless_shooting
+            if not itinerary:
+                time.sleep(60)                                  # delay 60 seconds before checking for job status again
 
         if not itinerary and not running:
             acceptances = [(100 * thread.accept_moves / thread.total_moves) for thread in allthreads]
-            max_of_accepts = max(acceptances)
-            open('as.log', 'a').write('\nItinerary and running lists are empty.\nAimless shooting is complete! The highest acceptance ratio for any thread was ' + max_of_accepts + '%.\nSee as.out in the working directory for results.')
+            open('as.log', 'a').write('\nItinerary and running lists are empty.\nAimless shooting is complete! '
+                                      'The highest acceptance ratio for any thread was ' + max(acceptances) + '%.'
+                                      '\nSee as.out in the working directory for results.')
             open('as.log', 'a').close()
+            # todo: add call to LMAX here
             break
 
+# update_progress() : Displays or updates a console progress bar
+## Accepts a float between 0 and 1. Any int will be converted to a float.
+## A value under 0 represents a 'halt'.
+## A value at 1 or bigger represents 100%
+def update_progress(progress, message='Progress'):
+    barLength = 10  # Modify this to change the length of the progress bar
+    status = ""
+    if isinstance(progress, int):
+        progress = float(progress)
+    if not isinstance(progress, float):
+        progress = 0
+        status = "error: progress var must be float\r\n"
+    if progress < 0:
+        progress = 0
+        status = "Halt...\r\n"
+    if progress >= 1:
+        progress = 1
+        status = "Done!\r\n"
+    block = int(round(barLength * progress))
+    text = "\r" + message + ": [{0}] {1}% {2}".format(
+        "#" * block + "-" * (barLength - block), round(progress * 100, 2), status)
+    sys.stdout.write(text)
+    sys.stdout.flush()
 
 # Get directory from which the code was called
 called_path = os.getcwd()
@@ -658,6 +953,10 @@ commit_define_fwd = []                          # Defines commitment to fwd basi
 commit_define_bwd = []                          # Defines commitment to bwd basin
 committor_analysis = ''                         # Variables to pass into committor analysis.
 restart = False                                 # Whether or not to restart an old AS run located in working_directory
+groupfile = 0                                   # Number of jobs to submit in one groupfile, if necessary
+groupfile_max_delay = 3600                      # Time in seconds to allow groupfiles to remain in construction before submitting
+# todo: add option for solver other than sander.MPI (edit templates to accomodate arbitrary solver name including .MPI if desired)
+# todo: (ambitious?) add support for arbitrary MD engine? I'm unsure whether I think this task is trivial or monumental
 
 if type(working_directory) == list:             # handles inconsistency in format when the default value is used vs. when a value is given
     working_directory = working_directory[0]
@@ -709,11 +1008,28 @@ for entry in input_file_lines:
         if len(commit_define_bwd) < 4:
             sys.exit('Error: commit_bwd must have four rows')
     elif entry[0] == 'candidate_op':
-        if ' ' in entry[2]:
-            sys.exit('Error: candidate_op cannot contain whitespace (\' \') characters')
-        candidateops = ast.literal_eval(entry[2])
-        if len(candidateops) < 2:
-            sys.exit('Error: candidate_op must have at least two rows')
+        literal_ops = False        # default setting
+        try:
+            null = isinstance(ast.literal_eval(entry[2])[0],list)
+        except SyntaxError:
+            literal_ops = True     # not a nested list, implies that this is an explicit definition
+            full_entry = ''                         # string to write all the input into
+            for index in range(2,len(entry)):       # full input is contained in entry[index] for all index > 2
+                full_entry += entry[index] + ' '    # add entry[index] element-wise, followed by a space
+            full_entry = full_entry[:-1]            # remove trailing ' '
+            candidateops = full_entry.split(';')    # each entry should be a string interpretable as an OP
+        if literal_ops == False:   # only do this stuff if the OPs are not given literally
+            if ' ' in entry[2]:
+                sys.exit('Error: candidate_op cannot contain whitespace (\' \') characters')
+            candidateops = ast.literal_eval(entry[2])
+            if len(candidateops) < 2:
+                sys.exit('Error: candidate_op must have length >= 2')
+            if not isinstance(candidateops[0], list) and not len(candidateops) == 2:
+                sys.exit('Error: if defining candidate_op implicitly, exactly two inputs in a list are required')
+            if not isinstance(candidateops[0], list) and not isinstance(candidateops[0], str):
+                sys.exit('Error: if defining candidate_op implicitly, the first entry must be a string (including quotes)')
+            if not isinstance(candidateops[0], list) and not isinstance(candidateops[1], str):
+                sys.exit('Error: if defining candidate_op implicitly, the second entry must be a string (including quotes)')
     elif entry[0] == 'restart_on_crash':
         if not entry[2].lower() == 'true' and not entry[2].lower() == 'false':
             sys.exit('Error: restart_on_crash must be either True or False')
@@ -832,10 +1148,112 @@ for entry in input_file_lines:
         if not entry[2].lower() == 'true' and not entry[2].lower() == 'false':
             sys.exit('Error: restart must be either True or False')
         restart = str2bool(entry[2])
+    elif entry[0] == 'groupfile':
+        try:
+            if int(entry[2]) < 0:
+                sys.exit('Error: groupfile must be greater than or equal to 0')
+        except ValueError:
+            sys.exit('Error: groupfile must be an integer')
+        if isinstance(ast.literal_eval(entry[2]), float):
+            print('Warning: groupfile was given as a float (' + entry[2] + '), but should be an integer. Rounding down '
+                                                                           'to ' + int(entry[2]) + ' and proceeding.')
+        groupfile = int(entry[2])
+        groupfile_list = []  # initialize list of groupfiles
+    elif entry[0] == 'groupfile_max_delay':
+        try:
+            if int(entry[2]) < 0:
+                sys.exit('Error: groupfile_max_delay must be greater than or equal to 0')
+        except ValueError:
+            sys.exit('Error: groupfile_max_delay must be an integer')
+        if isinstance(ast.literal_eval(entry[2]),float):
+            print('Warning: groupfile_max_delay was given as a float (' + entry[2] + '), but should be an integer. '
+                                                            'Rounding down to ' + int(entry[2]) + ' and proceeding.')
+        groupfile_max_delay = int(entry[2])
 
 # Remove trailing '/' from working_directory for compatibility with my code
 if working_directory[-1] == '/':
     working_directory = working_directory[:-1]
+
+# todo: ### Call to LMAX here (asusming LMAX input file option is supplied) ###
+# Nothing required for this, just put a call to it inside an "if" statement checking for an option in the input file
+# that says "I'm doing LMAX". I'll handle that.
+# LMAX can make its own output file(s), and it should write them to a directory passed in as a string here.
+
+# Check if candidate_op is given explicitly or as [mask, coordinates], and if the latter, build the explicit form
+if not isinstance(candidateops[0],list) and not literal_ops:
+    try:
+        traj = pytraj.iterload(candidateops[1], topology)
+    except RuntimeError:
+        sys.exit('Error: unable to load coordinate file ' + candidateops[1] + ' with topology ' + topology)
+    traj.top.set_reference(traj[0])         # set reference frame to first frame
+    atom_indices = list(pytraj.select(candidateops[0],traj.top))
+    if not atom_indices:                    # if distance = 0 or if there's a formatting error
+        sys.exit('Error: found no atoms matching ' + candidateops[0] + ' in file ' + candidateops[1]
+                 + '. This may indicate an issue with the format of the candidate_op option!')
+    elif len(atom_indices) == 1:            # if formatted correctly but only matches self
+        sys.exit('Error: mask ' + candidateops[0] + ' with file ' + candidateops[1] + ' only matches one atom.'
+                 + ' Cannot produce any order parameters!')
+
+    # Super-ugly nested loops to build every combination of indices...
+    temp_ops = [[],[],[],[]]                # temporary list to append candidate ops to as they're built
+    count = 0
+    for index in atom_indices:
+        count += 1
+        update_progress(count/len(atom_indices), 'Building all possible order parameters using atoms matching ' +
+                        candidateops[1] + ' with file ' + candidateops[0])
+        for second_index in atom_indices:   # second-order connections (distances)
+            if not second_index == index:
+                temp_ops[0].append('@' + str(index))
+                temp_ops[1].append('@' + str(second_index))
+                temp_ops[2].append('')
+                temp_ops[3].append('')
+                for third_index in atom_indices:
+                    if not index == third_index and not second_index == third_index:
+                        temp_ops[0].append('@' + str(index))
+                        temp_ops[1].append('@' + str(second_index))
+                        temp_ops[2].append('@' + str(third_index))
+                        temp_ops[3].append('')
+                        # Temporarily commented out to omit dihedrals while we develop LMAX code to handle huge numbers of OPs
+                        # for fourth_index in atom_indices:
+                        #     if not index == fourth_index and not second_index == fourth_index and not third_index == fourth_index:
+                        #         temp_ops[0].append('@' + str(index))
+                        #         temp_ops[1].append('@' + str(second_index))
+                        #         temp_ops[2].append('@' + str(third_index))
+                        #         temp_ops[3].append('@' + str(fourth_index))
+
+    # Then go back through and remove redundant OPs...
+    # For some reason this takes much longer than the above block. Reading temp_ops must be much slower than writing?
+    position = 0
+    count = -1
+    total_iters = len(temp_ops[0])
+    mirrors_list = []                       # list containing mirrors of OP definitions
+    # If an OP is already in mirrors_list, it's deleted from temp_ops; if not, its mirror is added to temp_ops
+    while position < len(temp_ops[0]):
+        count += 1
+        update_progress(count/total_iters, 'Removing redundant coordinates')
+        one = temp_ops[0][position]
+        two = temp_ops[1][position]
+        three = temp_ops[2][position]
+        four = temp_ops[3][position]
+        if (four and [one,two,three,four] in mirrors_list)\
+                or (three and not four and [one,two,three] in mirrors_list)\
+                or (not three and not four and [one,two] in mirrors_list):
+            del temp_ops[0][position]
+            del temp_ops[1][position]
+            del temp_ops[2][position]
+            del temp_ops[3][position]
+            position -= 1
+        elif four:
+            mirrors_list.append([four,three,two,one])
+        elif three:
+            mirrors_list.append([three,two,one])
+        else:
+            mirrors_list.append([two,one])
+        position += 1
+
+    candidateops = temp_ops
+    print('\nThe finalized order parameter definition is: ' + str(candidateops)) # todo: this is unwieldy, integrate with LMAX and just have it spit out the important ones!
+
 
 # Initialize jinja2 environment for filling out templates
 if os.path.exists(home_folder + '/' + 'templates'):
@@ -843,8 +1261,7 @@ if os.path.exists(home_folder + '/' + 'templates'):
         loader=FileSystemLoader(home_folder + '/' + 'templates'),
     )
 else:
-    sys.exit(
-        'Error: could not locate templates folder: ' + home_folder + '/' + 'templates\nSee documentation for the '
+    sys.exit('Error: could not locate templates folder: ' + home_folder + '/' + 'templates\nSee documentation for the '
                                                                                '\'home_folder\' option.')
 
 # Return an error and exit if the input file is missing entries for non-optional inputs.
@@ -855,6 +1272,7 @@ if 'commit_bwd' not in [entry[0] for entry in input_file_lines] and not resample
 if 'candidate_op' not in [entry[0] for entry in input_file_lines]:
     sys.exit('Error: input file is missing entry for candidate_op, which is non-optional')
 
+# Check for incompatible options and return helpful error message if a conflict is found
 if restart and (resample or rc_definition or committor_analysis):
     problem = ''
     if resample:
@@ -884,7 +1302,7 @@ elif restart:
     sys.exit()
 
 if rc_definition and not committor_analysis:
-    rc_eval.return_rcs(candidateops,rc_definition,working_directory,topology,rc_minmax)
+    rc_eval.return_rcs(candidateops,rc_definition,working_directory,topology,rc_minmax,literal_ops)
     sys.exit('\nCompleted reaction coordinate evaluation run. See ' + working_directory + '/rc_eval.out for results.')
 elif rc_definition and committor_analysis:
     rc_eval.committor_analysis(candidateops,rc_definition,working_directory,topology,rc_minmax,committor_analysis,batch_system,commit_define_fwd,commit_define_bwd)
@@ -966,6 +1384,7 @@ except OSError:                         # catches error if no previous output fi
 with open('as.out', 'w+') as newout:    # make a new output file
     newout.close()
 
+# Implementation of resample
 if resample:                            # if True, this is a resample run, so we'll head off the simulations steps here
     pattern = re.compile('\ .*\ finished')                              # pattern to find job name
     pattern2 = re.compile('result:\ [a-z]*\ ')                          # pattern for basin commitment flag
@@ -975,6 +1394,7 @@ if resample:                            # if True, this is a resample run, so we
         sys.exit('Error: could not find as.log in working directory: ' + working_directory)
     logfile_lines = logfile.readlines()
     logfile.close()
+    count = 0
     for line in logfile_lines:                                          # iterate through log file
         if 'finished with fwd trajectory result: ' in line:             # looking for lines with results
             commit = pattern2.findall(line)[0][8:-1]                    # first, identify the commitment flag
@@ -989,8 +1409,11 @@ if resample:                            # if True, this is a resample run, so we
                 fakethread = Thread()
                 fakethread.start_name = init_name                       # making a fake thread for candidatevalues
                 fakethread.prmtop = prmtop
-                open('as.out', 'a').write(basin + ' <- ' + candidatevalues(fakethread) + '\n') # todo: test this line of resample
+                open('as.out', 'a').write(basin + ' <- ' + candidatevalues(fakethread) + '\n')
                 open('as.log', 'a').close()
+        count += 1
+        update_progress(count / len(logfile_lines), 'Resampling by searching through logfile')
+    # todo: add call to LMAX here as well
     sys.exit('Resampling complete; written new as.out')
 
 os.makedirs('history')                  # make a new directory to contain the history files of each thread
