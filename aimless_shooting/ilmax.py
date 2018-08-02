@@ -14,6 +14,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from statsmodels.base.model import GenericLikelihoodModel
 import argparse
+import time
+# from sympy import Matrix
+# from sympy import lambdify
 import warnings
 
 
@@ -100,7 +103,7 @@ def parseData(lines, data):
     return data
 
 
-def threadedILMax(exog, endog,                      # currently has no support for passing **kwds to ILMax
+def threadedILMax(exog, endog,                      # TODO currently has no support for passing **kwds to ILMax
                   num_A_outcomes, num_B_outcomes,
                   num_q_params, num_qdot_params,
                   method,
@@ -118,6 +121,10 @@ def threadedILMax(exog, endog,                      # currently has no support f
     :param kwds: 
     :return: 
     '''
+    expected_rank = num_q_params + num_qdot_params
+    actual_rank = exog.rank()
+
+    # assert(exog.rank() == num_q_params + num_qdot_params)
 
     ilmax = ILMax(exog=exog, endog=endog,           # inertial likelihood maximization for current model
                   num_A_outcomes=num_A_outcomes,
@@ -135,7 +142,7 @@ def threadedILMax(exog, endog,                      # currently has no support f
     # BIC and AIC are used to determine if a model can be reduced
     # they will typically change in the same way
     BIC = ilmax_fit.bic
-    AIC = ilmax_fit.aic                              #unused currently
+    AIC = ilmax_fit.aic                              # TODO unused currently
 
     results_queue.put((param, BIC))
     return (param, BIC)
@@ -149,7 +156,8 @@ class ILMaxModel:
         :param kwds: additional keywords to be passed to GenericLikelihoodModel superclass
         '''
 
-        self.candidate_params = []      # candidate q parameters that will iteratively removed to test if model can be reduced
+        self.candidate_params = []      # candidate q parameters that will iteratively
+                                        # be removed to test if model can be reduced
                                         # a model can be reduced if its BIC is lower than the best model's BIC
 
         outcome_file = open(outcome_filename, 'r')
@@ -171,6 +179,23 @@ class ILMaxModel:
 
         self.A_data = A_data
         self.B_data = B_data
+
+        # TODO implement this somewhere else more fitting
+        # # Check for and remove duplicate columns
+        # del_list = []
+        #
+        # for i in range(len(self.A_data)):
+        #     j = i + 1
+        #     while j < len(self.A_data):
+        #         if self.A_data[i] == self.A_data[j] and self.B_data[i] == self.B_data[j]:
+        #             del_list.append(j)
+        #         j += 1
+        #
+        # i = len(del_list) - 1
+        # while i >= 0:
+        #     self.A_data.delitem(del_list[i])
+        #     self.B_data.delitem(del_list[i])
+        #     i -= 1
 
         self.candidate_params = np.arange(-1, num_q_params)     # [ -1, 0, 1, ..., num_q_params - 1 ]
 
@@ -348,6 +373,17 @@ class ILMax(GenericLikelihoodModel):
         self.num_qdot_params = num_qdot_params
         super(ILMax, self).__init__(endog, exog, **kwds)
 
+        # TODO add a check that all columns are linearly independent
+        # TODO and remove columns which aren't independent
+        # rank = np.linalg.matrix_rank(self.exog)
+        # expected_rank = num_q_params + num_qdot_params
+        #
+        # matrix = Matrix(self.exog)
+        # rref_tuple = matrix.rref()
+        #
+        # rref = rref_tuple[0].tolist()
+        # assert(rank == expected_rank)
+
     def loglike(self, params):
         '''
         Eqn 21 of PAPER_LINK
@@ -369,6 +405,11 @@ class ILMax(GenericLikelihoodModel):
         return sum
 
     def fit(self, start_params=None, method='bfgs', maxiter=10000, maxfun=5000, **kwds):
+        # TODO figure out better way to do this
+        # Currently maxiter and maxfun are functions of the parameter space
+        maxiter *= self.num_q_params
+        maxfun *= self.num_q_params
+
         # we have one additional parameter and we need to add it for summary
         self.exog_names.insert(0, 'alpha0')
         if start_params == None:
@@ -376,7 +417,7 @@ class ILMax(GenericLikelihoodModel):
             start_params = np.ones(self.exog.shape[1] + 1)
 
             for i in range(len(start_params)):          # divide by the number of observations to ensure the sum is < 1
-                start_params[i] /= len(self.exog)       # prevents potential log(0) error in loglike()
+                start_params[i] /= (self.exog.shape[1] + 1)       # prevents potential log(0) error in loglike()
 
         return super(ILMax, self).fit(start_params=start_params, method=method,
                                      maxiter=maxiter, maxfun=maxfun,
@@ -465,17 +506,25 @@ def plot_thetaB_sigmoid(a_thetaB, b_thetaB, bin_width=0.1, title="UNTITLED"):
     plt.show()
 
 def main():
+    start_time = time.time()
+
     # Parse arguments from command line using argparse
+    # TODO replace placeholder
     parser = argparse.ArgumentParser(description='PLACEHOLDER')
     parser.add_argument('-k', '--k_best', type=int, default=None,
                         help='set the desired model OP dimensionality (expects int)\n'
                              'NOTE: not setting this will skip the model reduction step,\n'
                              'greatly reducing computation time for systems with many OPs')
+    parser.add_argument('-m', '--method', type=str, default="lbfgs",
+                        help='set desired optimization method')
     parser.add_argument('-i', '--inputfile', type=str,
-                        help='input filename (expects *.txt)', required=True)  #CHANGE TO NOT BE REQUIRED?
+                        help='input filename (expects *.txt)', required=True)  # TODO CHANGE TO NOT BE REQUIRED?
     args = parser.parse_args()
 
-    ILMaxModel(k_best=args.k_best, outcome_filename=args.inputfile)
+    ILMaxModel(k_best=args.k_best, outcome_filename=args.inputfile, method=args.method)
+
+    # Program's execution time
+    print("Executed in " + str(time.time() - start_time) + "s")
 
 if __name__ == "__main__":
     # execute only if run as a script
