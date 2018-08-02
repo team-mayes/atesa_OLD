@@ -18,7 +18,7 @@ import subprocess
 import time
 
 
-def return_rcs(candidateops,rc_definition,working_directory,prmtop,rc_minmax):
+def return_rcs(candidateops,rc_definition,working_directory,prmtop,rc_minmax,literal_ops=False):
     # First, copy the definition of candidatevalues from aimless_shooting.py, modified to be called with a pytraj
     # trajectory object (or really a single frame) rather than with a thread object.
     def candidatevalues(coord_file, index):
@@ -26,26 +26,30 @@ def return_rcs(candidateops,rc_definition,working_directory,prmtop,rc_minmax):
         # reduced based on the contents of rc_minmax
         traj = pytraj.iterload(coord_file, prmtop)
 
-        if len(candidateops) == 4:  # candidateops contains dihedrals
-            if candidateops[3][index]:  # if this OP is a dihedral
-                value = pytraj.dihedral(traj, mask=candidateops[0][index] + ' ' + candidateops[1][index] + ' ' +
-                                                   candidateops[2][index] + ' ' + candidateops[3][index])
-            elif candidateops[2][index]:  # if this OP is an angle
-                value = pytraj.angle(traj, mask=candidateops[0][index] + ' ' + candidateops[1][index] + ' ' +
-                                                candidateops[2][index])
-            else:  # if this OP is a distance
+        if literal_ops:
+            output = float(eval(candidateops[index]))
+
+        else:
+            if len(candidateops) == 4:  # candidateops contains dihedrals
+                if candidateops[3][index]:  # if this OP is a dihedral
+                    value = pytraj.dihedral(traj, mask=candidateops[0][index] + ' ' + candidateops[1][index] + ' ' +
+                                                       candidateops[2][index] + ' ' + candidateops[3][index])
+                elif candidateops[2][index]:  # if this OP is an angle
+                    value = pytraj.angle(traj, mask=candidateops[0][index] + ' ' + candidateops[1][index] + ' ' +
+                                                    candidateops[2][index])
+                else:  # if this OP is a distance
+                    value = pytraj.distance(traj, mask=candidateops[0][index] + ' ' + candidateops[1][index])
+                output = float(value)
+            elif len(candidateops) == 3:  # candidateops contains angles but not dihedrals
+                if candidateops[2][index]:  # if this OP is an angle
+                    value = pytraj.angle(traj, mask=candidateops[0][index] + ' ' + candidateops[1][index] + ' ' +
+                                                    candidateops[2][index])
+                else:  # if this OP is a distance
+                    value = pytraj.distance(traj, mask=candidateops[0][index] + ' ' + candidateops[1][index])
+                output = float(value)
+            else:  # candidateops contains only distances
                 value = pytraj.distance(traj, mask=candidateops[0][index] + ' ' + candidateops[1][index])
-            output = value
-        elif len(candidateops) == 3:  # candidateops contains angles but not dihedrals
-            if candidateops[2][index]:  # if this OP is an angle
-                value = pytraj.angle(traj, mask=candidateops[0][index] + ' ' + candidateops[1][index] + ' ' +
-                                                candidateops[2][index])
-            else:  # if this OP is a distance
-                value = pytraj.distance(traj, mask=candidateops[0][index] + ' ' + candidateops[1][index])
-            output = value
-        else:  # candidateops contains only distances
-            value = pytraj.distance(traj, mask=candidateops[0][index] + ' ' + candidateops[1][index])
-            output = value
+                output = float(value)
 
         # Before returning the result, we want to convert to a reduced variable z = (r-rmin)/(rmax-rmin)
         if rc_minmax:
@@ -55,6 +59,8 @@ def return_rcs(candidateops,rc_definition,working_directory,prmtop,rc_minmax):
             except IndexError:                                          # if there's no entry at all
                 sys.exit('\nError: rc_definition contains reference to OP' + str(index + 1) + ' without a corresponding entry in rc_minmax')
             output = (output - rc_minmax[0][index])/(rc_minmax[1][index] - rc_minmax[0][index])
+            if not -0.01 <= output <= 1.01:
+                sys.exit('\nError: reduced variable at index ' + str(index) + ' is not between 0 and 1 (value is ' + str(output) + '). Check that rc_minmax is correct.')
 
         return output
 
@@ -98,7 +104,7 @@ def return_rcs(candidateops,rc_definition,working_directory,prmtop,rc_minmax):
         update_progress(index / len(filelist))
         results = sorted(results,key=lambda x: abs(x[0]))
         for result in results:
-            file.write(result[1] + ': ' + str(result[0][0]) + '\n')
+            file.write(result[1] + ': ' + str(result[0]) + '\n')
         file.close()
 
 
