@@ -15,8 +15,8 @@ import matplotlib.pyplot as plt
 from statsmodels.base.model import GenericLikelihoodModel
 import argparse
 import time
-# from sympy import Matrix
-# from sympy import lambdify
+from sympy import Matrix
+from sympy import lambdify
 import warnings
 
 
@@ -121,10 +121,6 @@ def threadedILMax(exog, endog,                      # TODO currently has no supp
     :param kwds: 
     :return: 
     '''
-    expected_rank = num_q_params + num_qdot_params
-    actual_rank = exog.rank()
-
-    # assert(exog.rank() == num_q_params + num_qdot_params)
 
     ilmax = ILMax(exog=exog, endog=endog,           # inertial likelihood maximization for current model
                   num_A_outcomes=num_A_outcomes,
@@ -133,7 +129,9 @@ def threadedILMax(exog, endog,                      # TODO currently has no supp
                   num_qdot_params=num_qdot_params,
                   **kwds)
 
-    ilmax_fit = ilmax.fit(method=method)
+    # start_params = np.random.uniform(0.01,0.99,num_q_params+num_qdot_params+1)
+
+    ilmax_fit = ilmax.fit(method=method)#, start_params=start_params)
 
     print('\n', ilmax_fit.params)                   # output for current iteration's model
     print(ilmax_fit.summary())
@@ -311,28 +309,29 @@ class ILMaxModel:
         print(k_best_ilmax_fit.summary())
         print(k_best_ilmax_fit.cov_params(), '\n')
 
-    def get_outcome_thetaB(self, outcomes):
-        '''
-        reaction coordinate from thetaB for outcomes
-        
-        :param outcomes: 
-        :return: 
-        '''
-        outcome_thetaB = []
-
-        outcome_data = [[] for x in range(len(outcomes[0]))]
-
-        # append outcome observations
-        for i in range(len(outcomes[0])):
-            for j in range(len(outcomes)):
-                # if the current parameter is significant
-                if j not in self.excluded_params:
-                    outcome_data[i].append(outcomes[j][i])
-
-        for i in range(len(outcome_data)):
-            outcome_thetaB.append(thetaB(outcome_data[i], self.best_model_fit.params))
-
-        return outcome_thetaB
+    # # TODO outdated
+    # def get_outcome_thetaB(self, outcomes):
+    #     '''
+    #     reaction coordinate from thetaB for outcomes
+    #
+    #     :param outcomes:
+    #     :return:
+    #     '''
+    #     outcome_thetaB = []
+    #
+    #     outcome_data = [[] for x in range(len(outcomes[0]))]
+    #
+    #     # append outcome observations
+    #     for i in range(len(outcomes[0])):
+    #         for j in range(len(outcomes)):
+    #             # if the current parameter is significant
+    #             if j not in self.excluded_params:
+    #                 outcome_data[i].append(outcomes[j][i])
+    #
+    #     for i in range(len(outcome_data)):
+    #         outcome_thetaB.append(thetaB(outcome_data[i], self.best_model_fit.params))
+    #
+    #     return outcome_thetaB
 
 def thetaB(exog_i, params):
     '''
@@ -375,14 +374,15 @@ class ILMax(GenericLikelihoodModel):
 
         # TODO add a check that all columns are linearly independent
         # TODO and remove columns which aren't independent
-        # rank = np.linalg.matrix_rank(self.exog)
-        # expected_rank = num_q_params + num_qdot_params
-        #
+        rank = np.linalg.matrix_rank(self.exog)
+        expected_rank = num_q_params + num_qdot_params
+
+        assert (rank == expected_rank)
+
         # matrix = Matrix(self.exog)
         # rref_tuple = matrix.rref()
         #
         # rref = rref_tuple[0].tolist()
-        # assert(rank == expected_rank)
 
     def loglike(self, params):
         '''
@@ -406,9 +406,9 @@ class ILMax(GenericLikelihoodModel):
 
     def fit(self, start_params=None, method='bfgs', maxiter=10000, maxfun=5000, **kwds):
         # TODO figure out better way to do this
-        # Currently maxiter and maxfun are functions of the parameter space
-        maxiter *= self.num_q_params
-        maxfun *= self.num_q_params
+        # # Currently maxiter and maxfun are functions of the parameter space
+        # maxiter *= self.num_q_params
+        # maxfun *= self.num_q_params
 
         # we have one additional parameter and we need to add it for summary
         self.exog_names.insert(0, 'alpha0')
@@ -416,100 +416,103 @@ class ILMax(GenericLikelihoodModel):
             # Reasonable starting values
             start_params = np.ones(self.exog.shape[1] + 1)
 
-            for i in range(len(start_params)):          # divide by the number of observations to ensure the sum is < 1
-                start_params[i] /= (self.exog.shape[1] + 1)       # prevents potential log(0) error in loglike()
+        for i in range(len(start_params)):          # divide by the number of observations to ensure the sum is < 1
+            start_params[i] /= (self.exog.shape[1] + 1)       # prevents potential log(0) error in loglike()
 
         return super(ILMax, self).fit(start_params=start_params, method=method,
                                      maxiter=maxiter, maxfun=maxfun,
                                      **kwds)
 
-def plot_model_thetaB_sigmoid(outcome_filename, bin_width=0.1):
-    '''
-    plots the thetaB's of simplified model
-    
-    :param outcome_filename: 
-    :param bin_width: 
-    :return: 
-    '''
-    ilmax = ILMaxModel(outcome_filename)
-
-    a_thetaB = ilmax.get_outcome_thetaB(ilmax.A_data)
-    b_thetaB = ilmax.get_outcome_thetaB(ilmax.B_data)
-
-    a_thetaB = sorted(a_thetaB)
-    b_thetaB = sorted(b_thetaB)
-
-    plot_thetaB_sigmoid(a_thetaB, b_thetaB, bin_width=bin_width, title=outcome_filename)
-
-#excluding sigmoid fit until decided it's important
-# # sigmoid shape for domain and range of [0, 1]
-# # beta can be varied to change the slope of the sigmoid
-# def sigmoid(x, beta=3):
-#     for i in range(len(x)):
-#         x[i] = 1 / (1 + pow((x[i]/((1-x[i]))),-beta))
+# # TODO outdated
+# def plot_model_thetaB_sigmoid(outcome_filename, bin_width=0.1):
+#     '''
+#     plots the thetaB's of simplified model
 #
-#     return x
-
-# sigmoid plotting of thetaB data with a specified bin size
-def plot_thetaB_sigmoid(a_thetaB, b_thetaB, bin_width=0.1, title="UNTITLED"):
-    # convert list of floats to a list of tuples of the form (float, outcome)
-    for i in range(len(a_thetaB)):
-        a_thetaB[i] = (a_thetaB[i], 'A')
-
-    for i in range(len(b_thetaB)):
-        b_thetaB[i] = (b_thetaB[i], 'B')
-
-    # combine the lists
-    thetaB = a_thetaB + b_thetaB
-    # sort (sorts based on first tuple element in ascending order by default)
-    thetaB.sort()
-
-    num_going_to_B = 0
-
-    bins = np.zeros(int(1/bin_width))
-
-    # start at bin with smallest thetaB val
-    curr_bin = int(thetaB[0][0] / bin_width)
-    bin_tot = 0
-
-    for i in range(len(thetaB)):
-        bin_tot += 1
-        if thetaB[i][0] > (curr_bin + 1) * bin_width:
-            bins[curr_bin] = num_going_to_B / bin_tot
-            num_going_to_B = 0
-            bin_tot = 1
-            curr_bin += 1
-
-        if thetaB[i][1] == 'B':
-            num_going_to_B += 1
-
-    bins[curr_bin] = num_going_to_B / bin_tot
-
-    x_pos = np.arange(0, 1, bin_width)
-
-    plt.bar(x_pos, bins, align='edge', width=bin_width, alpha=0.5)
-    plt.xticks(x_pos)
-    plt.xlabel("thetaB")
-    plt.ylabel('Fraction going to B')
-    plt.title(title)
-
-    #excluding sigmoid fit until decided it's important
-    # # plotting comparison sigmoid
-    # # linespace generate an array from start and stop value
-    # x = np.linspace(0, 1, 100)
-    # y = np.linspace(0, 1, 100)
-    # y = sigmoid(y)
-    #
-    # # prepare the plot, associate the color r(ed) or b(lue) and the label
-    # plt.plot(x, y, 'r')
-
-    plt.show()
+#     :param outcome_filename:
+#     :param bin_width:
+#     :return:
+#     '''
+#     ilmax = ILMaxModel(outcome_filename)
+#
+#     a_thetaB = ilmax.get_outcome_thetaB(ilmax.A_data)
+#     b_thetaB = ilmax.get_outcome_thetaB(ilmax.B_data)
+#
+#     a_thetaB = sorted(a_thetaB)
+#     b_thetaB = sorted(b_thetaB)
+#
+#     plot_thetaB_sigmoid(a_thetaB, b_thetaB, bin_width=bin_width, title=outcome_filename)
+#
+# # TODO outdated
+# #excluding sigmoid fit until decided it's important
+# # # sigmoid shape for domain and range of [0, 1]
+# # # beta can be varied to change the slope of the sigmoid
+# # def sigmoid(x, beta=3):
+# #     for i in range(len(x)):
+# #         x[i] = 1 / (1 + pow((x[i]/((1-x[i]))),-beta))
+# #
+# #     return x
+#
+# # TODO outdated
+# # sigmoid plotting of thetaB data with a specified bin size
+# def plot_thetaB_sigmoid(a_thetaB, b_thetaB, bin_width=0.1, title="UNTITLED"):
+#     # convert list of floats to a list of tuples of the form (float, outcome)
+#     for i in range(len(a_thetaB)):
+#         a_thetaB[i] = (a_thetaB[i], 'A')
+#
+#     for i in range(len(b_thetaB)):
+#         b_thetaB[i] = (b_thetaB[i], 'B')
+#
+#     # combine the lists
+#     thetaB = a_thetaB + b_thetaB
+#     # sort (sorts based on first tuple element in ascending order by default)
+#     thetaB.sort()
+#
+#     num_going_to_B = 0
+#
+#     bins = np.zeros(int(1/bin_width))
+#
+#     # start at bin with smallest thetaB val
+#     curr_bin = int(thetaB[0][0] / bin_width)
+#     bin_tot = 0
+#
+#     for i in range(len(thetaB)):
+#         bin_tot += 1
+#         if thetaB[i][0] > (curr_bin + 1) * bin_width:
+#             bins[curr_bin] = num_going_to_B / bin_tot
+#             num_going_to_B = 0
+#             bin_tot = 1
+#             curr_bin += 1
+#
+#         if thetaB[i][1] == 'B':
+#             num_going_to_B += 1
+#
+#     bins[curr_bin] = num_going_to_B / bin_tot
+#
+#     x_pos = np.arange(0, 1, bin_width)
+#
+#     plt.bar(x_pos, bins, align='edge', width=bin_width, alpha=0.5)
+#     plt.xticks(x_pos)
+#     plt.xlabel("thetaB")
+#     plt.ylabel('Fraction going to B')
+#     plt.title(title)
+#
+#     #excluding sigmoid fit until decided it's important
+#     # # plotting comparison sigmoid
+#     # # linespace generate an array from start and stop value
+#     # x = np.linspace(0, 1, 100)
+#     # y = np.linspace(0, 1, 100)
+#     # y = sigmoid(y)
+#     #
+#     # # prepare the plot, associate the color r(ed) or b(lue) and the label
+#     # plt.plot(x, y, 'r')
+#
+#     plt.show()
 
 def main():
     start_time = time.time()
 
     # Parse arguments from command line using argparse
-    # TODO replace placeholder
+    # TODO replace PLACEHOLDER
     parser = argparse.ArgumentParser(description='PLACEHOLDER')
     parser.add_argument('-k', '--k_best', type=int, default=None,
                         help='set the desired model OP dimensionality (expects int)\n'
