@@ -586,7 +586,7 @@ def combinations(n, k):
         comb = get_next_combination(comb, n)
 
 def main():
-    generate_random_data(10, 2069)
+    # generate_random_data(10, 2069) # TODO potentially remove
     start_time = time.time()
 
     # Parse arguments from command line using argparse
@@ -597,9 +597,9 @@ def main():
                              'NOTE: not setting this will skip the model reduction step,\n'
                              'greatly reducing computation time for systems with many OPs')
     parser.add_argument('-m', '--method', type=str, default="lbfgs",
-                        help='set desired optimization method')
+                        help='set desired optimization method')             # TODO add list of method choices
     parser.add_argument('-i', '--inputfile', type=str,
-                        help='input filename (required)', required=True)  # TODO CHANGE TO NOT BE REQUIRED?
+                        help='input filename (required)', required=True)    # TODO CHANGE TO NOT BE REQUIRED?
     args = parser.parse_args()
 
     ILMaxModel(k_best=args.k_best, outcome_filename=args.inputfile, method=args.method)
