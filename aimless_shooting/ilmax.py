@@ -11,13 +11,41 @@ import multiprocessing
 import math
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from statsmodels.base.model import GenericLikelihoodModel
 import argparse
 import time
+import queue
+import sys
+# from aimless_shooting import update_progress
 from sympy import Matrix
 from sympy import lambdify
 import warnings
+
+
+# update_progress() : Displays or updates a console progress bar
+## Accepts a float between 0 and 1. Any int will be converted to a float.
+## A value under 0 represents a 'halt'.
+## A value at 1 or bigger represents 100%
+def update_progress(progress, message='Progress'):
+    barLength = 10  # Modify this to change the length of the progress bar
+    status = ""
+    if isinstance(progress, int):
+        progress = float(progress)
+    if not isinstance(progress, float):
+        progress = 0
+        status = "error: progress var must be float\r\n"
+    if progress < 0:
+        progress = 0
+        status = "Halt...\r\n"
+    if progress >= 1:
+        progress = 1
+        status = "Done!\r\n"
+    block = int(round(barLength * progress))
+    text = "\r" + message + ": [{0}] {1}% {2}".format(
+        "#" * block + "-" * (barLength - block), round(progress * 100, 2), status)
+    sys.stdout.write(text)
+    sys.stdout.flush()
+# import cProfile       # performance profiling
 
 
 def parseOutcomeFile(outcome_file):
@@ -58,103 +86,73 @@ def parseOutcomeFile(outcome_file):
            column_names,\
            A_lines, B_lines
 
-def parseData(lines, data):
+def parseABData(A_data, B_data):
+    '''
+    reduce variables
+    
+    :param A_data: 
+    :param B_data: 
+    :return: 
+    '''
+
+    qmax = []
+    qmin = []
+
+    for i in range(len(A_data)):
+        qmax.append(A_data[i][0])
+        qmin.append(A_data[i][0])
+
+        for j in range(len(A_data[i])):     # update qmax and qmin using A_data
+            if qmax[i] < A_data[i][j]:
+                qmax[i] = A_data[i][j]
+
+            if qmin[i] > A_data[i][j]:
+                qmin[i] = A_data[i][j]
+
+        for j in range(len(B_data[i])):     # update qmax and qmin using B_data
+            if qmax[i] < B_data[i][j]:
+                qmax[i] = B_data[i][j]
+
+            if qmin[i] > B_data[i][j]:
+                qmin[i] = B_data[i][j]
+
+    for i in range(len(A_data)):            # REDUCED VARIABLES: Z = (Q-Qmin)/(Qmax-Qmin)
+        for j in range(len(A_data[i])):
+            A_data[i][j] = (A_data[i][j] - qmin[i]) / (qmax[i] - qmin[i])
+
+        for j in range(len(B_data[i])):
+            B_data[i][j] = (B_data[i][j] - qmin[i]) / (qmax[i] - qmin[i])
+
+def parseData(lines, num_params):
     '''
     converts strings to lists of floats
     
     :param lines: 
-    :param data: 
+    :param num_params: 
     :return: 
     '''
+    data = [[] for x in range(num_params)]
+
     for x in lines:
-        # get rid of \n at end of each line
-        x = x.strip()
-        # split var's into an array
-        x = x.split(' ')
-        # convert to np array
-        x = np.asarray(x)
-        # convert array to floats
-        x = x.astype(np.float)
+        x = x.strip()           # get rid of \n at end of each line
+        x = x.split(' ')        # split var's into an array
+        x = np.asarray(x)       # convert to np array
+        x = x.astype(np.float)  # convert array to floats
 
-        # add data to array
         for i in range(len(x)):
-            data[i].append(x[i])
-
-    # reduce variables
-    qmax = []
-    qmin = []
-
-    for i in range(len(data)):
-        qmax.append(data[i][0])
-        qmin.append(data[i][0])
-
-        for j in range(len(data[i])):
-            if qmax[i] < data[i][j]:
-                qmax[i] = data[i][j]
-
-            if qmin[i] > data[i][j]:
-                qmin[i] = data[i][j]
-
-    # REDUCED VARIABLES: Z = (Q-Qmin)/(Qmax-Qmin)
-    for i in range(len(data)):
-        for j in range(len(data[i])):
-            data[i][j] = (data[i][j] - qmin[i]) / (qmax[i] - qmin[i])
+            data[i].append(x[i])    # add data to array
 
     return data
 
-
-def threadedILMax(exog, endog,                      # TODO currently has no support for passing **kwds to ILMax
-                  num_A_outcomes, num_B_outcomes,
-                  num_q_params, num_qdot_params,
-                  method,
-                  param, results_queue, **kwds):
-    '''
-    
-    :param exog: 
-    :param endog: 
-    :param num_A_outcomes: 
-    :param num_B_outcomes: 
-    :param num_q_params: 
-    :param num_qdot_params: 
-    :param param: 
-    :param results_queue: 
-    :param kwds: 
-    :return: 
-    '''
-
-    ilmax = ILMax(exog=exog, endog=endog,           # inertial likelihood maximization for current model
-                  num_A_outcomes=num_A_outcomes,
-                  num_B_outcomes=num_B_outcomes,
-                  num_q_params=num_q_params,
-                  num_qdot_params=num_qdot_params,
-                  **kwds)
-
-    start_params = [0 for null in range(num_q_params+num_qdot_params+1)]
-    ilmax_fit = ilmax.fit(method=method, start_params=start_params)
-    print('\nBIC: ', ilmax_fit.bic)
-    print('\nCONVERGED: ', ilmax_fit.mle_retvals['converged']) # True or False
-    print('\nMODEL COEFFICIENTS: ', ilmax_fit.params)                   # Coefficients of the model
-    # print(ilmax_fit.summary())                      # Detailed output
-    # print(ilmax_fit.cov_params(), '\n')           # DEPRACATED
-
-    # BIC used to compare models
-    BIC = ilmax_fit.bic
-
-    results_queue.put((param, BIC))
-    return ilmax_fit
-
 class ILMaxModel:
-    def __init__(self, k_best=None, outcome_filename="outcomes.txt", method="powell", **kwds):
+    def __init__(self, k_best=None, outcome_filename="outcomes.txt", method="Powell", **kwds):
+        start_time = time.time()
         '''
-        Class to create a model using ILMax and BIC/AIC for culling
+        Class to create a model using ILMax and BIC for culling
         
         :param outcome_filename: input filename containing the outcome data
         :param kwds: additional keywords to be passed to GenericLikelihoodModel superclass
         '''
-
-        self.candidate_params = []      # candidate q parameters that will iteratively
-                                        # be removed to test if model can be reduced
-                                        # a model can be reduced if its BIC is lower than the best model's BIC
 
         outcome_file = open(outcome_filename, 'r')
 
@@ -167,23 +165,35 @@ class ILMaxModel:
 
         num_params = num_q_params + num_qdot_params
 
-        A_data = [ [] for x in range(num_params) ]
-        B_data = [ [] for x in range(num_params) ]
+        A_data = parseData(A_lines, num_params)
+        B_data = parseData(B_lines, num_params)
 
-        A_data = parseData(A_lines, A_data)
-        B_data = parseData(B_lines, B_data)
+        parseABData(A_data, B_data)
 
         self.A_data = A_data
         self.B_data = B_data
 
-        self.candidate_params = np.arange(-1, num_q_params)     # [ -1, 0, 1, ..., num_q_params - 1 ]
-
-        ilmax_args = []                                         # list of arguments to be passed to threadedILMax
+        ilmax_args = queue.Queue()      # queue of arguments to be passed to threadedILMax when running parallel
 
         if k_best is None:              # if k_best isn't defined, default to entire model
             k_best = num_q_params
 
-        models = []
+        self.count = 0
+        self.num_comb = 0
+        for combination in combinations(num_q_params, k_best):
+            self.num_comb += 1
+
+        models = []         # list of model data
+
+        num_cores = multiprocessing.cpu_count()
+        # print("Number of cpu cores: ", num_cores) # TODO add to verbose option
+        if (num_cores > 2):             # run in parallel if more than 2 cores
+            runInParallel = True
+        else:                           # run in series if 2 cores or less
+            runInParallel = False
+
+        # pr = cProfile.Profile()
+        # pr.enable()
 
         for combination in combinations(num_q_params, k_best):                      # TODO add support for qdot terms
             exog_data = [ [] for x in range(num_A_outcomes + num_B_outcomes) ]      # list of observation OP data
@@ -204,160 +214,98 @@ class ILMaxModel:
             exog = pd.DataFrame(exog_data, columns=new_column_names)
             endog = pd.DataFrame(np.zeros(exog.shape))          # matrix of zeroes with same shape as exog
 
-            ilmax_args.append((exog, endog,                     # threadILMAX arguments (in form of a tuple)
-                              num_A_outcomes, num_B_outcomes,
-                              len(new_column_names), num_qdot_params,
-                              self.candidate_params[0]))
+            ilmax_args.put((combination,
+                                exog, endog,
+                                num_A_outcomes, num_B_outcomes,
+                                len(new_column_names), num_qdot_params,
+                                method, multiprocessing.Queue()))
 
-            print('Current combination: ', combination)              # current combination of k_best OP's
-            ilmax_fit = threadedILMax(exog, endog,
-                          num_A_outcomes, num_B_outcomes,
-                          len(new_column_names), num_qdot_params,
-                          method,
-                          self.candidate_params[0], multiprocessing.Queue())
+            if not runInParallel:            # run in series
+                ilmax_fit = self.threadedILMax(combination,
+                                            exog, endog,
+                                            num_A_outcomes, num_B_outcomes,
+                                            len(new_column_names), num_qdot_params,
+                                            method, multiprocessing.Queue())
 
-            models.append((combination,ilmax_fit.bic,ilmax_fit.mle_retvals['converged'],ilmax_fit.params))
+                models.append((combination,ilmax_fit.bic,ilmax_fit.llf,ilmax_fit.mle_retvals['converged'],ilmax_fit.params))
+
+        if runInParallel:                   # run in parallel
+            results_queue = multiprocessing.Queue()
+
+            jobs = []
+            while not ilmax_args.empty():
+                arg = ilmax_args.get()
+                p = multiprocessing.Process(target=self.threadedILMax, args=(arg[0],
+                                                                        arg[1], arg[2],
+                                                                        arg[3], arg[4],
+                                                                        arg[5], arg[6],
+                                                                        method, results_queue))
+                jobs.append(p)
+                p.start()
+
+                update_progress(self.count / self.num_comb, str(self.count) +
+                                ' out of ' + str(self.num_comb) + ' combinations fitted')
+
+                self.count += 1
+
+            for proc in jobs:
+                proc.join()
+
+            while not results_queue.empty():
+                models.append(results_queue.get())
 
         models = sorted(models, key=lambda model: model[1])
 
+        # pr.disable()
+        # pr.print_stats(sort='tottime')        # after program ends
+
         file = open(outcome_filename.split('.')[0] + '-models.txt', 'w')
-        file.write('combination BIC converged coefficients\n')
+        file.write('combination BIC loglikelihood converged coefficients\n')
         for tuple in models:
             for item in tuple:
                 file.write(str(item) + ' ')
             file.write('\n')
-        # while len(self.candidate_params) > 0:                   # iterate over all candidate parameters
-        #     exog_data = [ [] for x in range(num_A_outcomes + num_B_outcomes) ]      # list of observation OP data
-        #
-        #     for i in range(num_A_outcomes):                     # append A outcome observations
-        #         for j in range(num_params):
-        #             if j != self.candidate_params[0]:
-        #                 exog_data[i].append(A_data[j][i])
-        #
-        #     for i in range(num_B_outcomes):                     # append B outcome observations
-        #         for j in range(num_params):
-        #             if j != self.candidate_params[0]:
-        #                 exog_data[num_A_outcomes + i].append(B_data[j][i])
-        #
-        #     new_column_names = []                               # list of parameter names for current model
-        #
-        #     for i in range(len(column_names)):                  # create list of parameter names for current iteration
-        #         if i != self.candidate_params[0]:
-        #             new_column_names.append(column_names[i])
-        #
-        #     exog = pd.DataFrame(exog_data, columns=new_column_names)
-        #     endog = pd.DataFrame(np.zeros(exog.shape))          # matrix of zeroes with same shape as exog
-        #
-        #     ilmax_args.append((exog, endog,                     # threadILMAX arguments (in form of a tuple)
-        #                       num_A_outcomes, num_B_outcomes,
-        #                       len(new_column_names), num_qdot_params,
-        #                       self.candidate_params[0]))
-        #
-        #     if k_best is None:      # if no k_best provided, default to entire OP set
-        #         threadedILMax(exog, endog,
-        #                       num_A_outcomes, num_B_outcomes,
-        #                       len(new_column_names), num_qdot_params,
-        #                       method,
-        #                       self.candidate_params[0], multiprocessing.Queue())
-        #         return              # return early since there's no need to compare BIC's for the entire OP set
-        #
-        #     self.candidate_params = np.delete(self.candidate_params, 0)     # move on to next candidate parameter
 
-        # results_list = []
-        # results_queue = multiprocessing.Queue()
-        #
-        # print("Number of cpu cores: ", multiprocessing.cpu_count())         # running in parallel
-        # jobs = []
-        # for arg in ilmax_args:
-        #     p = multiprocessing.Process(target=threadedILMax, args=(arg[0], arg[1],
-        #                                                             arg[2], arg[3],
-        #                                                             arg[4], arg[5],
-        #                                                             method,
-        #                                                             arg[6], results_queue))
-        #     jobs.append(p)
-        #     p.start()
-        #
-        # for proc in jobs:
-        #     proc.join()
-        #
-        # while not results_queue.empty():
-        #     results_list.append(results_queue.get())
-        #
-        # # for arg in ilmax_args:                                            # running in series
-        # #     results_list.append(threadedILMax(arg[0], arg[1],
-        # #                                         arg[2], arg[3],
-        # #                                         arg[4], arg[5],
-        # #                                         method,
-        # #                                         arg[6], results_queue))
-        #
-        # results_list.sort()
-        #
-        # dBIC = []
-        #
-        # i = 1
-        # while i < len(results_list):                # create list of (refBIC - BIC, param_index) tuples
-        #     dbic = results_list[0][1] - results_list[i][1]
-        #     dBIC.append((dbic, i - 1))
-        #
-        #     i += 1
-        #
-        # dBIC.sort()             # sort (sorts based on first tuple element in ascending order by default)
-        #
-        # k_best_params = []
-        # k_best_param_names = []
-        # k_best_exog_data = [[] for x in range(num_A_outcomes + num_B_outcomes)]
-        #
-        # for k in range(k_best):                     # create model from k best parameters
-        #     k_best_params.append(dBIC[k][1])
-        #     k_best_param_names.append(column_names[dBIC[k][1]])
-        #
-        # for i in range(num_A_outcomes):             # append A outcome observations
-        #     for j in range(len(k_best_params)):
-        #         k_best_exog_data[i].append(A_data[k_best_params[j]][i])
-        #
-        # for i in range(num_B_outcomes):             # append B outcome observations
-        #     for j in range(len(k_best_params)):
-        #         k_best_exog_data[num_A_outcomes + i].append(B_data[k_best_params[j]][i])
-        #
-        # k_best_exog = pd.DataFrame(k_best_exog_data, columns=k_best_param_names)
-        # k_best_endog = pd.DataFrame(np.zeros(k_best_exog.shape))
-        #
-        # k_best_ilmax = ILMax(exog=k_best_exog, endog=k_best_endog,
-        #               num_A_outcomes=num_A_outcomes,
-        #               num_B_outcomes=num_B_outcomes,
-        #               num_q_params=(len(k_best_param_names)),
-        #               num_qdot_params=num_qdot_params,
-        #               **kwds)
-        #
-        # k_best_ilmax_fit = k_best_ilmax.fit(method=method)
-        #
-        # print('\n', k_best_ilmax_fit.params)
-        # print(k_best_ilmax_fit.summary())
-        # # print(k_best_ilmax_fit.cov_params(), '\n')            # TODO DEPRACATED
+        file.write("\nExecuted in " + str(time.time() - start_time) + "s\n")
 
-    # # TODO outdated
-    # def get_outcome_thetaB(self, outcomes):
-    #     '''
-    #     reaction coordinate from thetaB for outcomes
-    #
-    #     :param outcomes:
-    #     :return:
-    #     '''
-    #     outcome_thetaB = []
-    #
-    #     outcome_data = [[] for x in range(len(outcomes[0]))]
-    #
-    #     # append outcome observations
-    #     for i in range(len(outcomes[0])):
-    #         for j in range(len(outcomes)):
-    #             # if the current parameter is significant
-    #             if j not in self.excluded_params:
-    #                 outcome_data[i].append(outcomes[j][i])
-    #
-    #     for i in range(len(outcome_data)):
-    #         outcome_thetaB.append(thetaB(outcome_data[i], self.best_model_fit.params))
-    #
-    #     return outcome_thetaB
+    def threadedILMax(self, combination,
+                      exog, endog,  # TODO currently has no support for passing **kwds to ILMax
+                      num_A_outcomes, num_B_outcomes,
+                      num_q_params, num_qdot_params,
+                      method,
+                      results_queue, **kwds):
+        '''
+
+        :param exog: 
+        :param endog: 
+        :param num_A_outcomes: 
+        :param num_B_outcomes: 
+        :param num_q_params: 
+        :param num_qdot_params: 
+        :param results_queue: 
+        :param kwds: 
+        :return: ilmax_fit:
+        '''
+        ilmax = ILMax(exog=exog, endog=endog,  # inertial likelihood maximization for current model
+                      num_A_outcomes=num_A_outcomes,
+                      num_B_outcomes=num_B_outcomes,
+                      num_q_params=num_q_params,
+                      num_qdot_params=num_qdot_params,
+                      **kwds)
+
+        start_params = [0 for null in range(num_q_params + num_qdot_params + 1)]
+        ilmax_fit = ilmax.fit(method=method, start_params=start_params) # TODO: add disp for verbose
+
+        # print('Current combination: ', combination)  # current combination of k_best OP's # TODO verbose option?
+        # print('BIC: ', ilmax_fit.bic)
+        # print('CONVERGED: ', ilmax_fit.mle_retvals['converged'])  # True or False
+        # print('MODEL COEFFICIENTS: ', ilmax_fit.params)  # Coefficients of the model
+        # print(ilmax_fit.summary())  # Detailed output
+
+        results_queue.put(
+            (combination, ilmax_fit.bic, ilmax_fit.llf, ilmax_fit.mle_retvals['converged'], ilmax_fit.params))
+        return ilmax_fit
+
 
 def thetaB(exog_i, params):
     '''
@@ -430,9 +378,11 @@ class ILMax(GenericLikelihoodModel):
 
         return sum
 
-    def fit(self, start_params=None, method='powell', maxiter=10000, maxfun=5000, **kwds):
+    def fit(self, start_params=None, method='Powell', maxiter=10000, maxfun=5000, disp=False, **kwds):
         maxiter *= self.num_q_params            # Currently maxiter and maxfun are functions of the parameter space
         maxfun *= self.num_q_params             # Somewhat arbitrary / somewhat empirically determined
+        if 'Powell' in method:
+            maxfun = None
 
         # we have one additional parameter and we need to add it for summary
         self.exog_names.insert(0, 'alpha0')
@@ -443,9 +393,17 @@ class ILMax(GenericLikelihoodModel):
         for i in range(len(start_params)):          # divide by the number of observations to ensure the sum is < 1
             start_params[i] /= (self.exog.shape[1] + 1)       # prevents potential log(0) error in loglike()
 
-        return super(ILMax, self).fit(start_params=start_params, method="minimize",
-                                     maxiter=maxiter, maxfun=maxfun,min_method=method,
-                                     **kwds)
+        if maxfun is None:
+            return super(ILMax, self).fit(start_params=start_params, method="minimize",
+                                          maxiter=maxiter, min_method=method,
+                                          disp=disp, skip_hessian=True,
+                                          **kwds)  # TODO: add skip_hessian functionality
+        else:
+            return super(ILMax, self).fit(start_params=start_params, method="minimize",
+                                         maxiter=maxiter, maxfun=maxfun, min_method=method,
+                                         disp=disp, skip_hessian=True,
+                                         **kwds) # TODO: add skip_hessian functionality
+
 
 def generate_random_data(num_params, num_obs):
     file = open('invertibility_testing/randdata.txt', 'w')
@@ -457,91 +415,6 @@ def generate_random_data(num_params, num_obs):
         for j in range(num_params):
             file.write(str(np.random.uniform()) + ' ')
         file.write('\n')
-
-# # TODO outdated
-# def plot_model_thetaB_sigmoid(outcome_filename, bin_width=0.1):
-#     '''
-#     plots the thetaB's of simplified model
-#
-#     :param outcome_filename:
-#     :param bin_width:
-#     :return:
-#     '''
-#     ilmax = ILMaxModel(outcome_filename)
-#
-#     a_thetaB = ilmax.get_outcome_thetaB(ilmax.A_data)
-#     b_thetaB = ilmax.get_outcome_thetaB(ilmax.B_data)
-#
-#     a_thetaB = sorted(a_thetaB)
-#     b_thetaB = sorted(b_thetaB)
-#
-#     plot_thetaB_sigmoid(a_thetaB, b_thetaB, bin_width=bin_width, title=outcome_filename)
-#
-# # TODO outdated
-# #excluding sigmoid fit until decided it's important
-# # # sigmoid shape for domain and range of [0, 1]
-# # # beta can be varied to change the slope of the sigmoid
-# # def sigmoid(x, beta=3):
-# #     for i in range(len(x)):
-# #         x[i] = 1 / (1 + pow((x[i]/((1-x[i]))),-beta))
-# #
-# #     return x
-#
-# # TODO outdated
-# # sigmoid plotting of thetaB data with a specified bin size
-# def plot_thetaB_sigmoid(a_thetaB, b_thetaB, bin_width=0.1, title="UNTITLED"):
-#     # convert list of floats to a list of tuples of the form (float, outcome)
-#     for i in range(len(a_thetaB)):
-#         a_thetaB[i] = (a_thetaB[i], 'A')
-#
-#     for i in range(len(b_thetaB)):
-#         b_thetaB[i] = (b_thetaB[i], 'B')
-#
-#     # combine the lists
-#     thetaB = a_thetaB + b_thetaB
-#     # sort (sorts based on first tuple element in ascending order by default)
-#     thetaB.sort()
-#
-#     num_going_to_B = 0
-#
-#     bins = np.zeros(int(1/bin_width))
-#
-#     # start at bin with smallest thetaB val
-#     curr_bin = int(thetaB[0][0] / bin_width)
-#     bin_tot = 0
-#
-#     for i in range(len(thetaB)):
-#         bin_tot += 1
-#         if thetaB[i][0] > (curr_bin + 1) * bin_width:
-#             bins[curr_bin] = num_going_to_B / bin_tot
-#             num_going_to_B = 0
-#             bin_tot = 1
-#             curr_bin += 1
-#
-#         if thetaB[i][1] == 'B':
-#             num_going_to_B += 1
-#
-#     bins[curr_bin] = num_going_to_B / bin_tot
-#
-#     x_pos = np.arange(0, 1, bin_width)
-#
-#     plt.bar(x_pos, bins, align='edge', width=bin_width, alpha=0.5)
-#     plt.xticks(x_pos)
-#     plt.xlabel("thetaB")
-#     plt.ylabel('Fraction going to B')
-#     plt.title(title)
-#
-#     #excluding sigmoid fit until decided it's important
-#     # # plotting comparison sigmoid
-#     # # linespace generate an array from start and stop value
-#     # x = np.linspace(0, 1, 100)
-#     # y = np.linspace(0, 1, 100)
-#     # y = sigmoid(y)
-#     #
-#     # # prepare the plot, associate the color r(ed) or b(lue) and the label
-#     # plt.plot(x, y, 'r')
-#
-#     plt.show()
 
 def get_pos_to_change(comb, n):
     """
@@ -594,9 +467,8 @@ def main():
     parser = argparse.ArgumentParser(description='PLACEHOLDER')
     parser.add_argument('-k', '--k_best', type=int, default=None,
                         help='set the desired model OP dimensionality (expects int)\n'
-                             'NOTE: not setting this will skip the model reduction step,\n'
-                             'greatly reducing computation time for systems with many OPs')
-    parser.add_argument('-m', '--method', type=str, default="lbfgs",
+                             'NOTE: not setting this will skip the model reduction step,\n')
+    parser.add_argument('-m', '--method', type=str, default="Powell",
                         help='set desired optimization method')             # TODO add list of method choices
     parser.add_argument('-i', '--inputfile', type=str,
                         help='input filename (required)', required=True)    # TODO CHANGE TO NOT BE REQUIRED?
