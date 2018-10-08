@@ -1,0 +1,6 @@
+{
+  "aimless_shooting/test/aimless_shooting_test.py::test_handle_groupfile": true,
+  "aimless_shooting/test/test_return_rcs.py::TestCase": true,
+  "aimless_shooting/test/test_return_rcs.py::TestReturn_rcs": true,
+  "aimless_shooting/test/test_return_rcs.py::TestReturn_rcs::test_return_rcs": true
+}

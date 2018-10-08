@@ -18,5 +18,6 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ),
-    scripts=['aimless_shooting/main_18.py'],
+    scripts=['aimless_shooting/aimless_shooting.py'],
+    install_requirements=['Jinja2==2.9.5', 'pytraj==2.0.2']
 )

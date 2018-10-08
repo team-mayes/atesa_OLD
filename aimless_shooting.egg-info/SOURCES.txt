@@ -1,0 +1,7 @@
+README.md
+setup.py
+aimless_shooting/aimless_shooting.py
+aimless_shooting.egg-info/PKG-INFO
+aimless_shooting.egg-info/SOURCES.txt
+aimless_shooting.egg-info/dependency_links.txt
+aimless_shooting.egg-info/top_level.txt

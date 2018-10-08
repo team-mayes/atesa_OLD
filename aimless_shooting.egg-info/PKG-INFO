@@ -1,0 +1,20 @@
+Metadata-Version: 2.1
+Name: aimless-shooting
+Version: 1.0
+Summary: Python code for performing aimless shooting for transition path sampling in Amber.
+Home-page: https://github.com/team-mayes/aimless_shooting
+Author: Tucker Burgin
+Author-email: tburgin@umich.edu
+License: UNKNOWN
+Description: # aimless_shooting
+        Python program for automating aimless shooting with Amber
+        
+        This code is designed to promote Transition Path Sampling studies by automating one of the more cumbersome steps, namely, aimless shooting. An excellent primer on the method can be found in [Beckham and Peters, 2010](https://pubs.acs.org/doi/abs/10.1021/bk-2010-1052.ch013). aimless_shooting interacts directly with a batch system (either PBS or Slurm are supported) to dynamically submit, interpret, and track shooting moves based on one or more initial structures provided to it. It employs a variable length approach that periodically checks simulations for commitment to user-defined reactant and product states in order to maximize the acceptance ratio and minimize wasted computational resources.
+        
+        The output of this software is formatted and ready to be plugged directly into the LMAX automation code produced by the Baron Peters lab and available for download from their website, [here](https://engineering.ucsb.edu/~baronp/CODES/). In combination, aimless_shooting and LMAX constitute a near-complete automation of the workflow between producing one or more transition path guess structures, and obtaining a *bona fide* reaction coordinate. 
+        
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
