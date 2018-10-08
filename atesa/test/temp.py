@@ -1,0 +1,17 @@
+import ast
+
+entry = "candidate_op = pytraj.distance(traj,mask='@4272 @7175')[0];pytraj.distance(traj,mask='@7175 @7174')[0];pytraj.distance(traj,mask='@7174 @7185')[0];pytraj.distance(traj,mask='@7185 @7186')[0];pytraj.distance(traj,mask='@7172 @7174')[0];pytraj.distance(traj,mask='@7186 @3584')[0];pytraj.distance(traj,mask='@7191 @3584')[0];pytraj.distance(traj,mask='@7186 @3582')[0];pytraj.distance(traj,mask='@4272,4273 @4072,4075')[0];pytraj.distance(traj,mask='@7186 @2704')[0];pytraj.distance(traj,mask='@4071 @7191')[0];pytraj.distance(traj,mask='@7172 @7185')[0];pytraj.distance(traj,mask='@958 @4273')[0];pytraj.distance(traj,mask='@2044 @7208')[0];pytraj.distance(traj,mask='@7194 @496')[0];pytraj.distance(traj,mask='@7204 @987')[0];pytraj.distance(traj,mask='@7186 @7188')[0];pytraj.distance(traj,mask='@7191 @7188')[0];pytraj.distance(traj,mask='@7186 @7191')[0];pytraj.distance(traj,mask='@7174 @4273')[0];pytraj.distance(traj,mask='@4273 @7175')[0] - pytraj.distance(traj,mask='@7175 @7174')[0];pytraj.angle(traj,mask='@7200 @7185 @7186')[0];pytraj.angle(traj,mask='@7200 @7185 @7174')[0];pytraj.angle(traj,mask='@4265 @4268 @4271')[0];pytraj.angle(traj,mask='@4272 @7173 @7184')[0];pytraj.angle(traj,mask='@7185 @7174 @7172')[0];pytraj.angle(traj,mask='@7174 @7175 @4273')[0];pytraj.angle(traj,mask='@7186 @7188 @7191')[0];pytraj.angle(traj,mask='@7188 @7186 @7165')[0];pytraj.dihedral(traj,mask='@7197 @7195 @7196 @7185')[0];pytraj.dihedral(traj,mask='@7197 @7195 @7193 @7190')[0];pytraj.dihedral(traj,mask='@7195 @7196 @7185 @7187')[0];pytraj.dihedral(traj,mask='@7195 @7193 @7190 @7187')[0];pytraj.dihedral(traj,mask='@7196 @7185 @7187 @7190')[0];pytraj.dihedral(traj,mask='@7193 @7190 @7187 @7185')[0];pytraj.dihedral(traj,mask='@7196 @7185 @7186 @7188')[0];pytraj.dihedral(traj,mask='@7185 @7186 @7188 @7191')[0];pytraj.dihedral(traj,mask='@7196 @7185 @7174 @7172')[0];pytraj.dihedral(traj,mask='@7196 @7185 @7174 @7175')[0];pytraj.dihedral(traj,mask='@7185 @7174 @7172 @7169')[0];pytraj.dihedral(traj,mask='@7174 @7172 @7169 @7168')[0];pytraj.dihedral(traj,mask='@7174 @7172 @7176 @7180')[0];pytraj.dihedral(traj,mask='@7172 @7169 @7168 @7166')[0];pytraj.dihedral(traj,mask='@7172 @7176 @7180 @7166')[0];pytraj.dihedral(traj,mask='@7176 @7180 @7166 @7165')[0];pytraj.dihedral(traj,mask='@7169 @7168 @7166 @7165')[0];pytraj.dihedral(traj,mask='@7168 @7166 @7165 @7154')[0];pytraj.dihedral(traj,mask='@7166 @7165 @7154 @7163')[0];pytraj.dihedral(traj,mask='@7174 @7175 @4273 @4271')[0];pytraj.dihedral(traj,mask='@7175 @4273 @4271 @4268')[0];pytraj.dihedral(traj,mask='@4273 @4271 @4268 @4265')[0];pytraj.dihedral(traj,mask='@4271 @4268 @4265 @4263')[0];pytraj.dihedral(traj,mask='@4268 @4265 @4263 @4274')[0];pytraj.dihedral(traj,mask='@4265 @4263 @4274 @4275')[0]"
+entry = entry.split(' ')
+
+try:
+    null = isinstance(ast.literal_eval(entry[2])[0], list)
+except SyntaxError:
+    literal_ops = True  # not a nested list, implies that this is an explicit definition
+    full_entry = ''  # string to write all the input into
+    for index in range(2, len(entry)):  # full input is contained in entry[index] for all index >= 2
+        full_entry += entry[index] + ' '  # add entry[index] element-wise, followed by a space
+    full_entry = full_entry[:-1]  # remove trailing ' '
+    candidateops = full_entry.split(';')  # each entry should be a string interpretable as an OP
+
+print(len(candidateops[0]))
+print(candidateops)
