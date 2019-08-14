@@ -1,3 +1,25 @@
 [
-  "aimless_shooting/test/aimless_shooting_test.py::test_handle_groupfile"
+  "atesa/test/test_atesa.py::test_handle_groupfile",
+  "atesa/test/test_atesa.py::test_spawnthread_bare",
+  "atesa/test/test_atesa.py::test_initialize_eps",
+  "atesa/test/test_atesa.py::test_spawnthread_eps",
+  "atesa/test/test_atesa.py::test_makebatch_init",
+  "atesa/test/test_atesa.py::test_makebatch_prod",
+  "atesa/test/test_atesa.py::test_makebatch_ca",
+  "atesa/test/test_atesa.py::test_checkcommit_as",
+  "atesa/test/test_atesa.py::test_checkcommit_eps",
+  "atesa/test/test_atesa.py::test_pickframe_on_thread",
+  "atesa/test/test_atesa.py::test_pickframe_neg_n_adjust",
+  "atesa/test/test_atesa.py::test_pickframe_on_string",
+  "atesa/test/test_atesa.py::test_cleanthread_as",
+  "atesa/test/test_atesa.py::test_cleanthread_eps",
+  "atesa/test/test_atesa.py::test_cleanthread_dynamic_seed",
+  "atesa/test/test_atesa.py::test_candidatevalues_no_qdot",
+  "atesa/test/test_atesa.py::test_candidatevalues_with_qdot",
+  "atesa/test/test_atesa.py::test_candidatevalues_different_frame",
+  "atesa/test/test_atesa.py::test_candidatevalues_not_literal_ops",
+  "atesa/test/test_atesa.py::test_revvels",
+  "atesa/test/test_atesa.py::test_main_loop_as_no_groupfile",
+  "atesa/test/test_atesa.py::test_handle_bootstrap_flag_true",
+  "atesa/test/test_atesa.py::test_handle_bootstrap_make_jobs"
 ]

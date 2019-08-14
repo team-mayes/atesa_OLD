@@ -15,3 +15,6 @@ export LD_LIBRARY_PATH=/opt/amber/lib:$LD_LIBRARY_PATH
 export AMBERHOME=/share/apps/compute/amber16.dat
 
 mpirun /opt/amber/bin/{{ solver }}.MPI -ng 1 -groupfile none -O -i {{ inp }} -o {{ out }} -p {{ prmtop }} -c {{ inpcrd }} -r {{ rst }} -x {{ nc }}
+
+rm {{ out }}
+rm {{ self_name }}

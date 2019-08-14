@@ -1,0 +1,18 @@
+Metadata-Version: 2.1
+Name: atesa
+Version: 1.0.1
+Summary: Automates performing and analyzing the results of aimless shooting transition path sampling in Amber.
+Home-page: https://github.com/team-mayes/atesa
+Author: Tucker Burgin
+Author-email: tburgin@umich.edu
+License: UNKNOWN
+Description: # atesa
+        Python program for setting up, automating, and analyzing aimless shooting with Amber
+        
+        This code is designed to promote Transition Path Sampling studies by automating aimless shooting, as well parts of setup and analysis. An excellent primer on the method can be found in [Beckham and Peters, 2010](https://pubs.acs.org/doi/abs/10.1021/bk-2010-1052.ch013). ATESA interacts directly with a batch system (either PBS or Slurm are supported) to dynamically submit, interpret, and track shooting moves based on one or more initial structures provided to it. It employs a variable length approach that periodically checks simulations for commitment to user-defined reactant and product states in order to maximize the acceptance ratio and minimize wasted computational resources.
+        
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown

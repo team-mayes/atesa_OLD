@@ -1,0 +1,19 @@
+
+Desired error not necessarily achieved due to precision loss.
+Function value and included parameter(s): 1168.1862393510105, CV2 CV63
+Corresponding coefficients (starting with constant term): [-2.31546896  6.15325765  1.48527791]
+Final RC: -2.31546895948 + 6.15325765265*CV2 + 1.48527790834*CV63
+Desired error not necessarily achieved due to precision loss.
+Function value and included parameter(s): 1011.5952996176438, CV2 CV4 CV63 CV65
+Corresponding coefficients (starting with constant term): [ 0.09098464  4.62526155 -2.76982125  1.11294093 -1.5811094 ]
+Final RC: 0.0909846413445 + 4.62526155178*CV2 + -2.769821254*CV4 + 1.11294092681*CV63 + -1.58110940183*CV65
+Desired error not necessarily achieved due to precision loss.
+Function value and included parameter(s): 863.2474426901358, CV2 CV4 CV1 CV63 CV65 CV62
+Corresponding coefficients (starting with constant term): [ 4.06664755  2.57715386 -5.66928522 -3.3747617   1.33968884 -1.83185974
+ -1.52786384]
+Final RC: 4.0666475492 + 2.57715385729*CV2 + -5.66928522458*CV4 + -3.37476169575*CV1 + 1.33968883748*CV63 + -1.83185974377*CV65 + -1.52786384194*CV62
+Desired error not necessarily achieved due to precision loss.
+Function value and included parameter(s): 703.1920045942825, CV2 CV4 CV1 CV3 CV63 CV65 CV62 CV64
+Corresponding coefficients (starting with constant term): [ 3.55546816  2.92100116 -7.09599396 -5.63282816  3.5254132   1.94172484
+ -2.24768033 -2.28627685  1.42347901]
+Final RC: 3.55546816094 + 2.92100115779*CV2 + -7.09599395851*CV4 + -5.6328281615*CV1 + 3.52541320175*CV3 + 1.94172483517*CV63 + -2.247680333*CV65 + -2.28627685222*CV62 + 1.42347901469*CV64

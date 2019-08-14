@@ -5,43 +5,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4169030c-4199-4c0e-96e2-4e2ea7739c27" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/1.1_1.2_2.2_2.6.nc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/testfile.test" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/atesa_docs.pdf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/Burgin_LMAX.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/atesa.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/committor_resample.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/input_files/committor_analysis.in" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/input_files/init.in" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/input_files/prod.in" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/mbar.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/rc_eval.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/templates/batch_pbs.tpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/templates/batch_pbs_groupfile.tpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/templates/batch_slurm.tpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/templates/eps_in.tpl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/1.1_1.2_2.2_2.6.rst7" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/1.3_1.4_2.2_2.6.rst7_1_1_init_fwd.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/a13_eps_results.out" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/a13_eps_results.out.data" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/aimless_shooting_test.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/eps_results.out" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/eps_results.out.data" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/temp.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/temp.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/test.prmtop" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/test.rst7" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/test_increment_velocity.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/test_return_rcs.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/ts_guess.prmtop" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/aimless_shooting/input_files/init.in" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/aimless_shooting/input_files/prod.in" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/aimless_shooting/main_18.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/aimless_shooting/templates/batch_pbs.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/aimless_shooting/templates/batch_pbs_18.tpl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/aimless_shooting/templates/batch_slurm.tpl" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/atesa/test/test_atesa.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/atesa/test/1.1_1.2_2.2_2.6.nc" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/atesa/test/1.1_1.2_2.2_2.6.rst7" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/atesa/test/1.3_1.4_2.2_2.6.rst7_1_1_init_fwd.rst" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/atesa/test/a13_eps_results.out" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/atesa/test/a13_eps_results.out.data" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/atesa/test/aimless_shooting_test.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/atesa/test/eps_results.out" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/atesa/test/eps_results.out.data" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/atesa/test/temp.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/atesa/test/temp.rst" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/atesa/test/test_increment_velocity.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/atesa/test/testfile.test" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/atesa/test/ts_guess.prmtop" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/aimless_shooting-1.0-py3-none-any.whl" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/aimless_shooting-1.0.tar.gz" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/aimless_shooting.iml" afterPath="$PROJECT_DIR$/.idea/aimless_shooting.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.pytest_cache/v/cache/lastfailed" afterPath="$PROJECT_DIR$/.pytest_cache/v/cache/lastfailed" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.pytest_cache/v/cache/nodeids" afterPath="$PROJECT_DIR$/.pytest_cache/v/cache/nodeids" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atesa/Burgin_LMAX.py" afterPath="$PROJECT_DIR$/atesa/Burgin_LMAX.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atesa/__init__.py" afterPath="$PROJECT_DIR$/atesa/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atesa/atesa.py" afterPath="$PROJECT_DIR$/atesa/atesa.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atesa/committor_resample.py" afterPath="$PROJECT_DIR$/atesa/committor_resample.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atesa/rc_eval.py" afterPath="$PROJECT_DIR$/atesa/rc_eval.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atesa/templates/batch_pbs.tpl" afterPath="$PROJECT_DIR$/atesa/templates/batch_pbs.tpl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atesa/templates/batch_slurm.tpl" afterPath="$PROJECT_DIR$/atesa/templates/batch_slurm.tpl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atesa/test/__init__.py" afterPath="$PROJECT_DIR$/atesa/test/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atesa/test/test.rst7" afterPath="$PROJECT_DIR$/atesa/test/test.rst7" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atesa/test/test_return_rcs.py" afterPath="$PROJECT_DIR$/atesa/test/test_return_rcs.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -55,72 +51,107 @@
     <SUITE FILE_PATH="coverage/aimless_shooting$test.coverage" NAME="test Coverage Results" MODIFIED="1530579784963" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/aimless_shooting" />
     <SUITE FILE_PATH="coverage/aimless_shooting$aimless_shooting.coverage" NAME="aimless_shooting Coverage Results" MODIFIED="1531324169231" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/aimless_shooting" />
     <SUITE FILE_PATH="coverage/aimless_shooting$temp.coverage" NAME="temp Coverage Results" MODIFIED="1533692105606" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/aimless_shooting/test" />
-    <SUITE FILE_PATH="coverage/aimless_shooting$mbar.coverage" NAME="mbar Coverage Results" MODIFIED="1537990288758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/aimless_shooting" />
+    <SUITE FILE_PATH="coverage/atesa$py_test_in_test_atesa_py.coverage" NAME="py.test in test_atesa.py Coverage Results" MODIFIED="1563542373096" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/atesa/test" />
+    <SUITE FILE_PATH="coverage/atesa$py_test_for_test_atesa_test_handle_bootstrap_flag_true.coverage" NAME="py.test for test_atesa.test_handle_bootstrap_flag_true Coverage Results" MODIFIED="1546356859459" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/atesa/test" />
     <SUITE FILE_PATH="coverage/aimless_shooting$aimless_shooting_test.coverage" NAME="aimless_shooting_test Coverage Results" MODIFIED="1533221762619" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/aimless_shooting/test" />
-    <SUITE FILE_PATH="coverage/aimless_shooting$test_increment_velocity.coverage" NAME="test_increment_velocity Coverage Results" MODIFIED="1534790184164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/aimless_shooting/test" />
     <SUITE FILE_PATH="coverage/aimless_shooting$rc_eval.coverage" NAME="rc_eval Coverage Results" MODIFIED="1530119132407" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/aimless_shooting" />
+    <SUITE FILE_PATH="coverage/atesa$190624_bootstrap.coverage" NAME="190624_bootstrap Coverage Results" MODIFIED="1561649608576" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../atesa_bootstrap_test" />
+    <SUITE FILE_PATH="coverage/atesa$py_test_for_test_atesa_test_pickframe_neg_n_adjust.coverage" NAME="py.test for test_atesa.test_pickframe_neg_n_adjust Coverage Results" MODIFIED="1544546842044" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/atesa/test" />
+    <SUITE FILE_PATH="coverage/atesa$py_test_for_test_atesa_test_revvels.coverage" NAME="py.test for test_atesa.test_revvels Coverage Results" MODIFIED="1544192625505" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/atesa/test" />
+    <SUITE FILE_PATH="coverage/atesa$bootstrap.coverage" NAME="bootstrap Coverage Results" MODIFIED="1560965748747" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../atesa_bootstrap_test" />
+    <SUITE FILE_PATH="coverage/atesa$190624_bootstrap__2_.coverage" NAME="190624_bootstrap (2) Coverage Results" MODIFIED="1562080438651" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../atesa_bootstrap_test_3" />
+    <SUITE FILE_PATH="coverage/atesa$py_test_for_test_atesa_test_cleanthread_dynamic_seed.coverage" NAME="py.test for test_atesa.test_cleanthread_dynamic_seed Coverage Results" MODIFIED="1563542350391" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/atesa/test" />
+    <SUITE FILE_PATH="coverage/atesa$py_test_for_test_atesa_test_candidatevalues_no_qdot.coverage" NAME="py.test for test_atesa.test_candidatevalues_no_qdot Coverage Results" MODIFIED="1563463859785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/atesa/test" />
+    <SUITE FILE_PATH="coverage/atesa$py_test_for_test_atesa_test_main_loop_as_no_groupfile.coverage" NAME="py.test for test_atesa.test_main_loop_as_no_groupfile Coverage Results" MODIFIED="1544198903505" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/atesa/test" />
+    <SUITE FILE_PATH="coverage/atesa$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1563457774577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/atesa" />
+    <SUITE FILE_PATH="coverage/atesa$190624_analysis.coverage" NAME="190624_analysis Coverage Results" MODIFIED="1561642066810" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../atesa_bootstrap_test" />
+    <SUITE FILE_PATH="coverage/atesa$atesa.coverage" NAME="atesa Coverage Results" MODIFIED="1543849555919" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/atesa" />
+    <SUITE FILE_PATH="coverage/aimless_shooting$mbar.coverage" NAME="mbar Coverage Results" MODIFIED="1537990288758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/aimless_shooting" />
     <SUITE FILE_PATH="coverage/aimless_shooting$make_restrt.coverage" NAME="make_restrt Coverage Results" MODIFIED="1526335502730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../Globus/XSEDE Comet/glycosynthases/171110_TmAfc_d224g/building_ts_guess" />
     <SUITE FILE_PATH="coverage/aimless_shooting$test_return_rcs.coverage" NAME="test_return_rcs Coverage Results" MODIFIED="1533828134159" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/aimless_shooting/test" />
+    <SUITE FILE_PATH="coverage/atesa$test_bootstrapping__1_.coverage" NAME="test_bootstrapping (1) Coverage Results" MODIFIED="1560352581015" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/atesa/temp" />
+    <SUITE FILE_PATH="coverage/atesa$190624_bootstrap__1_.coverage" NAME="190624_bootstrap (1) Coverage Results" MODIFIED="1561729566087" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../atesa_bootstrap_test_2" />
+    <SUITE FILE_PATH="coverage/atesa$test_bootstrapping.coverage" NAME="test_bootstrapping Coverage Results" MODIFIED="1560886423182" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/atesa" />
+    <SUITE FILE_PATH="coverage/atesa$analysis.coverage" NAME="analysis Coverage Results" MODIFIED="1560891546045" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../atesa_bootstrap_test" />
+    <SUITE FILE_PATH="coverage/aimless_shooting$test_increment_velocity.coverage" NAME="test_increment_velocity Coverage Results" MODIFIED="1534790184164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/aimless_shooting/test" />
+    <SUITE FILE_PATH="coverage/atesa$onebyone.coverage" NAME="onebyone Coverage Results" MODIFIED="1560888872468" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../atesa_bootstrap_test" />
+    <SUITE FILE_PATH="coverage/atesa$scrape_dvdl.coverage" NAME="scrape_dvdl Coverage Results" MODIFIED="1553007090973" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../Globus/Flux/insulin/190313_glycoforms_14_19_20" />
+    <SUITE FILE_PATH="coverage/atesa$py_test_for_test_atesa_test_handle_bootstrap_make_jobs.coverage" NAME="py.test for test_atesa.test_handle_bootstrap_make_jobs Coverage Results" MODIFIED="1546439722694" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/atesa/test" />
+    <SUITE FILE_PATH="coverage/atesa$atesa_test.coverage" NAME="atesa_test Coverage Results" MODIFIED="1544129097667" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/atesa/test" />
+    <SUITE FILE_PATH="coverage/atesa$committor_scatter.coverage" NAME="committor_scatter Coverage Results" MODIFIED="1539892965664" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../Globus/Flux/glycosynthases/171110_TmAfc_d224g/181018_committor_resample" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="atesa.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/atesa/atesa.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="54" column="93" lean-forward="true" selection-start-line="54" selection-start-column="93" selection-end-line="54" selection-end-column="93" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="rc_eval.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/atesa/rc_eval.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5130">
-              <caret line="342" column="53" lean-forward="true" selection-start-line="342" selection-start-column="53" selection-end-line="342" selection-end-column="53" />
-              <folding>
-                <element signature="e#635#725#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="committor_resample.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/atesa/committor_resample.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="311">
-              <caret line="40" column="80" lean-forward="false" selection-start-line="40" selection-start-column="80" selection-end-line="40" selection-end-column="80" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mbar.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/atesa/mbar.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-29">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Burgin_LMAX.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/atesa/Burgin_LMAX.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-29">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.89327353">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="atesa.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/atesa/atesa.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="30300">
+                  <caret line="2106" column="16" lean-forward="false" selection-start-line="2106" selection-start-column="9" selection-end-line="2106" selection-end-column="16" />
+                  <folding>
+                    <element signature="e#116#147#0" expanded="true" />
+                    <element signature="e#16984#19622#0" expanded="false" />
+                    <element signature="e#27893#30940#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Burgin_LMAX_josh.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test_2/Burgin_LMAX_josh.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="6000">
+                  <caret line="410" column="36" lean-forward="false" selection-start-line="410" selection-start-column="36" selection-end-line="410" selection-end-column="36" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="rc_eval.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/atesa/rc_eval.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="10920">
+                  <caret line="744" column="125" lean-forward="false" selection-start-line="744" selection-start-column="0" selection-end-line="745" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#635#725#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Burgin_LMAX.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/atesa/Burgin_LMAX.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1665">
+                  <caret line="120" column="22" lean-forward="false" selection-start-line="120" selection-start-column="22" selection-end-line="120" selection-end-column="22" />
+                  <folding>
+                    <element signature="e#0#31#0" expanded="true" />
+                    <element signature="e#12721#15959#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="test_atesa.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/atesa/test/test_atesa.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="4335">
+                  <caret line="292" column="0" lean-forward="false" selection-start-line="292" selection-start-column="0" selection-end-line="292" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#13#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -131,66 +162,68 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>as.out</find>
-      <find>eps_settings</find>
-      <find>eps_settings =</find>
-      <find>empty_windows</find>
-      <find>eps_dynamic_seed</find>
-      <find>eps_dege</find>
-      <find>eps_windows =</find>
-      <find>print(e</find>
-      <find>NameErr</find>
+      <find>norm</find>
+      <find>subprocess</find>
+      <find>time.</find>
+      <find>if restart</find>
       <find>FileNotFoundError</find>
-      <find>IOError</find>
-      <find>index =</find>
-      <find>~~~</find>
-      <find>eps_fwd =</find>
-      <find>if eps_settings</find>
-      <find>traj.wr</find>
-      <find>open('as.log', 'a').write</find>
-      <find>minmax_error</find>
-      <find>suffix</find>
-      <find>if restart:</find>
-      <find>but I can</find>
-      <find>but I can\'t find</find>
-      <find>empty_w</find>
-      <find>debug</find>
-      <find>spawnthread</find>
-      <find>reduce</find>
-      <find>prod_mem =</find>
+      <find>except IOError:</find>
+      <find>cancel</find>
+      <find>'temp.sh</find>
+      <find>temp</find>
+      <find>restart = Tr</find>
       <find>committor_suffix</find>
-      <find>def spawn</find>
-      <find>aimless_shooting</find>
+      <find>committor_suffix =</find>
+      <find>minmax =</find>
+      <find>minmax_error_behavior</find>
+      <find>time.time</find>
+      <find>rc_minmax</find>
+      <find>as_out</find>
+      <find>qdot_fac</find>
+      <find>as.out</find>
+      <find>settings.committor_analysis</find>
+      <find>rc_eval.ou</find>
+      <find>'rc_eval' + committor_suffix + '.out'</find>
+      <find>'rc_eval.out'</find>
+      <find>candidateval</find>
+      <find>def candidatevalues</find>
+      <find>settings)</find>
+      <find>settings):</find>
+      <find>candidatevalues</find>
+      <find>todo</find>
+      <find>find_ts</find>
     </findStrings>
     <replaceStrings>
-      <replace>as_working</replace>
-      <replace>as.log</replace>
-      <replace>_fwd</replace>
-      <replace>_bwd</replace>
-      <replace>commit_define_fwd</replace>
-      <replace>commit_define_bwd</replace>
-      <replace>prod</replace>
-      <replace>new_restart_name</replace>
-      <replace />
-      <replace>allthreads</replace>
-      <replace>append('@' + str</replace>
-      <replace>literal_ops</replace>
-      <replace>open('as.log', 'a').write</replace>
-      <replace>topology</replace>
-      <replace>local_home_folder</replace>
-      <replace>localgroupfile</replace>
-      <replace>local_env</replace>
-      <replace>batch_system</replace>
-      <replace>init</replace>
-      <replace>f.write</replace>
-      <replace>eval(str(equation))</replace>
-      <replace>committor_suffix</replace>
       <replace>rc_eval' + committor_suffix + '.out</replace>
-      <replace>logfile</replace>
-      <replace>IOError</replace>
       <replace>ATESA</replace>
       <replace>atesa.py</replace>
       <replace>atesa</replace>
+      <replace>subsample</replace>
+      <replace>GitHub</replace>
+      <replace>gmn_manual.mol2</replace>
+      <replace>logfile</replace>
+      <replace>' + logfile + '</replace>
+      <replace>local_index</replace>
+      <replace>ca.log</replace>
+      <replace>settings : argparse.Namespace</replace>
+      <replace>settings.candidateops</replace>
+      <replace>settings.commit_define</replace>
+      <replace>settings : Namespace</replace>
+      <replace>open(settings.logfile,</replace>
+      <replace>os.remove(settings.working_directory + '/</replace>
+      <replace>local_settings</replace>
+      <replace>Thread(settings)</replace>
+      <replace>settings.groupfile_list</replace>
+      <replace>settings.groupfile_max_delay</replace>
+      <replace>comittor_analysis</replace>
+      <replace>CV</replace>
+      <replace>CVs</replace>
+      <replace>IOError</replace>
+      <replace>str(len_data) + 'dimchk.out'</replace>
+      <replace>str(len_data) + '_dimchk.sh'</replace>
+      <replace>except (IOError, OSError):</replace>
+      <replace>committor_analysis</replace>
+      <replace>candidatevalues_rc_eval</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -199,26 +232,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/input_files/prod.in" />
-        <option value="$PROJECT_DIR$/input_files/init.in" />
-        <option value="$PROJECT_DIR$/../isEE/main.py" />
-        <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/test" />
-        <option value="$PROJECT_DIR$/../../Globus/XSEDE Comet/glycosynthases/171110_TmAfc_d224g/building_ts_guess/make_restrt.py" />
-        <option value="$PROJECT_DIR$/../../Globus/Flux/glycosynthases/171110_TmAfc_d224g/aimless_shooting/main.py" />
-        <option value="$PROJECT_DIR$/../../Globus/Flux/glycosynthases/171110_TmAfc_d224g/build_ts_guess/build_input_files.py" />
-        <option value="$PROJECT_DIR$/../../Globus/Flux/glycosynthases/171110_TmAfc_d224g/aimless_shooting/main_18.py" />
-        <option value="$PROJECT_DIR$/../../Globus/Flux/cellulose_synthases/180516_csla9_redo/main.py" />
-        <option value="$PROJECT_DIR$/aimless_shooting/main_18.py" />
-        <option value="$PROJECT_DIR$/aimless_shooting/two.his" />
-        <option value="$PROJECT_DIR$/aimless_shooting/one.his" />
-        <option value="$PROJECT_DIR$/aimless_shooting/test.py" />
-        <option value="$PROJECT_DIR$/aimless_shooting/test_return_rcs.py" />
-        <option value="$PROJECT_DIR$/aimless_shooting/package/rc_eval.py" />
-        <option value="$PROJECT_DIR$/aimless_shooting/templates/batch_pbs_groupfile.tpl" />
-        <option value="$PROJECT_DIR$/aimless_shooting/__init__.py" />
-        <option value="$PROJECT_DIR$/aimless_shooting/test/aimless_shooting_test.py" />
-        <option value="$PROJECT_DIR$/aimless_shooting/test/1.1_1.2_2.2_2.6.rst7" />
         <option value="$PROJECT_DIR$/aimless_shooting/test/temp.rst" />
         <option value="$PROJECT_DIR$/aimless_shooting/test/temp.py" />
         <option value="$PROJECT_DIR$/../fake_project/fakelies/aimless_shooting.py" />
@@ -230,8 +243,46 @@
         <option value="$PROJECT_DIR$/aimless_shooting/rc_eval.py" />
         <option value="$PROJECT_DIR$/aimless_shooting/committor_resample.py" />
         <option value="$PROJECT_DIR$/aimless_shooting/aimless_shooting.py" />
-        <option value="$PROJECT_DIR$/atesa/rc_eval.py" />
+        <option value="$PROJECT_DIR$/atesa/test/committor_scatter.py" />
+        <option value="$PROJECT_DIR$/../../Globus/Flux/glycosynthases/171110_TmAfc_d224g/181018_committor_resample/committor_scatter.py" />
+        <option value="$PROJECT_DIR$/../../Globus/XSEDE Comet/cellulose_synthases/181115_substrate_swap/main.py" />
         <option value="$PROJECT_DIR$/atesa/committor_resample.py" />
+        <option value="$PROJECT_DIR$/atesa/test/aimless_shooting_test.py" />
+        <option value="$PROJECT_DIR$/atesa/test/__init__.py" />
+        <option value="$PROJECT_DIR$/atesa/test/atesa_test.py" />
+        <option value="$PROJECT_DIR$/atesa/test/test_return_rcs.py" />
+        <option value="$PROJECT_DIR$/atesa/test/automatic_insulin.py" />
+        <option value="$PROJECT_DIR$/../../Globus/Flux/insulin/190313_glycoforms_14_19_20/scrape_dvdl.py" />
+        <option value="$PROJECT_DIR$/../../Globus/Flux/insulin/190319_glycoforms_14_19_20/scrape_dvdl.py" />
+        <option value="$PROJECT_DIR$/../../Globus/XSEDE Comet/insulin/190410_glycoforms_9_10_13/simply_script.py" />
+        <option value="$PROJECT_DIR$/../../Globus/XSEDE Comet/insulin/190410_glycoforms_9_10_13/scrape_dvdl.py" />
+        <option value="$USER_HOME$/Downloads/parallelData/scrape_dvdl.py" />
+        <option value="$PROJECT_DIR$/../HIS_rename/rename_for_leap.py" />
+        <option value="$PROJECT_DIR$/../../Globus/XSEDE Comet/cellulose_synthases/main_just_gmn.py" />
+        <option value="$PROJECT_DIR$/../../Globus/XSEDE Comet/cellulose_synthases/190418_new_cesa6/main.py" />
+        <option value="$PROJECT_DIR$/../../Globus/XSEDE Comet/insulin/190510_9_10_13_restarts/modified_script.py" />
+        <option value="$PROJECT_DIR$/../../Globus/XSEDE Comet/insulin/190510_9_10_13_restarts/scrape_dvdl.py" />
+        <option value="$PROJECT_DIR$/../../Globus/XSEDE Comet/celE/190425_saxs_1/190521_SNi_as/Burgin_LMAX.py" />
+        <option value="$PROJECT_DIR$/../../Globus/XSEDE Comet/celE/190425_saxs_1/190521_SNi_as/mbar.py" />
+        <option value="$PROJECT_DIR$/atesa/test_bootstrapping.py" />
+        <option value="$PROJECT_DIR$/../../Globus/XSEDE Comet/celE/190425_saxs_1/190613_relaxation/energy_decomp.py" />
+        <option value="$PROJECT_DIR$/../energy_decomp/energy_decomp.py" />
+        <option value="$PROJECT_DIR$/../../atesa_bootstrap_test/onebyone.py" />
+        <option value="$PROJECT_DIR$/../../atesa_bootstrap_test/analysis.py" />
+        <option value="$PROJECT_DIR$/../../atesa_bootstrap_test/bootstrap.py" />
+        <option value="$PROJECT_DIR$/../../atesa_bootstrap_test/190624_analysis.py" />
+        <option value="$PROJECT_DIR$/../../atesa_bootstrap_test/190624_bootstrap.py" />
+        <option value="$PROJECT_DIR$/atesa/Burgin_LMAX.py" />
+        <option value="$PROJECT_DIR$/../../atesa_bootstrap_test_2/Burgin_LMAX_josh.py" />
+        <option value="$PROJECT_DIR$/../../atesa_bootstrap_test_2/190624_bootstrap.py" />
+        <option value="$PROJECT_DIR$/../../atesa_bootstrap_test_3/190624_bootstrap.py" />
+        <option value="$PROJECT_DIR$/../../atesa_bootstrap_test_3/190624_analysis.py" />
+        <option value="$PROJECT_DIR$/../../Globus/XSEDE Comet/atesa_bootstrap_test_4/candidatevalues.py" />
+        <option value="$PROJECT_DIR$/../../Globus/XSEDE Comet/atesa_bootstrap_test_4/incremement_coords.py" />
+        <option value="$PROJECT_DIR$/atesa/__init__.py" />
+        <option value="$PROJECT_DIR$/atesa/test/test_atesa.py" />
+        <option value="$PROJECT_DIR$/atesa/rc_eval.py" />
+        <option value="$PROJECT_DIR$/atesa/atesa.py" />
       </list>
     </option>
   </component>
@@ -241,11 +292,11 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1280" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="35" />
     <option name="y" value="23" />
-    <option name="width" value="1920" />
-    <option name="height" value="1177" />
+    <option name="width" value="1245" />
+    <option name="height" value="777" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Just Compatibility">
@@ -269,20 +320,18 @@
             <id />
           </State>
           <State>
-            <id>Python</id>
+            <id>GeneralJavaScript</id>
+          </State>
+          <State>
+            <id>JavaScript</id>
           </State>
         </expanded-state>
-        <selected-state>
-          <State>
-            <id>PyCompatibilityInspection</id>
-          </State>
-        </selected-state>
       </profile-state>
     </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator currentView="Scope" currentSubView="Default" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -296,6 +345,29 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Default">
+          <expand>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="atesa" type="cbb8eebc:String" user="atesa" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="atesa" type="cbb8eebc:String" user="atesa" />
+              <item name="atesa" type="cbb8eebc:String" user="atesa" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="atesa" type="cbb8eebc:String" user="atesa" />
+              <item name="atesa" type="cbb8eebc:String" user="atesa" />
+              <item name="test" type="cbb8eebc:String" user="test" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -308,33 +380,37 @@
               <item name="atesa" type="462c0819:PsiDirectoryNode" />
               <item name="atesa" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="atesa" type="b2602c69:ProjectViewProjectNode" />
+              <item name="atesa" type="462c0819:PsiDirectoryNode" />
+              <item name="atesa" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/aimless_shooting/as_working/1.2_1.3_2.4_2.6.rst7_10_init_fwd.rst" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/aimless_shooting/templates" />
+      <recent name="$PROJECT_DIR$/aimless_shooting/package" />
+      <recent name="$PROJECT_DIR$/aimless_shooting/test" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/aimless_shooting/test" />
       <recent name="$PROJECT_DIR$/aimless_shooting/input_files" />
       <recent name="$PROJECT_DIR$/aimless_shooting/templates" />
       <recent name="$PROJECT_DIR$/aimless_shooting" />
       <recent name="$PROJECT_DIR$/input_files" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/aimless_shooting/templates" />
-      <recent name="$PROJECT_DIR$/aimless_shooting/package" />
-      <recent name="$PROJECT_DIR$/aimless_shooting/test" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -349,116 +425,163 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.mbar">
-    <configuration name="aimless_shooting" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python tests.py.test in test_atesa.py">
+    <configuration name="190624_bootstrap (2)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/aimless_shooting" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../atesa_bootstrap_test_3" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="aimless_shooting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/aimless_shooting/aimless_shooting.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../atesa_bootstrap_test_3/190624_bootstrap.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="mbar" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/aimless_shooting" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/atesa" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="aimless_shooting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/aimless_shooting/mbar.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/atesa/__init__.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="temp" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="true" type="tests" factoryName="Unittests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/aimless_shooting/test" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="$USER_HOME$/miniconda3/bin/python3.5m" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="aimless_shooting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/aimless_shooting/test/temp.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="_new_pattern" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
     </configuration>
-    <configuration name="test_increment_velocity" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="true" type="tests" factoryName="py.test">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/aimless_shooting/test" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="$USER_HOME$/miniconda3/bin/python3.5m" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="aimless_shooting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/aimless_shooting/test/test_increment_velocity.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
     </configuration>
-    <configuration name="test_return_rcs" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="my_pytest_config" type="tests" factoryName="py.test">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
+      <envs />
+      <option name="SDK_HOME" value="$USER_HOME$/miniconda3/bin/python3.5m" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="aimless_shooting" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/atesa/test&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+    </configuration>
+    <configuration name="py.test for test_atesa.test_candidatevalues_no_qdot" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/aimless_shooting/test" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/atesa/test" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="aimless_shooting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/aimless_shooting/test/test_return_rcs.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_atesa.test_candidatevalues_no_qdot&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
     </configuration>
-    <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.test_increment_velocity" />
-      <item index="1" class="java.lang.String" itemvalue="Python.temp" />
-      <item index="2" class="java.lang.String" itemvalue="Python.test_return_rcs" />
-      <item index="3" class="java.lang.String" itemvalue="Python.mbar" />
-      <item index="4" class="java.lang.String" itemvalue="Python.aimless_shooting" />
+    <configuration name="py.test for test_atesa.test_cleanthread_dynamic_seed" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/atesa/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="aimless_shooting" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_atesa.test_cleanthread_dynamic_seed&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+    </configuration>
+    <configuration name="py.test in test_atesa.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/atesa/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="aimless_shooting" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/atesa/test/test_atesa.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+    </configuration>
+    <list size="6">
+      <item index="0" class="java.lang.String" itemvalue="Python tests.my_pytest_config" />
+      <item index="1" class="java.lang.String" itemvalue="Python.190624_bootstrap (2)" />
+      <item index="2" class="java.lang.String" itemvalue="Python tests.py.test in test_atesa.py" />
+      <item index="3" class="java.lang.String" itemvalue="Python tests.py.test for test_atesa.test_candidatevalues_no_qdot" />
+      <item index="4" class="java.lang.String" itemvalue="Python.__init__" />
+      <item index="5" class="java.lang.String" itemvalue="Python tests.py.test for test_atesa.test_cleanthread_dynamic_seed" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.mbar" />
-        <item index="1" class="java.lang.String" itemvalue="Python.aimless_shooting" />
-        <item index="2" class="java.lang.String" itemvalue="Python.test_increment_velocity" />
-        <item index="3" class="java.lang.String" itemvalue="Python.test_return_rcs" />
-        <item index="4" class="java.lang.String" itemvalue="Python.temp" />
+        <item index="0" class="java.lang.String" itemvalue="Python tests.py.test in test_atesa.py" />
+        <item index="1" class="java.lang.String" itemvalue="Python tests.py.test for test_atesa.test_cleanthread_dynamic_seed" />
+        <item index="2" class="java.lang.String" itemvalue="Python tests.py.test for test_atesa.test_candidatevalues_no_qdot" />
+        <item index="3" class="java.lang.String" itemvalue="Python.__init__" />
+        <item index="4" class="java.lang.String" itemvalue="Python.190624_bootstrap (2)" />
       </list>
     </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
+  </component>
+  <component name="StructureViewFactory">
+    <option name="AUTOSCROLL_FROM_SOURCE" value="true" />
+    <option name="ACTIVE_ACTIONS" value=",SHOW_FIELDS,SHOW_INHERITED" />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -470,6 +593,38 @@
     </task>
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="py_test_for_test_atesa_test_candidatevalues_no_qdot - 2019.07.18 at 09h 46m 43s.xml">
+      <configuration name="py.test for test_atesa.test_candidatevalues_no_qdot" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_for_test_atesa_test_candidatevalues_no_qdot - 2019.07.18 at 09h 50m 03s.xml">
+      <configuration name="py.test for test_atesa.test_candidatevalues_no_qdot" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_for_test_atesa_test_candidatevalues_no_qdot - 2019.07.18 at 09h 50m 31s.xml">
+      <configuration name="py.test for test_atesa.test_candidatevalues_no_qdot" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_for_test_atesa_test_candidatevalues_no_qdot - 2019.07.18 at 09h 51m 36s.xml">
+      <configuration name="py.test for test_atesa.test_candidatevalues_no_qdot" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_for_test_atesa_test_candidatevalues_no_qdot - 2019.07.18 at 09h 52m 14s.xml">
+      <configuration name="py.test for test_atesa.test_candidatevalues_no_qdot" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_for_test_atesa_test_candidatevalues_no_qdot - 2019.07.18 at 11h 27m 26s.xml">
+      <configuration name="py.test for test_atesa.test_candidatevalues_no_qdot" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_for_test_atesa_test_candidatevalues_no_qdot - 2019.07.18 at 11h 27m 50s.xml">
+      <configuration name="py.test for test_atesa.test_candidatevalues_no_qdot" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_for_test_atesa_test_candidatevalues_no_qdot - 2019.07.18 at 11h 31m 04s.xml">
+      <configuration name="py.test for test_atesa.test_candidatevalues_no_qdot" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_for_test_atesa_test_cleanthread_dynamic_seed - 2019.07.19 at 09h 19m 22s.xml">
+      <configuration name="py.test for test_atesa.test_cleanthread_dynamic_seed" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_in_test_atesa_py - 2019.07.19 at 09h 20m 00s.xml">
+      <configuration name="py.test in test_atesa.py" configurationId="tests" />
+    </history-entry>
+  </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
@@ -480,17 +635,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1280" y="23" width="1920" height="1177" extended-state="6" />
-    <editor active="true" />
+    <frame x="35" y="23" width="1245" height="777" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.118743345" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.03990025" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46534654" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1980198" sideWeight="0.5063898" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32943293" sideWeight="0.4978701" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12601261" sideWeight="0.49361023" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973376" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32943293" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14205344" sideWeight="0.49361023" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24916667" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32853284" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -498,13 +652,13 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32348806" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35302392" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.03241895" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32943293" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32943293" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39963996" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39873987" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32853284" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -543,182 +697,302 @@
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="13" />
+      <option name="time" value="22" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../Globus/XSEDE Comet/glycosynthases/171110_TmAfc_d224g/building_ts_guess/make_restrt.py">
+    <entry file="file://$PROJECT_DIR$/aimless_shooting/aimless_shooting.py" />
+    <entry file="file://$PROJECT_DIR$/atesa/committor_probability.out" />
+    <entry file="file://$PROJECT_DIR$/atesa/test/committor_scatter.py" />
+    <entry file="file://$PROJECT_DIR$/../../Globus/Flux/glycosynthases/171110_TmAfc_d224g/181018_committor_resample/committor_scatter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="46" column="32" lean-forward="false" selection-start-line="46" selection-start-column="32" selection-end-line="46" selection-end-column="32" />
+        <state relative-caret-position="300">
+          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../Globus/Flux/glycosynthases/171110_TmAfc_d224g/build_ts_guess/build_input_files.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="54" column="26" lean-forward="false" selection-start-line="54" selection-start-column="26" selection-end-line="54" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../isEE/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5175">
-          <caret line="365" column="55" lean-forward="false" selection-start-line="365" selection-start-column="55" selection-end-line="365" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/input_files/prod.in" />
-    <entry file="file://$PROJECT_DIR$/main.py" />
-    <entry file="file://$PROJECT_DIR$/test" />
-    <entry file="file://$PROJECT_DIR$/../../Globus/Flux/glycosynthases/171110_TmAfc_d224g/aimless_shooting/main.py" />
-    <entry file="file://$PROJECT_DIR$/../../Globus/Flux/glycosynthases/171110_TmAfc_d224g/aimless_shooting/main_18.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="46" column="254" lean-forward="false" selection-start-line="46" selection-start-column="254" selection-end-line="46" selection-end-column="254" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../Globus/Flux/cellulose_synthases/180516_csla9_redo/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="27" column="13" lean-forward="false" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/main_18.py" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/ts_guess.prmtop" />
-    <entry file="uml://Python/#/Users/tburgin/Documents/PycharmProjects/aimless_shooting/aimless_shooting/aimless_shooting.py">
+    <entry file="uml://Python/#/Users/tburgin/Documents/PycharmProjects/atesa/atesa/atesa.py">
       <provider selected="true" editor-type-id="UmlEditorProvider">
         <state>
           <ID>Python</ID>
-          <OriginalElement>#/Users/tburgin/Documents/PycharmProjects/aimless_shooting/aimless_shooting/aimless_shooting.py</OriginalElement>
+          <OriginalElement>#/Users/tburgin/Documents/PycharmProjects/atesa/atesa/atesa.py</OriginalElement>
           <nodes>
-            <node x="" y="">aimless_shooting.aimless_shooting.Thread</node>
             <node x="" y="">_collections_abc.Hashable</node>
+            <node x="" y="">atesa.atesa.Thread</node>
             <node x="" y="">object</node>
           </nodes>
           <notes />
           <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="149.0" y="95.0" />
+          <settings layout="Hierarchic Group" zoom="1.0" x="81.0" y="95.0" />
           <SelectedNodes />
           <Categories />
           <SCOPE>All</SCOPE>
         </state>
       </provider>
     </entry>
-    <entry file="uml://Python/#/Users/tburgin/Documents/PycharmProjects/aimless_shooting/aimless_shooting/rc_eval.py">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>Python</ID>
-          <OriginalElement>#/Users/tburgin/Documents/PycharmProjects/aimless_shooting/aimless_shooting/rc_eval.py</OriginalElement>
-          <nodes />
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="847.0" y="394.0" />
-          <SelectedNodes />
-          <Categories />
-          <SCOPE>All</SCOPE>
+    <entry file="file://$PROJECT_DIR$/../../Globus/XSEDE Comet/cellulose_synthases/181115_substrate_swap/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="278" column="74" lean-forward="false" selection-start-line="278" selection-start-column="74" selection-end-line="278" selection-end-column="74" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/two.his" />
-    <entry file="file://$PROJECT_DIR$/err" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/memory_profiler.log" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/dthbsht" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/package/rc_eval.py" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/test.py" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/one.his" />
-    <entry file="file://$PROJECT_DIR$/LICENSE">
+    <entry file="file://$PROJECT_DIR$/../../TmAfc_Paper/fucosyn.tex">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/test/test_aimless_shooting.py" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/test/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/templates/batch_pbs_groupfile.tpl" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/test/1.1_1.2_2.2_2.6.rst7" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/../fake_project/fakelies/aimless_shooting.py" />
-    <entry file="file://$PROJECT_DIR$/../../Globus/Flux/glycosynthases/171110_TmAfc_d224g/committor_analysis/as_justin-models.txt">
+    <entry file="file://$PROJECT_DIR$/atesa/test/temp.py" />
+    <entry file="file://$PROJECT_DIR$/atesa/test/aimless_shooting_test.py" />
+    <entry file="file://$PROJECT_DIR$/atesa/test/test_return_rcs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="17" lean-forward="true" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.pytest_cache/v/cache/nodeids">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/input_files/prod.in" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/templates/eps_in.tpl" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/test/temp.rst" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/test/temp.py" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/test/test_increment_velocity.py" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/test/aimless_shooting_test.py" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/test/test_return_rcs.py" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/templates/batch_pbs.tpl" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/templates/batch_slurm.tpl" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/Burgin_LMAX.py" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/input_files/committor_analysis.in" />
-    <entry file="file://$USER_HOME$/miniconda3/lib/python3.5/site-packages/matplotlib/pyplot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1988">
-          <caret line="567" column="47" lean-forward="true" selection-start-line="567" selection-start-column="47" selection-end-line="567" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="32" lean-forward="true" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/mbar.py" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/rc_eval.py" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/committor_resample.py" />
-    <entry file="file://$PROJECT_DIR$/aimless_shooting/aimless_shooting.py" />
-    <entry file="file://$PROJECT_DIR$/atesa/committor_probability.out">
+    <entry file="file://$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/atesa/Burgin_LMAX.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-29">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/atesa/committor_resample.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="40" column="80" lean-forward="false" selection-start-line="40" selection-start-column="80" selection-end-line="40" selection-end-column="80" />
-          <folding />
+        <state relative-caret-position="2265">
+          <caret line="162" column="9" lean-forward="false" selection-start-line="162" selection-start-column="4" selection-end-line="162" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Globus/Flux/insulin/190313_glycoforms_14_19_20/scrape_dvdl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1060">
+          <caret line="5" column="9" lean-forward="false" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Globus/XSEDE Comet/insulin/190410_glycoforms_9_10_13/scrape_dvdl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="101">
+          <caret line="11" column="15" lean-forward="false" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/parallelData/scrape_dvdl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="41" column="20" lean-forward="true" selection-start-line="41" selection-start-column="20" selection-end-line="41" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Globus/Flux/insulin/190319_glycoforms_14_19_20/scrape_dvdl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../HIS_rename/rename_for_leap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1575">
+          <caret line="105" column="75" lean-forward="false" selection-start-line="105" selection-start-column="75" selection-end-line="105" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Globus/XSEDE Comet/cellulose_synthases/main_just_gmn.py" />
+    <entry file="file://$PROJECT_DIR$/../../Globus/XSEDE Comet/insulin/190510_9_10_13_restarts/simply_script.py" />
+    <entry file="file://$PROJECT_DIR$/../../Globus/XSEDE Comet/insulin/190410_glycoforms_9_10_13/simply_script.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="146" column="52" lean-forward="false" selection-start-line="146" selection-start-column="43" selection-end-line="146" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Globus/XSEDE Comet/insulin/190510_9_10_13_restarts/modified_script.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="92" column="73" lean-forward="false" selection-start-line="92" selection-start-column="73" selection-end-line="92" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Globus/XSEDE Comet/insulin/190510_9_10_13_restarts/scrape_dvdl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="66" column="23" lean-forward="false" selection-start-line="66" selection-start-column="23" selection-end-line="66" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Globus/XSEDE Comet/celE/190425_saxs_1/190521_SNi_as/Burgin_LMAX.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="221" column="32" lean-forward="false" selection-start-line="221" selection-start-column="32" selection-end-line="221" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Globus/XSEDE Comet/cellulose_synthases/190418_new_cesa6/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="177" column="32" lean-forward="false" selection-start-line="177" selection-start-column="32" selection-end-line="177" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/atesa/mbar.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-29">
+        <state relative-caret-position="-520">
+          <caret line="146" column="37" lean-forward="false" selection-start-line="146" selection-start-column="37" selection-end-line="146" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/atesa/temp/test_bootstrapping.py" />
+    <entry file="file://$PROJECT_DIR$/../../Globus/XSEDE Comet/celE/190425_saxs_1/190521_SNi_as/mbar.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="960">
+          <caret line="69" column="33" lean-forward="false" selection-start-line="69" selection-start-column="33" selection-end-line="69" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Globus/XSEDE Comet/celE/190425_saxs_1/190613_relaxation/energy_decomp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="24" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/miniconda3/lib/python3.5/site-packages/pytraj/analysis/energy_analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="142" column="23" lean-forward="true" selection-start-line="142" selection-start-column="23" selection-end-line="142" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../energy_decomp/energy_decomp.py" />
+    <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test/Burgin_LMAX.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5762">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test/analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="4" lean-forward="false" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="91" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test/onebyone.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="85" lean-forward="false" selection-start-line="21" selection-start-column="85" selection-end-line="21" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/atesa/Burgin_LMAX.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1665">
+          <caret line="120" column="22" lean-forward="false" selection-start-line="120" selection-start-column="22" selection-end-line="120" selection-end-column="22" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#0#31#0" expanded="true" />
+            <element signature="e#12721#15959#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test/190624_analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="13" column="25" lean-forward="false" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test_2/190624_bootstrap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="61" lean-forward="true" selection-start-line="25" selection-start-column="61" selection-end-line="25" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test/190624_bootstrap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1395">
+          <caret line="93" column="132" lean-forward="false" selection-start-line="93" selection-start-column="31" selection-end-line="93" selection-end-column="132" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test_3/190624_bootstrap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-82">
+          <caret line="0" column="13" lean-forward="false" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test_3/190624_analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="20" column="35" lean-forward="false" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test/bootstrap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/atesa/test/automatic_insulin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Globus/XSEDE Comet/atesa_bootstrap_test_4/candidatevalues.py" />
+    <entry file="file://$PROJECT_DIR$/../../Globus/XSEDE Comet/atesa_bootstrap_test_4/incremement_coords.py" />
+    <entry file="file://$PROJECT_DIR$/atesa/test_bootstrapping.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="705">
+          <caret line="128" column="12" lean-forward="false" selection-start-line="128" selection-start-column="12" selection-end-line="129" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/atesa/test/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/atesa/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="27" lean-forward="false" selection-start-line="1" selection-start-column="27" selection-end-line="1" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test_2/Burgin_LMAX_josh.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6000">
+          <caret line="410" column="36" lean-forward="false" selection-start-line="410" selection-start-column="36" selection-end-line="410" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/atesa/rc_eval.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5130">
-          <caret line="342" column="53" lean-forward="true" selection-start-line="342" selection-start-column="53" selection-end-line="342" selection-end-column="53" />
+        <state relative-caret-position="10920">
+          <caret line="744" column="125" lean-forward="false" selection-start-line="744" selection-start-column="0" selection-end-line="745" selection-end-column="0" />
           <folding>
             <element signature="e#635#725#0" expanded="true" />
           </folding>
@@ -727,11 +1001,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/atesa/atesa.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="54" column="93" lean-forward="true" selection-start-line="54" selection-start-column="93" selection-end-line="54" selection-end-column="93" />
-          <folding />
+        <state relative-caret-position="30300">
+          <caret line="2106" column="16" lean-forward="false" selection-start-line="2106" selection-start-column="9" selection-end-line="2106" selection-end-column="16" />
+          <folding>
+            <element signature="e#116#147#0" expanded="true" />
+            <element signature="e#16984#19622#0" expanded="false" />
+            <element signature="e#27893#30940#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/atesa/test/test_atesa.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4335">
+          <caret line="292" column="0" lean-forward="false" selection-start-line="292" selection-start-column="0" selection-end-line="292" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

@@ -1,0 +1,6 @@
+eps.rst7 acceptance ratio: 1/1, or 100.0%
+  Status: move 2 queued
+eps.rst7_1_1.rst7 acceptance ratio: 0/0, or 0%
+  Status: move 1 queued
+eps.rst7_1_2.rst7 acceptance ratio: 0/0, or 0%
+  Status: move 1 queued

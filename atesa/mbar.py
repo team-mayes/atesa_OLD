@@ -60,7 +60,7 @@ def main(input_file,bootstrap=True,bootstrapN=0,error=[]):
         for i in range(len(windows)):
             data[i] = random.sample(data[i],bootstrapN)
 
-    nbins = 4
+    nbins = 4   # todo: make this an input option
     left_boundary = 0
     fullPMF = []
     fullRC = []
@@ -71,7 +71,7 @@ def main(input_file,bootstrap=True,bootstrapN=0,error=[]):
         fig = plt.figure()
         ax4 = fig.add_subplot(111)
         error_index = 0
-    for index in range(len(windows)):
+    for index in range(len(windows)): # todo: find appropriate citation for this. I honestly forget how this works...
         #nbins = max([int(np.ceil(len(data[index])/60)),4])
         probs = [0 for null in range(nbins)]
         thismin = min(data[index])
@@ -158,6 +158,8 @@ def main(input_file,bootstrap=True,bootstrapN=0,error=[]):
     fig.canvas.draw()
     plt.show()
 
+    # todo: also write raw values to a text file for users who would prefer to do their own plotting or analysis
+
     # Section for writing WHAM input files, if desired
     # open('eps.meta','w').close()
     # for index in range(len(windows)):
@@ -218,7 +220,7 @@ def update_progress(progress, message='Progress'):
     sys.stdout.flush()
 
 if __name__ == '__main__':
-    input_file = 'test/a13_eps_results.out'
+    input_file = 'test/a13_eps_results.out' # todo: modify this to take input on the command line
     bootstrapN = 25    # number of bootstrap samples to include in each window
     bootstrapCyc = 1000  # number of bootstrapping iterations to perform in error estimation
     if bootstrapCyc:

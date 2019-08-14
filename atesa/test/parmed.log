@@ -1,0 +1,5 @@
+# Log started on 01/04/2019 [mm/dd/yyyy] at 10:34:24
+parm test.prmtop
+help
+printBonds :443@N3
+quit

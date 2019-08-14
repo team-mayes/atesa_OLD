@@ -34,3 +34,6 @@ module load amber/18
 cd {{ working_directory }}
 
 mpirun {{ solver }}.MPI -ng 1 -groupfile none -O -i {{ inp }} -o {{ out }} -p {{ prmtop }} -c {{ inpcrd }} -r {{ rst }} -x {{ nc }}
+
+rm {{ out }}
+rm {{ self_name }}
