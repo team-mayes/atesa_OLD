@@ -13,14 +13,25 @@
     <SUITE FILE_PATH="coverage/atesa$py_test_in_test_atesa_py.coverage" NAME="py.test in test_atesa.py Coverage Results" MODIFIED="1563377346865" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/atesa$test_bootstrapping.coverage" NAME="test_bootstrapping Coverage Results" MODIFIED="1563376610250" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/atesa$test_asout.coverage" NAME="test_asout Coverage Results" MODIFIED="1564758234630" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Globus/XSEDE Comet/celE/190425_saxs_1/190802_SNi_reanalysis" />
+    <SUITE FILE_PATH="coverage/atesa$py_test_for_test_atesa_test_cleanthread_dynamic_seed.coverage" NAME="py.test for test_atesa.test_cleanthread_dynamic_seed Coverage Results" MODIFIED="1566574208858" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="test_atesa.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/test_atesa.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="524">
+              <caret line="382" column="34" lean-forward="true" selection-start-line="382" selection-start-column="34" selection-end-line="382" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="atesa.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/atesa.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="1424" column="7" lean-forward="false" selection-start-line="1424" selection-start-column="7" selection-end-line="1424" selection-end-column="7" />
+            <state relative-caret-position="446">
+              <caret line="234" column="41" lean-forward="false" selection-start-line="234" selection-start-column="41" selection-end-line="234" selection-end-column="41" />
               <folding>
                 <element signature="e#116#147#0" expanded="true" />
                 <element signature="e#198928#203254#0" expanded="false" />
@@ -53,11 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="atesa_lmax.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="atesa_lmax.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/atesa_lmax.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="244" column="164" lean-forward="false" selection-start-line="244" selection-start-column="100" selection-end-line="244" selection-end-column="164" />
+            <state relative-caret-position="4980">
+              <caret line="435" column="39" lean-forward="false" selection-start-line="435" selection-start-column="39" selection-end-line="435" selection-end-column="39" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#13860#17098#0" expanded="false" />
@@ -104,8 +115,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>candidateops =</find>
-      <find>committor_suffix</find>
       <find>settings.committor_analysis</find>
       <find>numpy.mean</find>
       <find>def</find>
@@ -113,7 +122,6 @@
       <find>minmax_error_behavior</find>
       <find>minmax_</find>
       <find>open('as.out', 'a</find>
-      <find>def inter</find>
       <find>as.out',</find>
       <find>eps_sett</find>
       <find>eps_windows</find>
@@ -132,8 +140,11 @@
       <find>print(</find>
       <find>ugly</find>
       <find>def revvel</find>
-      <find>numpy.divide([numpy.sqrt(item) for item in numpy.diag(optim_result.hess_inv)], optim_result.x)]</find>
       <find>output</find>
+      <find>def inter</find>
+      <find>numpy.divide([numpy.sqrt(item) for item in numpy.diag(optim_result.hess_inv)], optim_result.x)]</find>
+      <find>as_test.out</find>
+      <find>as_test</find>
     </findStrings>
     <replaceStrings>
       <replace>'/rc_eval_' + settings.committor_suffix</replace>
@@ -158,6 +169,7 @@
         <option value="$PROJECT_DIR$/atesa.py" />
         <option value="$PROJECT_DIR$/atesa_lmax.py" />
         <option value="$PROJECT_DIR$/../../../atesa_bootstrap_test_4/get_mean_err.py" />
+        <option value="$PROJECT_DIR$/test/test_atesa.py" />
       </list>
     </option>
   </component>
@@ -168,10 +180,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="38" />
+    <option name="x" value="1280" />
     <option name="y" value="23" />
-    <option name="width" value="1242" />
-    <option name="height" value="777" />
+    <option name="width" value="1920" />
+    <option name="height" value="1177" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -197,6 +209,11 @@
               <item name="atesa" type="b2602c69:ProjectViewProjectNode" />
               <item name="atesa" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="atesa" type="b2602c69:ProjectViewProjectNode" />
+              <item name="atesa" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -220,7 +237,23 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test_asout">
+  <component name="RunManager" selected="Python tests.py.test for test_atesa.test_cleanthread_dynamic_seed">
+    <configuration name="py.test for test_atesa.test_cleanthread_dynamic_seed" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="atesa" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_atesa.test_cleanthread_dynamic_seed&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+    </configuration>
     <configuration name="py.test in test_atesa.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -273,16 +306,18 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <list size="3">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Python.test_bootstrapping" />
       <item index="1" class="java.lang.String" itemvalue="Python tests.py.test in test_atesa.py" />
       <item index="2" class="java.lang.String" itemvalue="Python.test_asout" />
+      <item index="3" class="java.lang.String" itemvalue="Python tests.py.test for test_atesa.test_cleanthread_dynamic_seed" />
     </list>
     <recent_temporary>
-      <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="Python.test_asout" />
-        <item index="1" class="java.lang.String" itemvalue="Python tests.py.test in test_atesa.py" />
-        <item index="2" class="java.lang.String" itemvalue="Python.test_bootstrapping" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="Python tests.py.test for test_atesa.test_cleanthread_dynamic_seed" />
+        <item index="1" class="java.lang.String" itemvalue="Python.test_asout" />
+        <item index="2" class="java.lang.String" itemvalue="Python tests.py.test in test_atesa.py" />
+        <item index="3" class="java.lang.String" itemvalue="Python.test_bootstrapping" />
       </list>
     </recent_temporary>
   </component>
@@ -300,6 +335,15 @@
     <servers />
   </component>
   <component name="TestHistory">
+    <history-entry file="py_test_for_test_atesa_test_cleanthread_dynamic_seed - 2019.08.23 at 11h 26m 23s.xml">
+      <configuration name="py.test for test_atesa.test_cleanthread_dynamic_seed" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_for_test_atesa_test_cleanthread_dynamic_seed - 2019.08.23 at 11h 28m 17s.xml">
+      <configuration name="py.test for test_atesa.test_cleanthread_dynamic_seed" configurationId="tests" />
+    </history-entry>
+    <history-entry file="py_test_for_test_atesa_test_cleanthread_dynamic_seed - 2019.08.23 at 11h 30m 14s.xml">
+      <configuration name="py.test for test_atesa.test_cleanthread_dynamic_seed" configurationId="tests" />
+    </history-entry>
     <history-entry file="py_test_in_test_atesa_py - 2019.07.17 at 11h 19m 01s.xml">
       <configuration name="py.test in test_atesa.py" configurationId="tests" />
     </history-entry>
@@ -320,16 +364,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="38" y="23" width="1242" height="777" extended-state="6" />
+    <frame x="1280" y="23" width="1920" height="1177" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18166667" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11608094" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32943293" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12961297" sideWeight="0.5021299" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20253165" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10261026" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12961297" sideWeight="0.4978701" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30243024" sideWeight="0.4978701" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973376" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -520,16 +564,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_atesa.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#13#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Burgin_LMAX_josh.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
@@ -543,16 +577,6 @@
         <state relative-caret-position="255">
           <caret line="17" column="34" lean-forward="true" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../Globus/XSEDE Comet/celE/190425_saxs_1/190802_SNi_reanalysis/test_asout.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="9" lean-forward="false" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -570,17 +594,6 @@
           <settings layout="Hierarchic Group" zoom="1.0" x="57.0" y="55.0" />
           <SelectedNodes />
           <Categories />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/atesa.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="1424" column="7" lean-forward="false" selection-start-line="1424" selection-start-column="7" selection-end-line="1424" selection-end-column="7" />
-          <folding>
-            <element signature="e#116#147#0" expanded="true" />
-            <element signature="e#198928#203254#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -622,14 +635,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/atesa.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="446">
+          <caret line="234" column="41" lean-forward="false" selection-start-line="234" selection-start-column="41" selection-end-line="234" selection-end-column="41" />
+          <folding>
+            <element signature="e#116#147#0" expanded="true" />
+            <element signature="e#198928#203254#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/atesa_lmax.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="244" column="164" lean-forward="false" selection-start-line="244" selection-start-column="100" selection-end-line="244" selection-end-column="164" />
+        <state relative-caret-position="4980">
+          <caret line="435" column="39" lean-forward="false" selection-start-line="435" selection-start-column="39" selection-end-line="435" selection-end-column="39" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
             <element signature="e#13860#17098#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../Globus/XSEDE Comet/celE/190425_saxs_1/190802_SNi_reanalysis/test_asout.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="9" lean-forward="false" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_atesa.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="524">
+          <caret line="382" column="34" lean-forward="true" selection-start-line="382" selection-start-column="34" selection-end-line="382" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -3,5 +3,6 @@
   "aimless_shooting/test/test_return_rcs.py::TestCase": true,
   "aimless_shooting/test/test_return_rcs.py::TestReturn_rcs": true,
   "aimless_shooting/test/test_return_rcs.py::TestReturn_rcs::test_return_rcs": true,
-  "atesa/test/test_atesa.py::test_handle_bootstrap_make_jobs": true
+  "atesa/test/test_atesa.py::test_handle_bootstrap_make_jobs": true,
+  "atesa/test_bootstrapping.py": true
 }

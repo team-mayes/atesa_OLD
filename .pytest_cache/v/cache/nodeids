@@ -19,7 +19,5 @@
   "atesa/test/test_atesa.py::test_candidatevalues_different_frame",
   "atesa/test/test_atesa.py::test_candidatevalues_not_literal_ops",
   "atesa/test/test_atesa.py::test_revvels",
-  "atesa/test/test_atesa.py::test_main_loop_as_no_groupfile",
-  "atesa/test/test_atesa.py::test_handle_bootstrap_flag_true",
-  "atesa/test/test_atesa.py::test_handle_bootstrap_make_jobs"
+  "atesa/test/test_atesa.py::test_main_loop_as_no_groupfile"
 ]
