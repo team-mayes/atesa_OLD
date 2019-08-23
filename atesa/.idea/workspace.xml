@@ -19,21 +19,21 @@
       <file leaf-file-name="atesa.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/atesa.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="37750">
-              <caret line="3033" column="47" lean-forward="false" selection-start-line="3033" selection-start-column="43" selection-end-line="3033" selection-end-column="47" />
+            <state relative-caret-position="315">
+              <caret line="1424" column="7" lean-forward="false" selection-start-line="1424" selection-start-column="7" selection-end-line="1424" selection-end-column="7" />
               <folding>
                 <element signature="e#116#147#0" expanded="true" />
-                <element signature="e#198596#202922#0" expanded="false" />
+                <element signature="e#198928#203254#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_asout.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test_asout.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../../Globus/XSEDE Comet/celE/190425_saxs_1/190802_SNi_reanalysis/test_asout.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="173" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="173" />
+            <state relative-caret-position="330">
+              <caret line="22" column="9" lean-forward="false" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="9" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -44,8 +44,8 @@
       <file leaf-file-name="rc_eval.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rc_eval.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-249">
-              <caret line="617" column="16" lean-forward="true" selection-start-line="617" selection-start-column="16" selection-end-line="617" selection-end-column="16" />
+            <state relative-caret-position="6346">
+              <caret line="617" column="16" lean-forward="false" selection-start-line="617" selection-start-column="16" selection-end-line="617" selection-end-column="16" />
               <folding>
                 <element signature="e#635#725#0" expanded="true" />
               </folding>
@@ -53,14 +53,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="atesa_lmax.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="atesa_lmax.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/atesa_lmax.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="581">
-              <caret line="201" column="119" lean-forward="true" selection-start-line="201" selection-start-column="119" selection-end-line="201" selection-end-column="119" />
+            <state relative-caret-position="361">
+              <caret line="244" column="164" lean-forward="false" selection-start-line="244" selection-start-column="100" selection-end-line="244" selection-end-column="164" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
-                <element signature="e#13673#16911#0" expanded="false" />
+                <element signature="e#13860#17098#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -69,10 +69,22 @@
       <file leaf-file-name="190725_fisher.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../../Globus/XSEDE Comet/atesa_error_test_noqdot/190725_fisher.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="48" column="8" lean-forward="false" selection-start-line="48" selection-start-column="8" selection-end-line="48" selection-end-column="132" />
+            <state relative-caret-position="300">
+              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="21" selection-end-column="55" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="get_mean_err.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../atesa_bootstrap_test_4/get_mean_err.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="16" column="44" lean-forward="false" selection-start-line="16" selection-start-column="44" selection-end-line="16" selection-end-column="44" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -92,8 +104,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>candidatevalues(</find>
-      <find>candidate_op</find>
       <find>candidateops =</find>
       <find>committor_suffix</find>
       <find>settings.committor_analysis</find>
@@ -119,8 +129,10 @@
       <find>restart and</find>
       <find>if restart</find>
       <find>todo:</find>
-      <find>ugly</find>
       <find>print(</find>
+      <find>ugly</find>
+      <find>def revvel</find>
+      <find>numpy.divide([numpy.sqrt(item) for item in numpy.diag(optim_result.hess_inv)], optim_result.x)]</find>
       <find>output</find>
     </findStrings>
     <replaceStrings>
@@ -142,9 +154,10 @@
         <option value="$PROJECT_DIR$/../../../atesa_error_test/190725_fisher.py" />
         <option value="$PROJECT_DIR$/../../../Globus/XSEDE Comet/atesa_error_test_noqdot/190725_fisher.py" />
         <option value="$PROJECT_DIR$/../../../Globus/XSEDE Comet/celE/190425_saxs_1/190802_SNi_reanalysis/test_asout.py" />
-        <option value="$PROJECT_DIR$/atesa_lmax.py" />
         <option value="$PROJECT_DIR$/rc_eval.py" />
         <option value="$PROJECT_DIR$/atesa.py" />
+        <option value="$PROJECT_DIR$/atesa_lmax.py" />
+        <option value="$PROJECT_DIR$/../../../atesa_bootstrap_test_4/get_mean_err.py" />
       </list>
     </option>
   </component>
@@ -192,7 +205,8 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/miniconda3/bin/python3.7" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -314,9 +328,9 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16596343" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20253165" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10261026" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973376" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -407,7 +421,7 @@
           <caret line="1211" column="14" lean-forward="true" selection-start-line="1211" selection-start-column="14" selection-end-line="1211" selection-end-column="14" />
           <folding>
             <element signature="e#116#147#0" expanded="true" />
-            <element signature="e#198596#202922#0" expanded="false" />
+            <element signature="e#198928#203254#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -418,7 +432,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#116#147#0" expanded="true" />
-            <element signature="e#198596#202922#0" expanded="false" />
+            <element signature="e#198928#203254#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -532,23 +546,60 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../../../Globus/XSEDE Comet/celE/190425_saxs_1/190802_SNi_reanalysis/test_asout.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" column="9" lean-forward="false" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://Python/#/Users/tburgin/Documents/PycharmProjects/atesa/atesa/atesa.py">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>Python</ID>
+          <OriginalElement>#/Users/tburgin/Documents/PycharmProjects/atesa/atesa/atesa.py</OriginalElement>
+          <nodes>
+            <node x="" y="">atesa.Thread</node>
+            <node x="" y="">object</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="57.0" y="55.0" />
+          <SelectedNodes />
+          <Categories />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/atesa.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="37750">
-          <caret line="3033" column="47" lean-forward="false" selection-start-line="3033" selection-start-column="43" selection-end-line="3033" selection-end-column="47" />
+        <state relative-caret-position="315">
+          <caret line="1424" column="7" lean-forward="false" selection-start-line="1424" selection-start-column="7" selection-end-line="1424" selection-end-column="7" />
           <folding>
             <element signature="e#116#147#0" expanded="true" />
-            <element signature="e#198596#202922#0" expanded="false" />
+            <element signature="e#198928#203254#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../../Globus/XSEDE Comet/atesa_error_test_noqdot/190725_fisher.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="48" column="8" lean-forward="false" selection-start-line="48" selection-start-column="8" selection-end-line="48" selection-end-column="132" />
+        <state relative-caret-position="300">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="21" selection-end-column="55" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rc_eval.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6346">
+          <caret line="617" column="16" lean-forward="false" selection-start-line="617" selection-start-column="16" selection-end-line="617" selection-end-column="16" />
+          <folding>
+            <element signature="e#635#725#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -561,33 +612,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../../../atesa_bootstrap_test_4/get_mean_err.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="44" lean-forward="false" selection-start-line="16" selection-start-column="44" selection-end-line="16" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/atesa_lmax.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="581">
-          <caret line="201" column="119" lean-forward="true" selection-start-line="201" selection-start-column="119" selection-end-line="201" selection-end-column="119" />
+        <state relative-caret-position="361">
+          <caret line="244" column="164" lean-forward="false" selection-start-line="244" selection-start-column="100" selection-end-line="244" selection-end-column="164" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
-            <element signature="e#13673#16911#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rc_eval.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-249">
-          <caret line="617" column="16" lean-forward="true" selection-start-line="617" selection-start-column="16" selection-end-line="617" selection-end-column="16" />
-          <folding>
-            <element signature="e#635#725#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../Globus/XSEDE Comet/celE/190425_saxs_1/190802_SNi_reanalysis/test_asout.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="173" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="173" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#13860#17098#0" expanded="false" />
           </folding>
         </state>
       </provider>

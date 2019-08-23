@@ -31,6 +31,21 @@ except TypeError:
 # thread is an independent series of simulations with its own acceptance ratio, and may or may not have a unique
 # starting structure.
 class Thread(object):           # add (object) explicitly to force compatibility of restart pickle file with Python 2
+    """
+    Object representing a series of simulations and containing the relevant information to define its current state.
+
+    Threads represent the level on which ATESA is parallelized. This flexible object is used for aimless shooting,
+    equilibrium path sampling, and committor analysis simulations.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    None
+
+    """
     def __init__(self, settings=argparse.Namespace()):
         self.basename = ''      # first part of name, universal to all files in the thread
         self.name = ''          # full name, identical to basename unless otherwise specified
@@ -66,7 +81,7 @@ class Thread(object):           # add (object) explicitly to force compatibility
 # system, and interpreting/modifying coordinate and trajectory files.
 def handle_groupfile(job_to_add='',settings=argparse.Namespace):
     """
-    Update attributes of settings.groupfile_list and return name of the groupfile that should be written to next
+    Update attributes of settings.groupfile_list and return name of the groupfile that should be written to next.
 
     Routine to handle groupfiles when necessary (i.e., when groupfile > 0). Maintains a list object keeping track of
     existing groupfiles and their contents as well as their statuses and ages. This function is called in makebatch()
@@ -85,14 +100,14 @@ def handle_groupfile(job_to_add='',settings=argparse.Namespace):
       4. if the list no longer contains any with status "construction", make a new, blank one and return its name
       5. otherwise, return the name of the groupfile with status "construction"
 
-    Format of each sublist of settings.groupfile_list:
-      [<NAME>, <STATUS>, <CONTENTS>, <TIME>]
+    Format of each sublist of settings.groupfile_list: [<NAME>, <STATUS>, <CONTENTS>, <TIME>]
           <NAME> is the name of the groupfile
           <STATUS> is any of:
               "construction", meaning this groupfile is the one to add new lines to (only one of these at a time),
               "completed", meaning the groupfile was submitted and has since terminated,
               "processed", meaning the groupfile has been fed through main_loop and followup jobs submitted, or
               a string of numbers indicating a jobid of a currently-running groupfile
+
           <CONTENTS> is a list of the jobs contained in the groupfile (their (thread.name + '_' + thread.type) values)
           <TIME> is the time in seconds when the groupfile was created
               if the current time - TIME > settings.groupfile_max_delay, then the groupfile is submitted regardless of length
@@ -182,7 +197,7 @@ def handle_groupfile(job_to_add='',settings=argparse.Namespace):
 
 def interact(type, settings):
     """
-    Handle submitting of jobs to the batch system or looking up of currently queued and running jobs
+    Handle submitting of jobs to the batch system or looking up of currently queued and running jobs.
 
     Parameters
     ----------
@@ -254,11 +269,12 @@ def interact(type, settings):
 
 def makebatch(thread, settings):
     """
-    Make the appropriate batch file for the given thread; or, append the appropriate line to the current groupfile
+    Make the appropriate batch file for the given thread; or, append the appropriate line to the current groupfile.
 
     Has two mutually exclusive branches:
     - When groupfile == 0, makes the batch file appropriate for thread.type, using other thread attributes as necessary,
       by filling a Jinja2 template from the "templates" directory
+
     - When groupfile > 0, appends a new line to the groupfile indicated by handle_groupfile() appropriate for
       thread.type.
 
@@ -429,7 +445,7 @@ def makebatch(thread, settings):
 
 def subbatch(thread,direction='',logfile='as.log',settings=argparse.Namespace):
     """
-    Submit the appropriate batch file for the given thread and direction to the batch system
+    Submit the appropriate batch file for the given thread and direction to the batch system.
 
     Has two mutually exclusive branches:
     - When groupfile == 0, simply constructs the name of the batch file to submit and calls interact() to do so
@@ -549,7 +565,7 @@ def subbatch(thread,direction='',logfile='as.log',settings=argparse.Namespace):
 
 def spawnthread(basename, thread_type='init', suffix='', settings=argparse.Namespace()):
     """
-    Generate a new Thread object with the desired specifications
+    Generate a new Thread object with the desired specifications.
 
     This is merely a shortcut function and may be deprecated in future releases in favor of defining Thread() in such a
     way as to make it obsolete. It ensures that Thread.name = Thread.basename + '_' + Thread.suffix.
@@ -747,9 +763,26 @@ def checkcommit(thread,direction,directory='',settings=argparse.Namespace()):
 
 
 def standalone_checkcommit(name, settings):   # todo: delete or modify this or checkcommit() so only one is needed
-    # This is basically just checkcommit() modified to work on individual coordinate files instead of with threads.
-    # This is for use with skip_log = True, so unlike in checkcommit, we never want to return a blank commitment flag;
-    # this is for analysis only, so if it's not commited to fwd or bwd, then it's failed.
+    """
+    Check a coordinate file for commitment to either of the user-defined basins and return a string indicating
+    the direction of that commitment, if applicable.
+
+    As checkcommit, but takes a trajectory/coordinate file name instead of a Thread.
+
+    Parameters
+    ----------
+    name : str
+        Name of trajectory file to check for commitment.
+    settings : Namespace
+        Global settings Namespace object.
+
+    Returns
+    -------
+    str
+        Either 'fwd' when the commit_fwd criteria are met; 'bwd' when the commit_bwd criteria are met; or '' when
+        neither are met. Alternatively, 'eps' if eps_settings was provided (no computations are performed in this case)
+
+    """
 
     if not os.path.isfile(settings.working_directory + '/' + name):  # if the file doesn't exist, return 'fail'
         return 'fail'
@@ -1390,7 +1423,7 @@ def candidatevalues(coord_file, frame=-1, reduce=False, settings=argparse.Namesp
 
 def revvels(thread):
     """
-    Write a new restart-format coordinate file by multiplying the velocity values from the most recent "*_init_fwd.rst"
+    Write a new restart-format coordinate file by multiplying the velocity values from the most recent "\*_init_fwd.rst"
     file belonging to thread by -1.
 
     This function provides the initial coordinates for "bwd" production simulations in ATESA. Velocities in
@@ -1402,7 +1435,7 @@ def revvels(thread):
     Parameters
     ----------
     thread : Thread
-        The Thread object that owns the *_init_fwd.rst file to reverse.
+        The Thread object that owns the \*_init_fwd.rst file to reverse.
 
     Returns
     -------
@@ -1432,17 +1465,11 @@ def revvels(thread):
             sys.stdout.write(line)
 
 
-
-# Then, define a loop that constitutes the runtime of the program. This loop will...
-#   assemble a list of all the jobs it needs to run,
-#   make the corresponding batch files and submit them, collecting the jobID's into a list,
-#   intermittently check for completion of jobs in its list, add the next step to the to-do list, and restart,
-#   before eventually terminating when its to-do list is empty and it has no outstanding jobs.
 def main_loop(settings):
     """
     Perform the sequence of simulations constituting a full ATESA run.
 
-    This is the primary runtime loop of this program, from which all the helper functions above are called (either
+    This is the primary runtime loop of this program, from which all the helper functions are called (either
     directly or by one another). Along with the helper functions, it builds Threads, submits them to the batch system,
     monitors them for completion, and handles the output and next steps once they've finished.
 
@@ -1986,15 +2013,16 @@ def initialize_eps(settings):
 
 def handle_bootstrap(settings):
     """
-    Handle tasks associated with bootstrapping convergence of the reaction coordinate produced by LMAX. This function
-    has branching behavior depending on what's going on when it's called:
+    Handle tasks associated with bootstrapping convergence of the reaction coordinate produced by LMAX.
+
+    This function has branching behavior depending on what's going on when it's called:
 
     If the variable settings.bootstrap_flag == True, it will just return True without running any jobs. This is so that
     once bootstrapping has returned True once, more tests will not be run even when handle_bootstrap() is called again.
 
     Else, if no bootstraping jobs are running or queued, it will call makebatch() and subbatch() to build and submit
     batch jobs that will run atesa_lmax.py on the current as.out file and on settings.bootstrap_n bootstrapped versions
-    of that file that this function will build
+    of that file that this function will build.
 
     Else, if those jobs are running or queued, it will return False.
 

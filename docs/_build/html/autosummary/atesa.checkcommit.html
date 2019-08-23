@@ -1,0 +1,262 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>atesa.checkcommit &mdash; atesa  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="atesa.standalone_checkcommit" href="atesa.standalone_checkcommit.html" />
+    <link rel="prev" title="atesa.spawnthread" href="atesa.spawnthread.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> atesa
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">For Users:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Under the Hood:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../functions.html">Function Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="atesa.main.html">atesa.main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.main_loop.html">atesa.main_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.interact.html">atesa.interact</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.makebatch.html">atesa.makebatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.subbatch.html">atesa.subbatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.spawnthread.html">atesa.spawnthread</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">atesa.checkcommit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.standalone_checkcommit.html">atesa.standalone_checkcommit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.pickframe.html">atesa.pickframe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.get_rc_value.html">atesa.get_rc_value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.cleanthread.html">atesa.cleanthread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.candidatevalues.html">atesa.candidatevalues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.revvels.html">atesa.revvels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.update_progress.html">atesa.update_progress</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.cv_analysis_func.html">atesa.cv_analysis_func</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.zip_for_transfer_func.html">atesa.zip_for_transfer_func</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.initialize_eps.html">atesa.initialize_eps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.init_find_ts.html">atesa.init_find_ts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.find_ts_loop.html">atesa.find_ts_loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atesa.handle_groupfile.html">atesa.handle_groupfile</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">atesa</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../functions.html">Function Documentation</a> &raquo;</li>
+        
+      <li>atesa.checkcommit</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/autosummary/atesa.checkcommit.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="atesa-checkcommit">
+<h1>atesa.checkcommit<a class="headerlink" href="#atesa-checkcommit" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="atesa.checkcommit">
+<code class="sig-prename descclassname">atesa.</code><code class="sig-name descname">checkcommit</code><span class="sig-paren">(</span><em class="sig-param">thread</em>, <em class="sig-param">direction</em>, <em class="sig-param">directory=''</em>, <em class="sig-param">settings=Namespace()</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/atesa/atesa.html#checkcommit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#atesa.checkcommit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check a currently running Thread for commitment to either of the user-defined basins and return a string indicating
+the direction of that commitment, if applicable.</p>
+<p>This function loads the indicated trajectory and measures the distances indicated in the commit_fwd and commit_bwd
+lists to compare them against the designated cutoff values. If the user provided basin definitions that are not
+mutually exclusive for some reason (this is strongly cautioned against) and both conditions are met, then this
+function will identify commitment in the ‘fwd’ direction only.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>thread</strong> (<em>Thread</em>) – The Thread object whose most recent simulation is to be checked for commitment.</p></li>
+<li><p><strong>direction</strong> (<em>str</em>) – Either ‘fwd’, ‘bwd’  or ‘committor_analysis’, to indicate which simulation to check commitment for. Note that
+this parameter only refers to the name of the simulation (production simulations are named with ‘fwd’ or ‘bwd’
+to indicate the original and reversed velocities), not the value that this function returns.</p></li>
+<li><p><strong>directory</strong> (<em>str</em>) – Path to the directory just above committor_analysis. When this parameter is not provided, the function looks for
+trajectories in the working directory, so this option is required for committor analysis. Default = ‘’</p></li>
+<li><p><strong>settings</strong> (<em>Namespace</em>) – Global settings Namespace object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Either ‘fwd’ when the commit_fwd criteria are met; ‘bwd’ when the commit_bwd criteria are met; or ‘’ when
+neither are met. Alternatively, ‘eps’ if eps_settings was provided (no computations are performed in this case)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="atesa.standalone_checkcommit.html" class="btn btn-neutral float-right" title="atesa.standalone_checkcommit" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="atesa.spawnthread.html" class="btn btn-neutral float-left" title="atesa.spawnthread" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Tucker Burgin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

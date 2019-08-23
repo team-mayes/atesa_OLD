@@ -4,38 +4,32 @@
 #
 # This file does only contain a selection of the most common options. For a
 # full list see the documentation:
-# http://www.sphinx-doc.org/en/master/config
+# http://www.sphinx-doc.org/en/stable/config
 
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#
+
+# Incase the project was not installed
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../aimless_shooting'))
-sys.path.insert(0, '/Users/tburgin/miniconda3/lib/python3.5/site-packages')
-sys.path.insert(0, '/Users/tburgin/miniconda3/lib/python3.5/site-packages/pytraj/')
+sys.path.insert(0, os.path.abspath('..'))
 
+import atesa
 
-# -- My custom code to tolerate inclusion of non-standard modules-------------
-import mock
- 
-MOCK_MODULES = ['numpy']
-for mod_name in MOCK_MODULES:
-    sys.modules[mod_name] = mock.Mock()
 
 # -- Project information -----------------------------------------------------
 
-project = u'aimless_shooting'
-copyright = u'2018, Tucker Burgin'
-author = u'Tucker Burgin'
+project = 'atesa'
+copyright = ("2019, Tucker Burgin.")
+author = 'Tucker Burgin'
 
 # The short X.Y version
-version = u''
+version = ''
 # The full version, including alpha/beta/rc tags
-release = u''
+release = ''
 
 
 # -- General configuration ---------------------------------------------------
@@ -48,9 +42,19 @@ release = u''
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx.ext.autosummary',
     'sphinx.ext.autodoc',
-    'sphinx.ext.coverage',
+    'sphinx.ext.mathjax',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.napoleon',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.extlinks',
 ]
+
+autosummary_generate = True
+napoleon_google_docstring = False
+napoleon_use_param = False
+napoleon_use_ivar = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -74,10 +78,10 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path .
-exclude_patterns = [u'_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = 'default'
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -85,7 +89,7 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -112,7 +116,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'aimless_shootingdoc'
+htmlhelp_basename = 'atesadoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -139,8 +143,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'aimless_shooting.tex', u'aimless\\_shooting Documentation',
-     u'Tucker Burgin', 'manual'),
+    (master_doc, 'atesa.tex', 'atesa Documentation',
+     'atesa', 'manual'),
 ]
 
 
@@ -149,7 +153,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'aimless_shooting', u'aimless_shooting Documentation',
+    (master_doc, 'atesa', 'atesa Documentation',
      [author], 1)
 ]
 
@@ -160,8 +164,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'aimless_shooting', u'aimless_shooting Documentation',
-     author, 'aimless_shooting', 'One line description of project.',
+    (master_doc, 'atesa', 'atesa Documentation',
+     author, 'atesa', 'Example project for MolSSI cookiecutter',
      'Miscellaneous'),
 ]
 

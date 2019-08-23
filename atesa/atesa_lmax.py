@@ -73,25 +73,16 @@ def sigmoid_data(params, obs):
 
 
 def objective_function(params, A_data, B_data):
-    # Returns -1*(sumA(ln(1 - theta)) + sumB(ln(theta))) where theta = (1 + erf(q))/2 and q is the reaction coordinate
+    # Returns -1 * (sumA(ln(1 - theta)) + sumB(ln(theta))) where theta = (1 + erf(q))/2 and q is the reaction coordinate
     def erflikefast(arg):
-        pluslimit = erf(5.7) * numpy.ones(len(arg))
-        minuslimit = erf(-5.7) * numpy.ones(len(arg))
-        #This is not particularly efficient
-        return numpy.where(arg>5.7, pluslimit, numpy.where(arg<-5.7, minuslimit, erf(arg)))
-    def erflike(arg):
-        if -5.7 <= arg <= 5.7:
-            return math.erf(arg)
-        elif arg > 5.7:
-            return math.erf(5.7)
-        else:
-            return math.erf(-5.7)
+        pl = numpy.ones(len(arg))
+        ml = numpy.negative(numpy.ones(len(arg)))
+        return numpy.where(arg > 5.7, pl, numpy.where(arg < -5.7, ml, erf(arg)))
 
     params = list(params)
-    #sum = 0
     qa = params[0] + numpy.inner(params[1:], A_data)
     qb = params[0] + numpy.inner(params[1:], B_data)
-    sum = numpy.sum(numpy.log((1-erflikefast(qa))/2)) + numpy.sum(numpy.log((1+erflikefast(qb))/2))
+    sum = numpy.sum(numpy.log((1 - erflikefast(qa)) / 2)) + numpy.sum(numpy.log((1 + erflikefast(qb)) / 2))
     
     # for observation in A_data:                  # observation is a list of CV values for a given observation
     #     try:
@@ -105,6 +96,7 @@ def objective_function(params, A_data, B_data):
     #     q = params[0] + numpy.dot(params[1:],observation)
     #     sum += numpy.log((1 + erflike(q))/2)                # increment log-likelihood by log(theta)
     # print sum, suma, params[0]
+
     return -1 * sum
 
 
@@ -170,12 +162,19 @@ def main(input_file, kbest=None, fixed=None, include_qdot=False, method='BFGS', 
         start_params = guess    # guess is only ever used during running, so this start_params is always of length kbest (one short)
     optim_result = 'null'
 
+    if fixed:
+        if len(fixed) > kbest:
+            sys.exit('Error: number of fixed parameters (' + str(len(fixed)) + ') must be less than or equal to number '
+                     'of parameters requested (' + str(kbest) + ')')
+
     # These branches both build a list of combinations to optimize. They use a list comprehension with set.issubset
     # because it's elegant, and more importantly because it keeps memory usage low in cases where going through and
     # removing unnecessary combinations from the full N-choose-kbest list is prohibitively expensive, though that option
     # may well be faster.
     if not running:
-        if not include_qdot:
+        if len(fixed) == int(kbest):
+            iterables = [fixed]
+        elif not include_qdot:
             iterables = [comb for comb in itertools.combinations(range(N), kbest) if (not fixed or set(fixed).issubset(comb))]
         else:
             iterables = []
@@ -244,6 +243,7 @@ def main(input_file, kbest=None, fixed=None, include_qdot=False, method='BFGS', 
         if method.lower() == 'bfgs':
             print('Standard error of each term: ' + str([float('%.4f'%(numpy.sqrt(item))) for item in numpy.diag(optim_result.hess_inv)]) + '\n')
             print('Errors as fractions: ' + str([abs(float('%.4f'%(item))) for item in numpy.divide([numpy.sqrt(item) for item in numpy.diag(optim_result.hess_inv)], optim_result.x)]) + '\n')
+            print(optim_result.hess_inv)    # todo: gives different results for same optimization depending on whether it was arrived at via running?
     elif not running:
         open(output_file, 'w').write(str(optim_result.message) + '\n')
         open(output_file, 'a').write('Function value and included parameter(s): ' + str(current_best[0]) + ',' + ''.join((' CV' + str(current_best[1][i] + 1)) for i in range(len(current_best[1]))) + '\n')
