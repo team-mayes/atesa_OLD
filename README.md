@@ -13,8 +13,4 @@ ATESA contains scripts to automate flexible length aimless shooting, intertial l
 
 ### Copyright
 
-<<<<<<< HEAD
 Copyright (c) 2019, Tucker Burgin
-=======
-Copyright (c) 2019, Tucker Burgin
->>>>>>> 960b01a89dd9e789445cdea4bf5f56d5a20a1233
