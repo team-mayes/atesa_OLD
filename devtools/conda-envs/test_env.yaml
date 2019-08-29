@@ -12,6 +12,7 @@ dependencies:
   - codecov
 
     # Pip-only installs
-  #- pip:
-  #  - codecov
+  - pip:
+    - codecov
+    - pytraj
 
