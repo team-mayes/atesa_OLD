@@ -34,7 +34,8 @@ source ~/.bashrc  # source file to get new commands
 conda config --add channels conda-forge
     
 conda config --set always_yes yes
-conda install conda conda-build jinja2 anaconda-client pytraj numpy pathos
+conda install conda conda-build jinja2 anaconda-client numpy pathos
+pip install pytraj
 conda update --quiet --all
 
 # Restore original directory
