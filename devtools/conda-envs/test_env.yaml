@@ -5,6 +5,8 @@ dependencies:
   - python
   - pip
   - numpy
+  - jinja2
+  - pathos
 
     # Testing
   - pytest
