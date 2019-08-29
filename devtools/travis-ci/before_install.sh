@@ -35,7 +35,7 @@ conda config --add channels conda-forge
     
 conda config --set always_yes yes
 conda install conda conda-build jinja2 anaconda-client numpy pathos
-pip install pytraj
+conda install -c ambermd pytraj 
 conda update --quiet --all
 
 # Restore original directory
