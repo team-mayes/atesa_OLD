@@ -38,7 +38,7 @@ install:
 build: false
 
 test_script:
-  - pytest -v --cov=atesa atesa\\tests
+  - pytest -v --cov=atesa
 
 on_success:
   - codecov

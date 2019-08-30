@@ -20,6 +20,7 @@ import pickle
 import math
 import numpy
 from jinja2 import Environment, FileSystemLoader
+import stattools
 #from atesa import rc_eval                                              # this one I think might not work at all
 try:
     rc_eval = importlib.import_module('.rc_eval', package=__package__)  # this one works with tests
@@ -2132,6 +2133,86 @@ def handle_bootstrap(settings):
         return False
 
 
+def handle_fishers(settings):
+    """
+    Handle tasks associated with evaluating mean Fisher error of current best model and testing for stability.
+
+    This function calls likelihood maximization on the current set of aimless shooting data in order to evaluate the
+    mean Fisher error (that is, the mean of the square roots of the diagonals of the Fisher information matrix) as a
+    proxy for the real error between the model and the underlying "true" reaction coordinate.
+
+    It also uses a Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test statistic to determine if the sequence of mean Fisher
+    errors to date is converged (apparently constant) and returns a boolean True if so, False if not. Also returns False
+    if there has not been enough sampling to statistically decorrelate the data from the initial conditions with
+    threshold  p < 0.05.
+
+    Parameters
+    ----------
+    settings : Namespace
+        Global settings Namespace object.
+
+    Returns
+    -------
+    bool
+        True if the KPSS test is passed; False otherwise.
+    """
+    ### First step is to decorrelate the aimless shooting sampling data from the initial conditions ###
+    # Load in data
+    thislines = open('as.out', 'r').readlines()
+    nlines = len(thislines)
+
+    # Obtain dimensionality of data
+    temp = thislines[0].replace('A <- ','').replace('B <- ','').split(' ')
+    while temp[-1] == '' or temp[-1] == '\n':
+        temp = temp[:-1]
+    if '\n' in temp[-1]:
+        temp = temp[:-1] + [temp[-1].replace('\n', '')]
+    ndims = len(temp)
+    if settings.include_qdot:
+        ndims = ndims/2
+        if not ndims % 1 == 0:
+            sys.exit('Error: tried to interpret as.out as including rates of change but came up with non-integer number of CVs')
+        else:
+            ndims = int(ndims)
+
+    # Identify slowest lag time for CV decorrelation
+    slowest_lag = -1
+    for dim_index in range(ndims):
+        this_cv = [float(thislines[i].replace('A <- ','').replace('B <- ','').split(' ')[dim_index]) for i in range(nlines)]
+        this_autocorr = [stattools.acf(this_cv[lag:],nlags=1,fft=True)[-1] for lag in range(len(this_cv)-1)]
+        in_bounds = [this_autocorr[lag] < 1.96/numpy.sqrt(len(this_cv[lag:])) for lag in range(len(this_autocorr))]
+        running = 0
+        begin = 0
+        this_index = -1
+        for item in in_bounds:                  # item is a Boolean
+            this_index += 1
+            if (not item and running > 0) or this_index == len(in_bounds)-1:    # leaves threshold (in -> out) or ends
+                if running >= begin:            # if stretch in bounds is at least as long as strech preceding
+                    if begin > slowest_lag:     # if this lag is slower than the previous slowest recorded
+                        slowest_lag = begin
+                    break
+                begin = 0
+                running = 0
+            elif item and running == 0:         # entered threshold after being outside (out -> in)
+                running += 1
+                begin = this_index
+            elif item:                          # inside threshold already and still in (in -> in)
+                running += 1
+            else:                               # was not in threshold and continues not to be (out -> out)
+                begin = 0
+                running = 0
+        if begin == 0:      # triggers unless for-loop exited via break
+            return False    # can't decorrelate from initial position, so we definitely don't have enough data!
+
+    # Write new, decorrelated as.out file
+    open('as_' + str(nlines) + '_decorrelated.out', 'w').close()
+    for line in thislines[slowest_lag:nlines]:
+        open('as_' + str(nlines) + '_decorrelated.out', 'a').write(line)
+
+    ### Next step is to perform Likelihood Maximization on this decorrelated data file ###
+    command = sys.executable + ' ' + settings.home_folder + '/atesa_lmax.py -i ' + 'as_' + str(nlines) + '_decorrelated.out -q ' + str(settings.include_qdot) + ' --running ' + str(int(ndims)) + ' --output_file ' + str(nlines) + '_errchk.out'
+    process = subprocess.Popen(command.split(' '), stdout=subprocess.PIPE)
+
 def init_find_ts(settings,start_name):
     """
     Initialize and perform jobs for constructing transition state guesses from the provided input coordinate files. The
@@ -2197,8 +2278,8 @@ def init_find_ts(settings,start_name):
             f.write(' &end\n')
         f.close()
     # Check that the input file for these simulations exists
-    if not os.path.exists(settings.home_folder + '/' + 'input_files/find_ts.in'):
-        sys.exit('Error: could not locate input file \'find_ts.in\' in ' + settings.home_folder + '/' + 'input_files')
+    if not os.path.exists(settings.home_folder + '/input_files/find_ts.in'):
+        sys.exit('Error: could not locate input file \'find_ts.in\' in ' + settings.home_folder + '/input_files')
     # Now write and submit the batch file(s)...
     settings.running = []       # a list of currently running threads
     settings.allthreads = []    # a list of all threads regardless of status

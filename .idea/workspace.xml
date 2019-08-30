@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4169030c-4199-4c0e-96e2-4e2ea7739c27" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.travis.yml" afterPath="$PROJECT_DIR$/.travis.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/atesa/atesa.py" afterPath="$PROJECT_DIR$/atesa/atesa.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -48,15 +49,17 @@
     <SUITE FILE_PATH="coverage/atesa$committor_scatter.coverage" NAME="committor_scatter Coverage Results" MODIFIED="1539892965664" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../Globus/Flux/glycosynthases/171110_TmAfc_d224g/181018_committor_resample" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.58596075">
+    <splitter split-orientation="horizontal" split-proportion="0.77215946">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="atesa.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="atesa.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/atesa/atesa.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="255">
-                  <caret line="17" column="6" lean-forward="false" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
-                  <folding />
+                <state relative-caret-position="322">
+                  <caret line="2213" column="74" lean-forward="true" selection-start-line="2213" selection-start-column="74" selection-end-line="2213" selection-end-column="74" />
+                  <folding>
+                    <element signature="e#116#147#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -64,32 +67,41 @@
           <file leaf-file-name="Burgin_LMAX_josh.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test_2/Burgin_LMAX_josh.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="6000">
+                <state relative-caret-position="917">
                   <caret line="410" column="36" lean-forward="false" selection-start-line="410" selection-start-column="36" selection-end-line="410" selection-end-column="36" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="rc_eval.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/atesa/rc_eval.py">
+          <file leaf-file-name="190725_fisher.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test_3/190725_fisher.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="345">
-                  <caret line="23" column="22" lean-forward="true" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
+                <state relative-caret-position="687">
+                  <caret line="79" column="92" lean-forward="true" selection-start-line="79" selection-start-column="4" selection-end-line="79" selection-end-column="92" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Burgin_LMAX.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/atesa/Burgin_LMAX.py">
+          <file leaf-file-name="rc_eval.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/atesa/rc_eval.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1665">
-                  <caret line="120" column="22" lean-forward="false" selection-start-line="120" selection-start-column="22" selection-end-line="120" selection-end-column="22" />
+                <state relative-caret-position="423">
+                  <caret line="773" column="111" lean-forward="false" selection-start-line="773" selection-start-column="111" selection-end-line="773" selection-end-column="111" />
                   <folding>
-                    <element signature="e#0#31#0" expanded="true" />
-                    <element signature="e#12721#15959#0" expanded="false" />
+                    <element signature="e#635#725#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="atesa_lmax.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/atesa/atesa_lmax.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="426">
+                  <caret line="251" column="36" lean-forward="false" selection-start-line="251" selection-start-column="36" selection-end-line="251" selection-end-column="36" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -123,14 +135,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>norm</find>
-      <find>subprocess</find>
-      <find>time.</find>
-      <find>if restart</find>
-      <find>FileNotFoundError</find>
-      <find>except IOError:</find>
-      <find>cancel</find>
-      <find>'temp.sh</find>
       <find>temp</find>
       <find>restart = Tr</find>
       <find>committor_suffix</find>
@@ -153,6 +157,14 @@
       <find>candidatevalues</find>
       <find>todo</find>
       <find>find_ts</find>
+      <find>bootstrap</find>
+      <find>error</find>
+      <find>def handle_b</find>
+      <find>stattools</find>
+      <find>settings.len_data</find>
+      <find>settings.len_data =</find>
+      <find>len_data =</find>
+      <find>home_folder</find>
     </findStrings>
     <replaceStrings>
       <replace>rc_eval' + committor_suffix + '.out</replace>
@@ -254,10 +266,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1327" />
-    <option name="y" value="46" />
-    <option name="width" value="1921" />
-    <option name="height" value="1007" />
+    <option name="x" value="1280" />
+    <option name="y" value="23" />
+    <option name="width" value="1920" />
+    <option name="height" value="1177" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Just Compatibility">
@@ -311,6 +323,11 @@
           <expand>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="atesa" type="cbb8eebc:String" user="atesa" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="atesa" type="cbb8eebc:String" user="atesa" />
               <item name="atesa" type="cbb8eebc:String" user="atesa" />
             </path>
             <path>
@@ -372,60 +389,6 @@
               <item name="lib" type="cbb8eebc:String" user="lib" />
               <item name="python3.7" type="cbb8eebc:String" user="python3.7" />
               <item name="site-packages" type="cbb8eebc:String" user="site-packages" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="/" type="cbb8eebc:String" user="/" />
-              <item name="Users" type="cbb8eebc:String" user="Users" />
-              <item name="tburgin" type="cbb8eebc:String" user="tburgin" />
-              <item name="miniconda3" type="cbb8eebc:String" user="miniconda3" />
-              <item name="lib" type="cbb8eebc:String" user="lib" />
-              <item name="python3.7" type="cbb8eebc:String" user="python3.7" />
-              <item name="site-packages" type="cbb8eebc:String" user="site-packages" />
-              <item name="pip" type="cbb8eebc:String" user="pip" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="/" type="cbb8eebc:String" user="/" />
-              <item name="Users" type="cbb8eebc:String" user="Users" />
-              <item name="tburgin" type="cbb8eebc:String" user="tburgin" />
-              <item name="miniconda3" type="cbb8eebc:String" user="miniconda3" />
-              <item name="lib" type="cbb8eebc:String" user="lib" />
-              <item name="python3.7" type="cbb8eebc:String" user="python3.7" />
-              <item name="site-packages" type="cbb8eebc:String" user="site-packages" />
-              <item name="pip" type="cbb8eebc:String" user="pip" />
-              <item name="_vendor" type="cbb8eebc:String" user="_vendor" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="/" type="cbb8eebc:String" user="/" />
-              <item name="Users" type="cbb8eebc:String" user="Users" />
-              <item name="tburgin" type="cbb8eebc:String" user="tburgin" />
-              <item name="miniconda3" type="cbb8eebc:String" user="miniconda3" />
-              <item name="lib" type="cbb8eebc:String" user="lib" />
-              <item name="python3.7" type="cbb8eebc:String" user="python3.7" />
-              <item name="site-packages" type="cbb8eebc:String" user="site-packages" />
-              <item name="pip" type="cbb8eebc:String" user="pip" />
-              <item name="_vendor" type="cbb8eebc:String" user="_vendor" />
-              <item name="urllib3" type="cbb8eebc:String" user="urllib3" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="/" type="cbb8eebc:String" user="/" />
-              <item name="Users" type="cbb8eebc:String" user="Users" />
-              <item name="tburgin" type="cbb8eebc:String" user="tburgin" />
-              <item name="miniconda3" type="cbb8eebc:String" user="miniconda3" />
-              <item name="lib" type="cbb8eebc:String" user="lib" />
-              <item name="python3.7" type="cbb8eebc:String" user="python3.7" />
-              <item name="site-packages" type="cbb8eebc:String" user="site-packages" />
-              <item name="pip" type="cbb8eebc:String" user="pip" />
-              <item name="_vendor" type="cbb8eebc:String" user="_vendor" />
-              <item name="urllib3" type="cbb8eebc:String" user="urllib3" />
-              <item name="packages" type="cbb8eebc:String" user="packages" />
             </path>
           </expand>
           <select />
@@ -700,29 +663,30 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1280" y="23" width="1920" height="1177" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.104898825" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10330138" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46534654" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1980198" sideWeight="0.5063898" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32943293" sideWeight="0.4978701" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.090009004" sideWeight="0.49361023" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16561656" sideWeight="0.49361023" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35302392" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24866879" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32853284" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39873987" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35302392" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.03241895" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32943293" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39873987" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32853284" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -766,15 +730,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/atesa/committor_probability.out" />
-    <entry file="file://$PROJECT_DIR$/atesa/test/committor_scatter.py" />
-    <entry file="file://$PROJECT_DIR$/../../Globus/Flux/glycosynthases/171110_TmAfc_d224g/181018_committor_resample/committor_scatter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="uml://Python/#/Users/tburgin/Documents/PycharmProjects/atesa/atesa/atesa.py">
       <provider selected="true" editor-type-id="UmlEditorProvider">
         <state>
@@ -955,17 +910,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/atesa/Burgin_LMAX.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1665">
-          <caret line="120" column="22" lean-forward="false" selection-start-line="120" selection-start-column="22" selection-end-line="120" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-            <element signature="e#12721#15959#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test/190624_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -1032,34 +976,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test_2/Burgin_LMAX_josh.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6000">
-          <caret line="410" column="36" lean-forward="false" selection-start-line="410" selection-start-column="36" selection-end-line="410" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/devtools/scripts/create_conda_env.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/atesa/atesa.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="6" lean-forward="false" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/atesa/rc_eval.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="22" lean-forward="true" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
           <folding />
         </state>
       </provider>
@@ -1070,6 +990,69 @@
           <caret line="292" column="0" lean-forward="false" selection-start-line="292" selection-start-column="0" selection-end-line="292" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/atesa/Burgin_LMAX.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="404" column="119" lean-forward="false" selection-start-line="404" selection-start-column="114" selection-end-line="404" selection-end-column="119" />
+          <folding>
+            <element signature="e#0#31#0" expanded="false" />
+            <element signature="e#12721#15959#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/atesa/rc_eval.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="773" column="111" lean-forward="false" selection-start-line="773" selection-start-column="111" selection-end-line="773" selection-end-column="111" />
+          <folding>
+            <element signature="e#635#725#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/atesa/atesa_lmax.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="426">
+          <caret line="251" column="36" lean-forward="false" selection-start-line="251" selection-start-column="36" selection-end-line="251" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test_6/190725_fisher.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test_2/Burgin_LMAX_josh.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="917">
+          <caret line="410" column="36" lean-forward="false" selection-start-line="410" selection-start-column="36" selection-end-line="410" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../atesa_bootstrap_test_3/190725_fisher.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="687">
+          <caret line="79" column="92" lean-forward="true" selection-start-line="79" selection-start-column="4" selection-end-line="79" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/atesa/atesa.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="2213" column="74" lean-forward="true" selection-start-line="2213" selection-start-column="74" selection-end-line="2213" selection-end-column="74" />
+          <folding>
+            <element signature="e#116#147#0" expanded="true" />
           </folding>
         </state>
       </provider>
