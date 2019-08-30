@@ -2,7 +2,7 @@ Aimless Transision Ensemble Sampling and Analysis (ATESA)
 ==============================
 [//]: # (Badges)
 [![Travis Build Status](https://travis-ci.com/team-mayes/atesa.png)](https://travis-ci.com/team-mayes/atesa)
-[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/REPLACE_WITH_APPVEYOR_LINK/branch/master?svg=true)](https://ci.appveyor.com/project/team-mayes/atesa/branch/master)
+[![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/project/tuckerburgin/atesa/branch/master?svg=true)](https://ci.appveyor.com/project/tuckerburgin/atesa/branch/master)
 [![codecov](https://codecov.io/gh/team-mayes/atesa/branch/master/graph/badge.svg)](https://codecov.io/gh/team-mayes/atesa/branch/master)
 
 Python program for automating transition path sampling with aimless shooting using Amber
